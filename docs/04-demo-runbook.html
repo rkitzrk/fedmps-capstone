@@ -1,0 +1,466 @@
+<title>FedMPS Demo Runbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F4F5F2; --surface:#FFFFFF; --surface-2:#EBEEE9; --surface-3:#E1E5DF;
+  --ink:#14191A; --ink-2:#3D474A; --muted:#6B7679;
+  --rule:#DADED7; --rule-strong:#B9C1BA;
+  --accent:#0F5F57; --accent-soft:#DCEDE8;
+  --flag:#8E5A11; --flag-soft:#F5EAD8;
+  --stop:#93332A; --stop-soft:#F6E3DF;
+  --say:#2C5C86; --say-soft:#DFE9F2;
+  --f-display:"Newsreader",Georgia,serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1413; --surface:#161B1A; --surface-2:#1D2423; --surface-3:#242C2A;
+    --ink:#E9ECE8; --ink-2:#B5BEBA; --muted:#818C88;
+    --rule:#293130; --rule-strong:#3B4543;
+    --accent:#54C2B1; --accent-soft:#14312D;
+    --flag:#DBA657; --flag-soft:#332810;
+    --stop:#E08578; --stop-soft:#3B221D;
+    --say:#79ADDE; --say-soft:#152634;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1413; --surface:#161B1A; --surface-2:#1D2423; --surface-3:#242C2A;
+  --ink:#E9ECE8; --ink-2:#B5BEBA; --muted:#818C88;
+  --rule:#293130; --rule-strong:#3B4543;
+  --accent:#54C2B1; --accent-soft:#14312D;
+  --flag:#DBA657; --flag-soft:#332810;
+  --stop:#E08578; --stop-soft:#3B221D;
+  --say:#79ADDE; --say-soft:#152634;
+}
+
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.page{max-width:66rem;margin:0 auto;padding:3.2rem 1.5rem 6rem}
+@media(max-width:640px){.page{padding:2.2rem 1rem 4rem}}
+
+.eyebrow{font-family:var(--f-mono);font-size:.69rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 .9rem}
+h1{font-family:var(--f-display);font-size:clamp(2rem,4.6vw,2.9rem);font-weight:500;line-height:1.1;letter-spacing:-.015em;margin:0 0 .8rem;text-wrap:balance}
+.stand{font-family:var(--f-display);font-size:1.14rem;line-height:1.5;color:var(--ink-2);margin:0 0 1.3rem;max-width:38rem}
+.meta{display:flex;flex-wrap:wrap;gap:.3rem 1.8rem;font-family:var(--f-mono);font-size:.71rem;color:var(--muted);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:.72rem 0}
+.meta b{color:var(--ink-2);font-weight:500}
+
+section{padding:2.5rem 0 0;scroll-margin-top:1rem}
+h2{font-family:var(--f-display);font-size:1.58rem;font-weight:500;line-height:1.2;margin:0 0 .4rem;letter-spacing:-.01em}
+.hint{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 1rem}
+h3{font-size:.94rem;font-weight:600;margin:1.6rem 0 .45rem}
+p{margin:0 0 .9rem;max-width:44rem}
+ul,ol{margin:0 0 .9rem;padding-left:1.1rem;max-width:44rem}
+li{margin-bottom:.34rem}
+li::marker{color:var(--rule-strong)}
+code{font-family:var(--f-mono);font-size:.85em;background:var(--surface-2);border:1px solid var(--rule);padding:.08em .32em;border-radius:3px}
+.hr{height:1px;background:var(--rule);border:0;margin:2.5rem 0 0}
+
+/* split bar */
+.splitwrap{margin:1.3rem 0 1.6rem;max-width:46rem}
+.splitbar{display:flex;height:58px;border:1px solid var(--rule-strong);overflow:hidden;font-family:var(--f-mono)}
+.seg{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;color:#fff;font-size:.72rem;letter-spacing:.04em;min-width:0;padding:0 .3rem;text-align:center}
+.seg b{font-size:1.05rem;font-weight:600;font-variant-numeric:tabular-nums}
+.seg.server{flex:70;background:var(--accent)}
+.seg.train{flex:20;background:var(--flag)}
+.seg.val{flex:10;background:var(--say)}
+.splitkey{display:grid;grid-template-columns:1fr;gap:.5rem;margin-top:.9rem}
+@media(min-width:700px){.splitkey{grid-template-columns:repeat(3,1fr)}}
+.sk{display:grid;grid-template-columns:10px 1fr;gap:.55rem;font-size:.85rem;color:var(--ink-2);align-items:start}
+.sk i{width:10px;height:10px;border-radius:2px;margin-top:.36rem;display:block}
+.sk b{display:block;color:var(--ink);font-weight:600;font-size:.88rem}
+
+/* callouts */
+.call{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1rem 1.2rem;margin:1.3rem 0;max-width:46rem}
+.call.warn{border-left-color:var(--flag)}
+.call.stop{border-left-color:var(--stop)}
+.call h4{font-family:var(--f-mono);font-size:.69rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 .45rem}
+.call p{max-width:none}
+.call p:last-child{margin-bottom:0}
+
+/* steps */
+.steps{counter-reset:step;margin:1.4rem 0 1rem}
+.step{border-top:1px solid var(--rule);padding:1.3rem 0;display:grid;grid-template-columns:1fr;gap:.9rem}
+@media(min-width:840px){.step{grid-template-columns:1.05fr 1fr;gap:1.8rem}}
+.step:last-child{border-bottom:1px solid var(--rule)}
+.step-do>h3{margin:0 0 .5rem;display:flex;align-items:baseline;gap:.6rem;font-size:1rem}
+.step-do>h3::before{counter-increment:step;content:counter(step);font-family:var(--f-mono);font-size:.7rem;font-weight:600;color:var(--surface);background:var(--accent);width:1.35rem;height:1.35rem;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;transform:translateY(-.1em)}
+.cmd{font-family:var(--f-mono);font-size:.78rem;background:var(--surface-3);border:1px solid var(--rule);border-left:2px solid var(--accent);padding:.55rem .7rem;margin:.5rem 0;overflow-x:auto;white-space:pre;line-height:1.6;color:var(--ink)}
+.click{font-size:.87rem;color:var(--ink-2);margin:.35rem 0}
+.click b{color:var(--ink);font-weight:600}
+.say{background:var(--say-soft);border-left:3px solid var(--say);padding:.7rem .9rem;margin:.5rem 0;font-size:.9rem;line-height:1.55;color:var(--ink)}
+.say::before{content:"Say";font-family:var(--f-mono);font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--say);display:block;margin-bottom:.3rem}
+.see{background:var(--surface-2);border:1px solid var(--rule);padding:.7rem .9rem;margin:.5rem 0;font-size:.86rem;color:var(--ink-2);line-height:1.55}
+.see::before{content:"He sees";font-family:var(--f-mono);font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem}
+.beat{font-family:var(--f-mono);font-size:.66rem;color:var(--muted);letter-spacing:.06em;margin-top:.5rem}
+
+/* checklist */
+.check{display:grid;grid-template-columns:1fr;gap:.45rem;margin:1rem 0;max-width:44rem}
+@media(min-width:700px){.check{grid-template-columns:1fr 1fr;gap:.45rem 1.8rem}}
+.check div{display:grid;grid-template-columns:1.05rem 1fr;gap:.55rem;font-size:.88rem;color:var(--ink-2);align-items:start}
+.check .bx{width:12px;height:12px;border:1.5px solid var(--accent);border-radius:2px;margin-top:.33rem}
+
+/* qa */
+.qa{border-top:1px solid var(--rule);margin:1.2rem 0}
+.qa details{border-bottom:1px solid var(--rule)}
+.qa summary{cursor:pointer;padding:.85rem 0;font-weight:600;font-size:.93rem;list-style:none;display:flex;gap:.6rem;align-items:baseline}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::before{content:"?";font-family:var(--f-mono);font-size:.7rem;font-weight:600;color:var(--accent);flex:0 0 auto}
+.qa details[open] summary{color:var(--accent)}
+.qa .ans{padding:0 0 1rem 1.3rem;font-size:.9rem;color:var(--ink-2);max-width:44rem}
+.qa .ans p{max-width:none;margin-bottom:.7rem}
+.qa .ans p:last-child{margin-bottom:0}
+
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);margin:1.1rem 0 1.4rem}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.86rem}
+th{font-family:var(--f-mono);font-size:.63rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.58rem .8rem;background:var(--surface-2);border-bottom:1px solid var(--rule-strong)}
+td{padding:.56rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.k{font-weight:500;color:var(--ink)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+footer{border-top:1px solid var(--rule);margin-top:2.8rem;padding-top:1.2rem;font-family:var(--f-mono);font-size:.7rem;color:var(--muted);line-height:1.7}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="page">
+
+<p class="eyebrow">Demo runbook · FedMPS capstone</p>
+<h1>Faculty Demo Runbook</h1>
+<p class="stand">The dataset split in the percentages he asked for, an eight-minute demo that proves every privacy claim on screen, and the questions he is most likely to ask.</p>
+<div class="meta">
+  <span><b>Runtime</b> ~8 min</span>
+  <span><b>Setup</b> 20 min before</span>
+  <span><b>Windows</b> 2 browser tabs + 1 terminal</span>
+  <span><b>Driver</b> one person on keyboard</span>
+</div>
+
+<hr class="hr">
+
+<section id="split">
+  <h2>The dataset split</h2>
+  <p class="hint">Exactly as instructed · now enforced in code</p>
+
+  <div class="splitwrap">
+    <div class="splitbar">
+      <div class="seg server"><b>70%</b><span>CENTRAL SERVER</span></div>
+      <div class="seg train"><b>20%</b><span>TRAIN</span></div>
+      <div class="seg val"><b>10%</b><span>VAL</span></div>
+    </div>
+    <div class="splitkey">
+      <div class="sk"><i style="background:var(--accent)"></i><span><b>70% central server</b>Gallery and held-out evaluation. Reference photographs that arrive with a case report, plus the identities used to measure the system. Nobody trains on it.</span></div>
+      <div class="sk"><i style="background:var(--flag)"></i><span><b>20% node training</b>Split across 5 nodes. Each node trains only on its own share, and it never leaves the node.</span></div>
+      <div class="sk"><i style="background:var(--say)"></i><span><b>10% node validation</b>Local validation at each node, from the same identities that node trains on.</span></div>
+    </div>
+  </div>
+
+  <p>It lives in <code>fedmps/config.py</code> as three numbers that must sum to 100, and the code refuses to start if they do not:</p>
+
+  <div class="cmd">server_pct     = 70.0   # gallery + evaluation, never trained on
+node_train_pct = 20.0   # local training, stays at the node
+node_val_pct   = 10.0   # local validation, stays at the node</div>
+
+  <p>Run this in front of him if he wants to see it is not just a slide:</p>
+  <div class="cmd">python -c "from fedmps.config import default_config; print(default_config().partition.summary())"</div>
+
+  <div class="call warn">
+    <h4>One thing to say before he asks</h4>
+    <p><strong>The server's 70% is not training data.</strong> In federated learning the server holds none — that is the whole premise. Its share is the gallery and the evaluation set: the reference photographs, and the held-out people used to measure whether the system works. If you let the server train on 70% of the faces, you have rebuilt the centralised system the project exists to avoid. Say this yourself, early, rather than letting it surface as a challenge.</p>
+  </div>
+
+  <div class="call">
+    <h4>And the detail that earns marks</h4>
+    <p>The split is by <strong>identity, not by image</strong>. Every photograph of one person lands on one side of the line. Split by image instead and the same face appears in both training and evaluation, which inflates every number in the report. This is the single most common flaw in student face-recognition work, and being able to say you avoided it deliberately is worth more than a percentage point of accuracy.</p>
+  </div>
+
+  <h3>What the split actually produced</h3>
+  <p>From 400 identities and 4,763 images of Labeled Faces in the Wild:</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Share</th><th class="num">Identities</th><th class="num">Images</th><th class="num">% of images</th><th>Held by</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Central server</td><td class="num">280</td><td class="num">3,199</td><td class="num">67.2%</td><td>Gallery + evaluation. Never trained on.</td></tr>
+        <tr><td class="k">Node training</td><td class="num" rowspan="2">120</td><td class="num">1,042</td><td class="num">21.9%</td><td>Split across 5 nodes, stays local</td></tr>
+        <tr><td class="k">Node validation</td><td class="num">522</td><td class="num">11.0%</td><td>Split across 5 nodes, stays local</td></tr>
+        <tr><td class="k"><strong>Total</strong></td><td class="num"><strong>400</strong></td><td class="num"><strong>4,763</strong></td><td class="num"><strong>100%</strong></td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Node</th><th class="num">Identities</th><th class="num">Train</th><th class="num">Val</th><th>Camera profile</th></tr></thead>
+      <tbody>
+        <tr><td class="k">node_0</td><td class="num">12</td><td class="num">137</td><td class="num">69</td><td>sharp, mid-distance</td></tr>
+        <tr><td class="k">node_1</td><td class="num">18</td><td class="num">164</td><td class="num">82</td><td>distant, blurred</td></tr>
+        <tr><td class="k">node_2</td><td class="num">24</td><td class="num">225</td><td class="num">113</td><td>heavily compressed</td></tr>
+        <tr><td class="k">node_3</td><td class="num">30</td><td class="num">221</td><td class="num">110</td><td>close, sharp</td></tr>
+        <tr><td class="k">node_4</td><td class="num">36</td><td class="num">295</td><td class="num">148</td><td>blurred, compressed</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call warn">
+    <h4>Why 67.2% and not exactly 70%</h4>
+    <p>Because the split is by identity and people have different numbers of photographs. Asking for 70% of <em>identities</em> gives 67.2% of <em>images</em> — the two cannot both be exact at once, and identity is the one that has to be, or the evaluation leaks.</p>
+    <p>Volunteer this if the arithmetic comes up. It shows you know which of the two constraints matters and why you chose it, rather than having missed a rounding error.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="preflight">
+  <h2>Before he walks in</h2>
+  <p class="hint">Twenty minutes · do not skip the dry run</p>
+
+  <div class="check">
+    <div><span class="bx"></span><span>Data prepared under the 70/20/10 split (<code>01_prepare_data.py</code> has been run since the split changed)</span></div>
+    <div><span class="bx"></span><span>Experiments run, <code>figures/</code> has all seven charts</span></div>
+    <div><span class="bx"></span><span><code>artifacts/fedmps.sqlite</code> deleted, so the demo starts from an empty system</span></div>
+    <div><span class="bx"></span><span>Both consoles start cleanly and you have loaded each once</span></div>
+    <div><span class="bx"></span><span>Reference photograph ready at <code>media/person.jpg</code></span></div>
+    <div><span class="bx"></span><span>Demo video ready at <code>media/corridor.mp4</code></span></div>
+    <div><span class="bx"></span><span>Backup recording of the whole demo, in case the live run fails</span></div>
+    <div><span class="bx"></span><span>Full dry run completed, start to finish, timed</span></div>
+  </div>
+
+  <p>Reset to a clean state and start both consoles:</p>
+  <div class="cmd">rm -f artifacts/fedmps.sqlite
+rm -rf media/alerts
+
+python -m streamlit run fedmps/apps/server_app.py --server.port 8502
+python -m streamlit run fedmps/apps/node_app.py   --server.port 8501</div>
+
+  <p>Open <code>localhost:8502</code> (server) and <code>localhost:8501</code> (node) in two tabs, and <strong>load each one once before he arrives</strong> — the server console loads the face model on first open and takes about twenty seconds. You do not want that pause as your opening move.</p>
+
+  <div class="call stop">
+    <h4>Record a backup</h4>
+    <p>Screen-record the full demo the day before. If anything fails live — a port in use, a slow model load, a laptop that decides to update — you play the recording and keep talking. A demo that fails in the room and has no fallback costs more marks than any technical shortcoming in the work itself.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="demo">
+  <h2>The demo</h2>
+  <p class="hint">Six steps · the order matters, step 3 is the point of the whole thing</p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-do">
+        <h3>Show the split</h3>
+        <div class="cmd">python -c "from fedmps.config import default_config; print(default_config().partition.summary())"</div>
+        <p class="click">Then open <b>figures/fig1_degradation.png</b>.</p>
+      </div>
+      <div>
+        <div class="say">"The dataset is split 70/20/10 as you asked. The server's 70% is gallery and evaluation — it never trains on anything. The 30% goes across five nodes, two thirds for training and one third for validation. And we split by person, not by photograph, so nobody the system is tested on was ever seen during training."</div>
+        <div class="see">The three percentages printed straight from the config, then the chart showing what surveillance degradation costs a state-of-the-art face model.</div>
+        <div class="beat">~60 seconds</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-do">
+        <h3>Open a missing-person case</h3>
+        <p class="click">On the <b>server console</b> → <b>Open a case</b> tab. Enter a name, upload <code>media/person.jpg</code>, set nodes to 5, press <b>Create case and distribute</b>.</p>
+      </div>
+      <div>
+        <div class="say">"This is a report coming in. I upload the photograph once. Watch what actually leaves this machine."</div>
+        <div class="see">A table of five rows — one per node — each holding a different 64-byte hexadecimal string for the same person. No image is stored or sent.</div>
+        <div class="say">"Sixty-four bytes per site, and every row is a different pattern for the same face. Two sites cannot compare their watchlists and work out they are looking for the same person."</div>
+        <div class="beat">~90 seconds</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-do">
+        <h3>Run a node against its camera</h3>
+        <div class="cmd">python fedmps/scripts/03_run_video.py \
+  --video media/corridor.mp4 --node 0</div>
+        <p class="click">Then, while it runs, switch to the <b>server console</b> → <b>Confirmed sightings</b>.</p>
+      </div>
+      <div>
+        <div class="say">"The node is now watching its own footage. Detection, tracking, a quality gate, then matching against those 64 bytes. It has found someone — and here is the part that matters."</div>
+        <div class="see">The terminal reports an <strong>ALERT … PENDING local review</strong>. The server's Confirmed sightings tab is <strong>empty</strong>.</div>
+        <div class="say">"The node is holding a face crop right now. The server cannot see it. Nothing reaches this screen until a named person at that site looks at it and agrees."</div>
+        <div class="beat">~2 minutes · the centrepiece</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-do">
+        <h3>Show what the node can and cannot see</h3>
+        <p class="click">On the <b>node console</b> → <b>Watchlist</b> tab. Then back to <b>Review queue</b>.</p>
+      </div>
+      <div>
+        <div class="say">"This is everything the node knows about who it is looking for. A keyed code and a key fingerprint. It is searching for a person whose face it has never been shown."</div>
+        <div class="see">A single row: case reference, 64-byte hex template, key fingerprint. No photograph anywhere on the page.</div>
+        <div class="beat">~60 seconds</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-do">
+        <h3>The human gate</h3>
+        <p class="click">On the <b>node console</b>, set <b>Reviewing as</b> to a real name, then press <b>Confirm — send upstream</b>. Switch to the <b>server console</b> and reload.</p>
+      </div>
+      <div>
+        <div class="say">"The operator reviews the crop and confirms it. Only now does it travel — and the server records who authorised it."</div>
+        <div class="see">The sighting appears under Confirmed sightings with the crop, the score, the camera, and <em>confirmed by</em> the operator's name.</div>
+        <div class="say">"Every disclosure has a human attached to it, and it is in an audit log that the site operators can read too. Trust runs both directions or it does not mean anything."</div>
+        <div class="beat">~90 seconds</div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-do">
+        <h3>Close the case</h3>
+        <p class="click">On the <b>server console</b> → <b>Cases</b> → <b>Close &amp; revoke</b>. Then reload the <b>node console</b> → <b>Watchlist</b>.</p>
+      </div>
+      <div>
+        <div class="say">"The person is found, so I close the case. Every template issued for it is revoked at the same moment."</div>
+        <div class="see">The node's watchlist is now empty.</div>
+        <div class="say">"Nobody had to remember to delete anything. Cases also carry an expiry date, so a watchlist cannot quietly outlive the reason it was created."</div>
+        <div class="beat">~60 seconds</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="call">
+    <h4>If you only have three minutes</h4>
+    <p>Run steps <strong>2, 3 and 5</strong>. Distribute a case, show the alert sitting unseen by the server, then confirm it and watch it arrive. That sequence alone demonstrates the privacy architecture end to end.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="numbers">
+  <h2>Numbers to have ready</h2>
+  <p class="hint">Quote these rather than reaching for a file mid-demo</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>If he asks</th><th>Answer</th></tr></thead>
+      <tbody>
+        <tr><td class="k">How big is the model you share?</td><td><span class="num">66,240</span> parameters, <span class="num">265 KB</span> per round — about <span class="num">658×</span> smaller than sharing the face-recognition model itself.</td></tr>
+        <tr><td class="k">What does degradation cost?</td><td>Rank-1 falls from <span class="num">0.99</span> to <span class="num">0.91</span>; the operational metric — true positives at 1% false alarms — falls from <span class="num">0.98</span> to <span class="num">0.59</span>.</td></tr>
+        <tr><td class="k">Does federation actually help?</td><td>Yes. Federated beats every node training alone, and matches pooling all the data centrally.</td></tr>
+        <tr><td class="k">What does secure aggregation cost?</td><td>Nothing in accuracy — the difference is <span class="num">0.00000</span> — and about <span class="num">1.1×</span> in time.</td></tr>
+        <tr><td class="k">Does the model leak who trained it?</td><td>Membership-inference attack scores <span class="num">0.53</span> where <span class="num">0.50</span> is a coin flip. Comparable work reports 0.507–0.532.</td></tr>
+        <tr><td class="k">How big is a watchlist entry?</td><td><span class="num">64 bytes</span>, keyed per site.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call warn">
+    <h4>Re-check these against your own run</h4>
+    <p>The figures above come from the run before the split changed to 70/20/10. That split gives the nodes less training data, so the accuracy numbers will move. Take the current ones from <code>results/</code> the morning of the demo and correct this table — quoting a number you have not re-measured is the fastest way to lose the room.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="qa">
+  <h2>Questions he is likely to ask</h2>
+  <p class="hint">Answers in your own words · the honest ones land best</p>
+
+  <div class="qa">
+    <details>
+      <summary>Why does the server get 70% if it does not train on anything?</summary>
+      <div class="ans">
+        <p>Because evaluation needs to be generous and training does not. The server's share is the held-out population — hundreds of people the system has never seen — which is what makes the accuracy figure trustworthy. A small evaluation set gives a number that swings on a handful of images.</p>
+        <p>The nodes' 30% is deliberately the scarce side. That is the realistic case: a single hospital or campus has a modest amount of camera data, and the whole argument for federation is that it lets many such sites learn together without pooling.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Is this real federated learning, or just simulated?</summary>
+      <div class="ans">
+        <p>The learning is real: five nodes with disjoint identities and different camera characteristics, training locally and sharing only weight updates. The averaging, the proximal term, the clipping, the noise and the masking all run exactly as they would in deployment.</p>
+        <p>What is simulated is the <em>network</em>. The five nodes are processes on one machine rather than five buildings. Say so plainly — it is a standard research setup, and pretending otherwise invites a question you cannot answer.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Why freeze the face-recognition model instead of training it?</summary>
+      <div class="ans">
+        <p>Because it cannot be trained at this scale. ArcFace is trained on millions of images with a classifier spanning every identity it knows; a node with a few hundred images has neither. Federating it would also mean shipping 166 MB per site per round.</p>
+        <p>So we freeze it and federate a small adapter that corrects for each site's camera. That is the project's actual contribution, and it is why the update is 265 KB instead of 166 MB.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Did you split by image or by person?</summary>
+      <div class="ans">
+        <p>By person. Every photograph of one individual sits on one side of the split. If you split by image, the same face appears in training and testing and the accuracy figure becomes meaningless.</p>
+        <p>You can show it: the partition code asserts that no identity and no image index is shared between any node and the evaluation set, and it fails loudly if that is ever violated.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>What stops the server from seeing the faces?</summary>
+      <div class="ans">
+        <p>Three separate things, and they defend different attacks. Raw video and embeddings never leave the node at all. Model updates are masked so the server sees only the sum across nodes, never one site's update. And the watchlist itself travels as a keyed code rather than a photograph.</p>
+        <p>Be precise about the limit: a confirmed alert <em>does</em> send one face crop upstream. That is deliberate and necessary — an alert nobody can look at is useless — and it happens only after a named operator approves it.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>What if a node is compromised?</summary>
+      <div class="ans">
+        <p>The keyed template protects the watchlist database at rest and stops two sites correlating their lists. It does <em>not</em> protect against a live compromised node, which holds the key and is watching its own camera anyway.</p>
+        <p>Saying this unprompted is worth more than claiming otherwise. The mitigation is revocation: close the case, reissue under a new key, and every template that node holds becomes useless.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Why is the accuracy not higher? The papers report 97%.</summary>
+      <div class="ans">
+        <p>Those are balanced-set accuracies, where every test face is in the gallery. The real task is open-set: almost everyone walking past a camera is on no watchlist, and the system has to stay quiet for all of them.</p>
+        <p>We report true positives at a fixed false-alarm rate instead, which is far less flattering and far more useful. One camera seeing 2,000 people a day against a 50-person watchlist makes 100,000 comparisons; at a false-positive rate any paper would call excellent, that is a hundred false alarms a day. That is why the system decides per track rather than per frame, and why a human confirms every alert.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Is the demo video real footage?</summary>
+      <div class="ans">
+        <p>No — it is built from held-out faces so the test is reproducible and the person in it is someone no node trained on. Say so.</p>
+        <p>If you have recorded your own corridor footage by then, show that instead: four consenting team members, filmed by yourselves, no bystanders. That is the honest version and it needs no ethics approval because you are the subjects.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="broken">
+  <h2>If something breaks</h2>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Symptom</th><th>Fix, in ten seconds</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Console will not start, port in use</td><td>Change <code>--server.port</code>, or kill the old process. Have a second port written down.</td></tr>
+        <tr><td class="k">Server console hangs on a blank page</td><td>It is loading the face model. Wait twenty seconds. This is why you load it before he arrives.</td></tr>
+        <tr><td class="k">No alerts in the review queue</td><td>The node id in the sidebar must match the <code>--node</code> you passed to the video script.</td></tr>
+        <tr><td class="k">Watchlist row shows but nothing matches</td><td>The templates were issued under a different bit width. Delete <code>artifacts/selector.json</code> and <code>artifacts/fedmps.sqlite</code>, re-enrol.</td></tr>
+        <tr><td class="k">Video pipeline is slow</td><td>It runs at about 1 frame per second on a laptop CPU. Expected. Keep talking while it runs, or pass <code>--max-frames 40</code>.</td></tr>
+        <tr><td class="k">Anything else</td><td>Switch to the backup recording and keep going. Do not debug in front of him.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  <p>Fourth document in the set, after the design report, the twelve-week plan and the implementation spec. Commands assume the project root as the working directory. Re-measure every number in the "Numbers to have ready" table against your own most recent run before presenting.</p>
+</footer>
+
+</div>

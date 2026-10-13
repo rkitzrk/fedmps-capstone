@@ -1,0 +1,1006 @@
+<title>Federated Missing-Person Identification</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F4F5F2;
+  --surface:#FFFFFF;
+  --surface-2:#EBEEE9;
+  --ink:#14191A;
+  --ink-2:#3D474A;
+  --muted:#6B7679;
+  --rule:#DADED7;
+  --rule-strong:#B9C1BA;
+  --accent:#0F5F57;
+  --accent-soft:#E0EEEA;
+  --flag:#8E5A11;
+  --flag-soft:#F5EAD8;
+  --stop:#93332A;
+  --stop-soft:#F6E3DF;
+  --shadow:0 1px 2px rgba(20,25,26,.06), 0 8px 24px -16px rgba(20,25,26,.28);
+
+  --f-display:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+
+  --col:44rem;
+  --rail:4.25rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1413;
+    --surface:#161B1A;
+    --surface-2:#1D2423;
+    --ink:#E9ECE8;
+    --ink-2:#B5BEBA;
+    --muted:#818C88;
+    --rule:#293130;
+    --rule-strong:#3B4543;
+    --accent:#54C2B1;
+    --accent-soft:#14312D;
+    --flag:#DBA657;
+    --flag-soft:#332810;
+    --stop:#E08578;
+    --stop-soft:#3B221D;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1413;
+  --surface:#161B1A;
+  --surface-2:#1D2423;
+  --ink:#E9ECE8;
+  --ink-2:#B5BEBA;
+  --muted:#818C88;
+  --rule:#293130;
+  --rule-strong:#3B4543;
+  --accent:#54C2B1;
+  --accent-soft:#14312D;
+  --flag:#DBA657;
+  --flag-soft:#332810;
+  --stop:#E08578;
+  --stop-soft:#3B221D;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);text-underline-offset:.18em;text-decoration-thickness:.06em}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* ---------- masthead ---------- */
+.bar{
+  position:sticky;top:0;z-index:40;
+  background:var(--ground);
+  background:color-mix(in srgb, var(--ground) 88%, transparent);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--rule);
+}
+.bar-in{
+  max-width:78rem;margin:0 auto;padding:.55rem 1.5rem;
+  display:flex;align-items:baseline;gap:1.25rem;
+}
+.bar-title{
+  font-family:var(--f-mono);font-size:.7rem;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink);
+  white-space:nowrap;
+}
+.bar-nav{
+  display:flex;gap:1.1rem;overflow-x:auto;scrollbar-width:none;
+  font-family:var(--f-mono);font-size:.68rem;letter-spacing:.07em;
+}
+.bar-nav::-webkit-scrollbar{display:none}
+.bar-nav a{color:var(--muted);text-decoration:none;white-space:nowrap}
+.bar-nav a:hover{color:var(--accent)}
+
+/* ---------- page grid ---------- */
+.page{max-width:78rem;margin:0 auto;padding:0 1.5rem 7rem}
+.grid{
+  display:grid;
+  grid-template-columns:var(--rail) minmax(0,var(--col)) minmax(0,1fr);
+  column-gap:1.75rem;
+}
+.grid > *{grid-column:2}
+.wide{grid-column:2 / 4}
+.full{grid-column:1 / 4}
+@media (max-width:1080px){
+  .grid{grid-template-columns:var(--rail) minmax(0,1fr);}
+  .wide,.full{grid-column:2}
+  .full{grid-column:1 / 3}
+}
+@media (max-width:680px){
+  .grid{grid-template-columns:1fr}
+  .grid > *,.wide,.full{grid-column:1}
+  .page{padding:0 1.1rem 5rem}
+}
+
+/* ---------- hero ---------- */
+.hero{padding:4.5rem 0 2.5rem}
+.eyebrow{
+  font-family:var(--f-mono);font-size:.7rem;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+  margin:0 0 1.1rem;
+}
+h1{
+  font-family:var(--f-display);
+  font-size:clamp(2.3rem,5.2vw,3.5rem);
+  font-weight:500;line-height:1.06;letter-spacing:-.015em;
+  text-wrap:balance;margin:0 0 1.1rem;
+}
+.standfirst{
+  font-family:var(--f-display);font-size:1.24rem;line-height:1.52;
+  color:var(--ink-2);margin:0 0 2rem;max-width:38rem;
+}
+.meta{
+  display:flex;flex-wrap:wrap;gap:.4rem 2rem;
+  font-family:var(--f-mono);font-size:.72rem;color:var(--muted);
+  border-top:1px solid var(--rule);padding-top:.9rem;
+}
+.meta b{color:var(--ink-2);font-weight:500}
+
+/* ---------- sections ---------- */
+section{padding:2.6rem 0 .6rem;scroll-margin-top:4rem}
+.snum{
+  grid-column:1;
+  font-family:var(--f-mono);font-size:.72rem;font-weight:600;
+  color:var(--rule-strong);letter-spacing:.04em;
+  padding-top:.62rem;text-align:right;
+}
+@media (max-width:680px){.snum{display:none}}
+h2{
+  font-family:var(--f-display);font-size:1.85rem;font-weight:500;
+  line-height:1.2;letter-spacing:-.012em;margin:0 0 .5rem;text-wrap:balance;
+}
+h3{
+  font-family:var(--f-body);font-size:.95rem;font-weight:600;
+  letter-spacing:.005em;margin:2rem 0 .5rem;color:var(--ink);
+}
+h4{
+  font-family:var(--f-mono);font-size:.72rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  margin:1.6rem 0 .5rem;
+}
+p{margin:0 0 1rem}
+.lede{color:var(--ink-2);font-size:1.03rem;margin-bottom:1.6rem}
+ul,ol{margin:0 0 1rem;padding-left:1.15rem}
+li{margin-bottom:.4rem}
+li::marker{color:var(--rule-strong)}
+strong{font-weight:600}
+code{
+  font-family:var(--f-mono);font-size:.86em;
+  background:var(--surface-2);padding:.1em .34em;border-radius:3px;
+  border:1px solid var(--rule);
+}
+.hr{height:1px;background:var(--rule);margin:3.2rem 0 0;border:0}
+
+/* ---------- chips ---------- */
+.chip{
+  display:inline-block;font-family:var(--f-mono);font-size:.63rem;
+  font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  padding:.2em .6em;border-radius:2px;white-space:nowrap;line-height:1.5;
+}
+.chip.keep{background:var(--accent-soft);color:var(--accent)}
+.chip.rework{background:var(--flag-soft);color:var(--flag)}
+.chip.drop{background:var(--stop-soft);color:var(--stop)}
+
+/* ---------- tables ---------- */
+.scroll{overflow-x:auto;margin:1.2rem 0 1.6rem;border:1px solid var(--rule);background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:36rem;font-size:.88rem}
+th{
+  font-family:var(--f-mono);font-size:.66rem;font-weight:600;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);
+  text-align:left;padding:.7rem .85rem;border-bottom:1px solid var(--rule-strong);
+  vertical-align:bottom;background:var(--surface-2);
+}
+td{padding:.72rem .85rem;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5}
+tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.k{font-weight:500;color:var(--ink)}
+table.compact td,table.compact th{padding:.55rem .8rem;font-size:.84rem}
+
+/* ---------- callouts ---------- */
+.call{
+  background:var(--surface);border:1px solid var(--rule);
+  border-left:3px solid var(--accent);
+  padding:1.1rem 1.3rem;margin:1.5rem 0;box-shadow:var(--shadow);
+}
+.call.warn{border-left-color:var(--flag)}
+.call.stop{border-left-color:var(--stop)}
+.call h4{margin-top:0}
+.call p:last-child{margin-bottom:0}
+
+.keyline{
+  border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);
+  padding:1.4rem 0;margin:1.8rem 0;
+}
+.keyline p{
+  font-family:var(--f-display);font-size:1.2rem;line-height:1.5;
+  color:var(--ink);margin:0;text-wrap:balance;
+}
+
+/* ---------- verdict list ---------- */
+.verdicts{display:flex;flex-direction:column;gap:0;margin:1.5rem 0 2rem;border-top:1px solid var(--rule)}
+.vrow{
+  display:grid;grid-template-columns:1fr;gap:.35rem;
+  padding:1.15rem 0;border-bottom:1px solid var(--rule);
+}
+@media (min-width:820px){
+  .vrow{grid-template-columns:15rem 1fr;column-gap:2rem;gap:.4rem}
+}
+.vhead{display:flex;flex-direction:column;gap:.45rem;align-items:flex-start}
+.vclaim{font-size:.9rem;font-weight:500;color:var(--ink);line-height:1.45}
+.vbody{font-size:.93rem;color:var(--ink-2)}
+.vbody p{margin:0 0 .6rem}
+.vbody p:last-child{margin:0}
+
+/* ---------- metric tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin:1.5rem 0 1.8rem}
+.tile{background:var(--surface);padding:1rem 1.1rem}
+.tile .v{font-family:var(--f-mono);font-size:1.45rem;font-weight:500;letter-spacing:-.02em;color:var(--accent);line-height:1.2;font-variant-numeric:tabular-nums}
+.tile .l{font-size:.78rem;color:var(--muted);margin-top:.3rem;line-height:1.4}
+
+/* ---------- figure ---------- */
+figure{margin:2rem 0 2.2rem}
+figure svg{display:block;width:100%;height:auto;min-width:44rem}
+figcaption{
+  font-family:var(--f-mono);font-size:.7rem;color:var(--muted);
+  line-height:1.6;margin-top:.8rem;letter-spacing:.02em;
+}
+.svgwrap{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);padding:1.2rem}
+.d-lbl{font-family:"IBM Plex Mono",monospace;font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase}
+.d-ttl{font-family:"IBM Plex Sans",sans-serif;font-size:12.5px;font-weight:600}
+.d-txt{font-family:"IBM Plex Sans",sans-serif;font-size:10.5px}
+.d-mono{font-family:"IBM Plex Mono",monospace;font-size:9.5px}
+
+/* ---------- phase list ---------- */
+.phases{border-top:1px solid var(--rule);margin:1.5rem 0 2rem}
+.ph{display:grid;grid-template-columns:5.5rem 1fr;column-gap:1.5rem;padding:1rem 0;border-bottom:1px solid var(--rule);align-items:start}
+.ph .wk{font-family:var(--f-mono);font-size:.72rem;color:var(--accent);font-weight:600;padding-top:.15rem;letter-spacing:.03em}
+.ph .nm{font-size:.93rem;font-weight:600;margin:0 0 .25rem}
+.ph .ds{font-size:.88rem;color:var(--ink-2);margin:0}
+.ph .dl{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);margin-top:.35rem}
+@media (max-width:560px){.ph{grid-template-columns:1fr;gap:.3rem}}
+
+/* ---------- cut list ---------- */
+.cuts{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.25rem;margin:1.5rem 0 1rem}
+.cut{border-top:2px solid var(--rule-strong);padding-top:.8rem}
+.cut.must{border-top-color:var(--accent)}
+.cut.no{border-top-color:var(--stop)}
+.cut h4{margin:0 0 .5rem}
+.cut ul{padding-left:1rem;font-size:.88rem;color:var(--ink-2);margin:0}
+
+footer{
+  border-top:1px solid var(--rule);margin-top:3.5rem;padding-top:1.5rem;
+  font-family:var(--f-mono);font-size:.72rem;color:var(--muted);line-height:1.7;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="bar">
+  <div class="bar-in">
+    <span class="bar-title">Feasibility&nbsp;Report</span>
+    <nav class="bar-nav">
+      <a href="#verdict">01 Verdict</a>
+      <a href="#audit">02 Plan audit</a>
+      <a href="#statement">03 Statement</a>
+      <a href="#threat">04 Threat model</a>
+      <a href="#arch">05 Architecture</a>
+      <a href="#fl">06 What is federated</a>
+      <a href="#privacy">07 Privacy stack</a>
+      <a href="#data">08 Data</a>
+      <a href="#eval">09 Evaluation</a>
+      <a href="#stack">10 Stack</a>
+      <a href="#plan">11 Timeline</a>
+      <a href="#risk">12 Risks</a>
+      <a href="#ethics">13 Ethics</a>
+      <a href="#gap">14 Gap</a>
+      <a href="#cut">15 Cut list</a>
+    </nav>
+  </div>
+</div>
+
+<div class="page">
+<div class="grid">
+
+  <header class="hero wide">
+    <p class="eyebrow">Capstone design review · Fall 2026–2027</p>
+    <h1>Privacy-Preserving Federated Learning for Missing Person Identification</h1>
+    <p class="standfirst">The project is feasible for a two-semester capstone — but not as currently drafted. Three of your design decisions will fail on contact with real data. This report replaces them, keeps everything that works, and specifies a system you can actually build, measure, and defend.</p>
+    <div class="meta">
+      <span><b>Guide</b> &nbsp;Kanhaiya Sharma (70880)</span>
+      <span><b>Team</b> &nbsp;23BCE9603 · 23BCE9585 · 23BCE9746 · 23BCE8540</span>
+      <span><b>Basis</b> &nbsp;16-paper literature survey</span>
+      <span><b>Scope</b> &nbsp;Design only — no implementation</span>
+    </div>
+  </header>
+
+  <div class="snum">01</div>
+  <section id="verdict">
+    <h2>The verdict in one page</h2>
+    <p class="lede">Your three pillars — missing-person identification, federated methodology, biometric privacy — are sound and they sit on a genuine research gap. What needs to change is <em>which part of the model you federate</em>, <em>what data you train on</em>, and <em>how you measure success</em>.</p>
+
+    <div class="keyline">
+      <p>Do not federate the face recognition backbone. Freeze it, and federate two small modules on top of it. That single decision is what turns this from a research programme into a capstone.</p>
+    </div>
+
+    <p>An ArcFace backbone is trained on 10 million+ images across 100,000+ identities with a classification head spanning the whole identity set. Nothing at a hospital or college node resembles that. Federating it would collapse the embedding space within a handful of rounds, and the 166&nbsp;MB payload would make secure aggregation and differential privacy prohibitively expensive on top.</p>
+
+    <p>Freeze it instead. Federate a <strong>surveillance adapter</strong> (≈0.4&nbsp;M parameters) that corrects for each site's camera degradation, and a <strong>match verifier</strong> (≈0.13&nbsp;M parameters) trained on labels your node operators produce when they confirm or reject an alert. Total federated payload drops to about 2&nbsp;MB per round — small enough that masking, noise, and bandwidth all become non-issues.</p>
+
+    <div class="tiles">
+      <div class="tile"><div class="v">166 MB</div><div class="l">Payload if you federate the backbone — infeasible with SecAgg + DP</div></div>
+      <div class="tile"><div class="v">2.1 MB</div><div class="l">Payload with the frozen-backbone design — comfortable</div></div>
+      <div class="tile"><div class="v">≈ 79×</div><div class="l">Reduction in per-round uplink, and the reason the privacy stack fits</div></div>
+      <div class="tile"><div class="v">5–8</div><div class="l">Simulated nodes, plus one real edge device</div></div>
+    </div>
+
+    <h3>And the argument that makes federated learning genuinely necessary here</h3>
+    <p>Reviewers will ask why you cannot just centralise. Your answer is not "privacy law" — it is a technical fact about the data:</p>
+    <div class="call">
+      <h4>The strongest FL justification in this project</h4>
+      <p>The most valuable training signal at each node is its own <strong>hard negatives</strong> — the thousands of ordinary people who walk past that camera, are <em>not</em> the missing person, and yet look similar once compressed to a 30-pixel face. Those faces are exactly the ones that can never be centralised: they are uninvolved bystanders who never consented to anything. Federated learning is not a privacy garnish here. It is the only way to learn from the data that matters most.</p>
+    </div>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">02</div>
+  <section id="audit">
+    <h2>Audit of your draft plan</h2>
+    <p class="lede">Every proposal from your brief, with a verdict and a replacement where needed. Nothing here is discarded without a substitute.</p>
+
+    <div class="verdicts">
+
+      <div class="vrow">
+        <div class="vhead">
+          <span class="chip rework">Rework</span>
+          <span class="vclaim">"Fine-tune a pretrained model with LFW, CelebA and custom CCTV."</span>
+        </div>
+        <div class="vbody">
+          <p>LFW and CelebA are high-resolution, well-lit, near-frontal celebrity photographs. CCTV faces are 20–50 pixels between the eyes, off-axis, motion-blurred and H.264-compressed. A model tuned on LFW learns nothing about that domain, and paper [2]'s 99.65% on LFW will not survive the transfer.</p>
+          <p><strong>Instead:</strong> keep the backbone frozen and train a small adapter on <em>synthetically degraded</em> pairs, then validate that the adapter transfers to natively-low-resolution surveillance data (QMUL-SurvFace, TinyFace). Use LFW only to report one comparable verification number against [2] and [6].</p>
+        </div>
+      </div>
+
+      <div class="vrow">
+        <div class="vhead">
+          <span class="chip drop">Drop</span>
+          <span class="vclaim">"The central server improves from node weights" — i.e. federating the whole recognition model.</span>
+        </div>
+        <div class="vbody">
+          <p>Not achievable at capstone scale, for the reasons in §01. The margin-based losses that make ArcFace work (paper [1], [7]) require a classifier over the global identity set; a node holding a handful of identities cannot compute a meaningful gradient for it.</p>
+          <p><strong>Instead:</strong> federate the adapter and the verifier only. Everything else is a frozen, globally-shared, publicly-available checkpoint — which also means no node ever needs to download a model your project trained from scratch.</p>
+        </div>
+      </div>
+
+      <div class="vrow">
+        <div class="vhead">
+          <span class="chip rework">Rework</span>
+          <span class="vclaim">"Based on this local model updates its weights" — training triggered by a match.</span>
+        </div>
+        <div class="vbody">
+          <p>A single match is one sample of one identity. That is not a training signal for recognition, and treating it as one would cause the node's model to drift toward whoever it saw last.</p>
+          <p><strong>Instead:</strong> an <em>operator-confirmed</em> match or rejection is a clean binary label. Accumulate those into a local buffer and train the verifier head on them, alongside hard negatives mined from that node's own non-matching tracks. That is a real, defensible learning loop — and it is what your node dashboard is actually for.</p>
+        </div>
+      </div>
+
+      <div class="vrow">
+        <div class="vhead">
+          <span class="chip rework">Rework</span>
+          <span class="vclaim">"Server sends the missing person photo, maybe by adding salt."</span>
+        </div>
+        <div class="vbody">
+          <p>Salting does not apply to images. A salt randomises a hash input; it does not hide a face, and any pixel perturbation large enough to obscure identity also destroys the biometric.</p>
+          <p><strong>Instead:</strong> distribute a <strong>cancelable biometric template</strong> in the style of DeepShieldFed [2] — select the top-<em>k</em> most discriminative embedding dimensions, quantise by mean thresholding to a binary code, and XOR-mask it with a key derived from the case ID and the destination node ID. The template is revocable, per-node unlinkable, and useless if the node's database leaks.</p>
+          <p>Also note, honestly, in your report: in real missing-person cases the probe photograph is usually already public on police portals and news media. The privacy that genuinely needs defending is the <em>bystanders'</em>.</p>
+        </div>
+      </div>
+
+      <div class="vrow">
+        <div class="vhead">
+          <span class="chip rework">Rework</span>
+          <span class="vclaim">"Nodes don't share matched photos."</span>
+        </div>
+        <div class="vbody">
+          <p>If a node finds the missing person and sends only a similarity score, the alert is unactionable — no one can dispatch a response to a number.</p>
+          <p><strong>Instead:</strong> two-stage disclosure. The local operator reviews the candidate first; only a confirmed alert releases a minimal payload — one cropped face, camera ID, timestamp, and confidence. Everything else, which is 99.99% of what the camera sees, never leaves the node and is deleted within seconds. Frame this in your report as <em>purpose-limited minimal disclosure</em>, not as a privacy failure.</p>
+        </div>
+      </div>
+
+      <div class="vrow">
+        <div class="vhead">
+          <span class="chip rework">Rework</span>
+          <span class="vclaim">"Each node pulls updates continuously from the centralized model."</span>
+        </div>
+        <div class="vbody">
+          <p>Two different things are being conflated, on two very different clocks.</p>
+          <p><strong>Instead:</strong> split the channels. <em>Watchlist updates</em> are pushed within seconds of a case being opened — that is where latency matters. <em>Model updates</em> follow scheduled federated rounds (nightly or weekly). Continuous federated training would be unstable and would learn nothing at your data rates.</p>
+        </div>
+      </div>
+
+      <div class="vrow">
+        <div class="vhead">
+          <span class="chip keep">Keep, scoped</span>
+          <span class="vclaim">"Integrate SMPC and Differential Privacy."</span>
+        </div>
+        <div class="vbody">
+          <p>Correct instinct, but full multi-party computation over a model is a research project on its own. Scope it: use <strong>pairwise-masked secure aggregation</strong> (Flower ships <code>SecAgg+</code>), which <em>is</em> a genuine SMPC construction and gives you exactly the property you want — the server sees only the sum, never any single node's update. Add <strong>DP-SGD</strong> via Opacus on the local head, and report a utility-versus-ε curve. Both are practical precisely because the payload is 2&nbsp;MB, not 166&nbsp;MB.</p>
+        </div>
+      </div>
+
+      <div class="vrow">
+        <div class="vhead">
+          <span class="chip keep">Keep — promote it</span>
+          <span class="vclaim">"Maybe create a dashboard at nodes for manually verifying the match."</span>
+        </div>
+        <div class="vbody">
+          <p>This is the best idea in your draft and you listed it as optional. It is not optional — it does three jobs at once: it is the false-positive control that makes the system operationally usable, it is the legal safeguard that keeps a human accountable for every disclosure, and it is the <em>label source</em> that makes federated learning possible at all. Make it a first-class component.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">03</div>
+  <section id="statement">
+    <h2>Revised problem statement and objectives</h2>
+    <p class="lede">Submittable wording, with the scope tightened to what two semesters can deliver and defend.</p>
+
+    <h3>Problem statement</h3>
+    <p>Missing-person searches across distributed camera networks currently require either centralising privacy-sensitive video from every participating site, or abandoning cross-site collaboration entirely. Centralisation exposes the biometric data of the overwhelming majority of people captured — uninvolved bystanders who are not the subject of any search — and creates a single high-value target for inversion, membership-inference and gradient-leakage attacks. This project designs and evaluates a decentralised framework in which participating sites (hospitals, campuses, NGO shelters, transit hubs) collaboratively improve a shared surveillance-face-matching model without any raw frame, face crop, or biometric embedding ever leaving the site of capture.</p>
+
+    <h3>Objectives</h3>
+    <ol>
+      <li><strong>Build an edge identification pipeline for degraded imagery.</strong> Detection, multi-object tracking, quality gating, and frozen-backbone face embedding, running end-to-end on a single edge device against surveillance-resolution video, with track-level rather than frame-level decisions — directly addressing the tracking gap left open by [1].</li>
+      <li><strong>Federate the components that genuinely benefit from it.</strong> A surveillance-domain adapter and a pairwise match verifier, trained across non-IID nodes using FedProx, with the recognition backbone frozen and shared. Demonstrate that the federated model beats every node's local-only model and approaches the centralised upper bound.</li>
+      <li><strong>Protect the model updates.</strong> Pairwise-masked secure aggregation so the server observes only the aggregate, plus DP-SGD with per-example clipping and Gaussian noise, reported as a measured privacy–utility curve rather than a single claimed ε.</li>
+      <li><strong>Protect the watchlist.</strong> Cancelable, per-node-keyed binary templates so that a compromised node's stored watchlist is revocable, unlinkable across sites, and resistant to reconstruction — with the accuracy cost of the transform measured, not assumed.</li>
+      <li><strong>Evaluate the way an operator would.</strong> Open-set identification metrics at fixed false-positive identification rates, plus alerts-per-camera-per-day at the chosen operating point — and an empirical attack evaluation (membership inference, embedding inversion, update poisoning).</li>
+    </ol>
+
+    <h3>Explicitly out of scope</h3>
+    <p>Say this in the report; it protects you at the viva. <em>Not</em> in scope: training a face recognition backbone from scratch; gait, voice or multi-modal biometrics; cross-camera person re-identification beyond faces; blockchain-based aggregation; homomorphic encryption of full model updates; and any live deployment on non-consenting subjects.</p>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">04</div>
+  <section id="threat">
+    <h2>Threat model</h2>
+    <p class="lede">A privacy project is judged on whether it names its adversaries precisely. Each row states what the attacker can do, which mechanism answers it, and — critically — what it does <em>not</em> answer.</p>
+  </section>
+
+  <div class="scroll wide">
+    <table>
+      <thead><tr><th>Adversary</th><th>Capability</th><th>Mechanism</th><th>Residual risk you must state</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="k">Honest-but-curious aggregation server</td>
+          <td>Sees every update submitted to it; wants to know what a specific node learned</td>
+          <td>Pairwise-masked secure aggregation — masks cancel only in the sum</td>
+          <td>Server colluding with <em>n</em>−1 nodes recovers the last one. State the collusion threshold explicitly.</td>
+        </tr>
+        <tr>
+          <td class="k">Network eavesdropper</td>
+          <td>Observes traffic between nodes and server</td>
+          <td>TLS 1.3, plus updates already masked at the application layer</td>
+          <td>Traffic analysis: the <em>timing</em> of an alert upload leaks that a match occurred at that site. Mitigate with fixed-rate dummy traffic, or acknowledge it.</td>
+        </tr>
+        <tr>
+          <td class="k">Compromised node operator</td>
+          <td>Full read access to node storage, keys and live pipeline</td>
+          <td>Cancelable per-node template; no raw gallery images stored; case-scoped keys with TTL</td>
+          <td><strong>Be honest here.</strong> Template protection defends leak-at-rest and cross-database linkage. It does <em>not</em> defend a live, fully compromised node — that node already sees its own camera feed and holds its own key.</td>
+        </tr>
+        <tr>
+          <td class="k">Gradient-leakage / inversion attacker</td>
+          <td>Obtains model updates and tries to reconstruct training faces</td>
+          <td>DP-SGD: per-example clipping + Gaussian noise; small federated surface area</td>
+          <td>Utility loss at low ε. Report the curve; do not chase ε = 1 if it destroys the model.</td>
+        </tr>
+        <tr>
+          <td class="k">Membership-inference attacker</td>
+          <td>Asks "was person X in node Y's training data?"</td>
+          <td>DP noise + frozen backbone (most capacity is not trained on private data at all)</td>
+          <td>Measure it. Target attack AUC ≈ 0.50, matching the 0.507–0.532 reported in [4].</td>
+        </tr>
+        <tr>
+          <td class="k">Malicious node (poisoning)</td>
+          <td>Submits crafted updates to degrade or backdoor the global model</td>
+          <td>Norm-bounded clipping (already required by DP), plus median/trimmed-mean aggregation</td>
+          <td>Secure aggregation and robust aggregation are in tension — the server cannot inspect what it cannot see. Test at 5% and 10% malicious, as [7] does.</td>
+        </tr>
+        <tr>
+          <td class="k">Function creep / operator misuse</td>
+          <td>Uses an open case to search for someone who is not missing</td>
+          <td>Case-scoped keys, template TTL and auto-expiry, immutable audit log of every distribution and alert</td>
+          <td>This is a governance control, not a cryptographic one. Say so.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="hr full"></div>
+
+  <div class="snum">05</div>
+  <section id="arch">
+    <h2>System architecture</h2>
+    <p class="lede">Two planes, on two clocks. The <em>operational</em> plane distributes watchlists and returns alerts in near-real time. The <em>learning</em> plane runs scheduled federated rounds. They share the node but nothing else.</p>
+  </section>
+
+  <figure class="full">
+    <div class="svgwrap">
+      <svg viewBox="0 0 1000 620" role="img" aria-label="Architecture diagram: edge node pipeline on the left, coordination server on the right, with four labelled channels between them and a bar listing what never leaves the node.">
+
+        <!-- ===== EDGE NODE PANEL ===== -->
+        <rect x="14" y="34" width="412" height="470" fill="var(--surface-2)" stroke="var(--rule-strong)" stroke-width="1"/>
+        <text x="26" y="24" class="d-lbl" fill="var(--accent)">Edge node · hospital / campus / shelter</text>
+
+        <!-- A -->
+        <rect x="30" y="52" width="380" height="90" fill="var(--surface)" stroke="var(--rule)" stroke-width="1"/>
+        <rect x="30" y="52" width="3" height="90" fill="var(--rule-strong)"/>
+        <text x="44" y="72" class="d-ttl" fill="var(--ink)">A · Capture &amp; detect</text>
+        <text x="44" y="90" class="d-txt" fill="var(--ink-2)">RTSP ingest, sampled at 8 fps  →  SCRFD face detector</text>
+        <text x="44" y="106" class="d-txt" fill="var(--ink-2)">→  ByteTrack assigns a track ID to each person</text>
+        <text x="44" y="126" class="d-mono" fill="var(--muted)">quality gate: ≥24px inter-ocular · blur · pose · exposure  ⟶ ~70% discarded</text>
+
+        <!-- B -->
+        <rect x="30" y="154" width="380" height="86" fill="var(--surface)" stroke="var(--rule)" stroke-width="1"/>
+        <rect x="30" y="154" width="3" height="86" fill="var(--accent)"/>
+        <text x="44" y="174" class="d-ttl" fill="var(--ink)">B · Embed &amp; adapt</text>
+        <text x="44" y="192" class="d-txt" fill="var(--ink-2)">ArcFace buffalo_l → 512-d embedding</text>
+        <text x="326" y="192" class="d-mono" fill="var(--muted)">frozen · 43.6M</text>
+        <text x="44" y="210" class="d-txt" fill="var(--ink-2)">Surveillance adapter → corrected 512-d</text>
+        <text x="316" y="210" class="d-mono" fill="var(--accent)">federated · 0.4M</text>
+        <text x="44" y="230" class="d-mono" fill="var(--muted)">learns this site's camera degradation profile</text>
+
+        <!-- C -->
+        <rect x="30" y="252" width="380" height="104" fill="var(--surface)" stroke="var(--rule)" stroke-width="1"/>
+        <rect x="30" y="252" width="3" height="104" fill="var(--accent)"/>
+        <text x="44" y="272" class="d-ttl" fill="var(--ink)">C · Match</text>
+        <text x="44" y="290" class="d-txt" fill="var(--ink-2)">Cancelable transform (node key) → compare to watchlist</text>
+        <text x="44" y="308" class="d-txt" fill="var(--ink-2)">Verifier head → calibrated P(match)</text>
+        <text x="316" y="308" class="d-mono" fill="var(--accent)">federated · 0.13M</text>
+        <text x="44" y="326" class="d-txt" fill="var(--ink-2)">Track-level vote: k of n frames must agree</text>
+        <text x="44" y="346" class="d-mono" fill="var(--muted)">the single largest false-alarm reduction in the pipeline</text>
+
+        <!-- D -->
+        <rect x="30" y="368" width="380" height="118" fill="var(--surface)" stroke="var(--rule)" stroke-width="1"/>
+        <rect x="30" y="368" width="3" height="118" fill="var(--flag)"/>
+        <text x="44" y="388" class="d-ttl" fill="var(--ink)">D · Human gate</text>
+        <text x="44" y="406" class="d-txt" fill="var(--ink-2)">Local review console → operator confirms or rejects</text>
+        <text x="44" y="426" class="d-mono" fill="var(--flag)">↳ confirm  →  minimal alert released upstream</text>
+        <text x="44" y="442" class="d-mono" fill="var(--flag)">↳ either way  →  labelled example into local buffer</text>
+        <text x="44" y="464" class="d-txt" fill="var(--ink-2)">Local DP-SGD training on buffer, between rounds</text>
+        <text x="44" y="480" class="d-mono" fill="var(--muted)">frames &amp; embeddings deleted after processing</text>
+
+        <!-- flow arrows down the left panel -->
+        <path d="M 220 142 L 220 154" stroke="var(--rule-strong)" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+        <path d="M 220 240 L 220 252" stroke="var(--rule-strong)" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+        <path d="M 220 356 L 220 368" stroke="var(--rule-strong)" stroke-width="1.5" fill="none" marker-end="url(#ar)"/>
+
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--rule-strong)"/>
+          </marker>
+          <marker id="ar-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)"/>
+          </marker>
+          <marker id="ar-f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--flag)"/>
+          </marker>
+        </defs>
+
+        <!-- ===== CHANNEL BAND ===== -->
+        <text x="440" y="24" class="d-lbl" fill="var(--muted)">Channels</text>
+
+        <path d="M 700 96 L 440 96" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#ar-a)"/>
+        <text x="444" y="88" class="d-mono" fill="var(--accent)">watchlist template · 96-bit · node-keyed</text>
+        <text x="444" y="112" class="d-mono" fill="var(--muted)">push · seconds</text>
+
+        <path d="M 700 186 L 440 186" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#ar-a)"/>
+        <text x="444" y="178" class="d-mono" fill="var(--accent)">global adapter + verifier weights · 2.1 MB</text>
+        <text x="444" y="202" class="d-mono" fill="var(--muted)">pull · scheduled round</text>
+
+        <path d="M 440 300 L 700 300" stroke="var(--accent)" stroke-width="1.5" fill="none" marker-end="url(#ar-a)"/>
+        <text x="444" y="292" class="d-mono" fill="var(--accent)">DP-noised, pairwise-masked update · 2.1 MB</text>
+        <text x="444" y="316" class="d-mono" fill="var(--muted)">server sees only the sum</text>
+
+        <path d="M 440 424 L 700 424" stroke="var(--flag)" stroke-width="1.5" stroke-dasharray="5 3" fill="none" marker-end="url(#ar-f)"/>
+        <text x="444" y="416" class="d-mono" fill="var(--flag)">confirmed alert: 1 crop · cam ID · timestamp</text>
+        <text x="444" y="440" class="d-mono" fill="var(--muted)">operator-gated · rare</text>
+
+        <!-- ===== SERVER PANEL ===== -->
+        <rect x="704" y="34" width="282" height="470" fill="var(--surface-2)" stroke="var(--rule-strong)" stroke-width="1"/>
+        <text x="716" y="24" class="d-lbl" fill="var(--accent)">Coordination server</text>
+
+        <rect x="720" y="52" width="250" height="90" fill="var(--surface)" stroke="var(--rule)" stroke-width="1"/>
+        <text x="734" y="72" class="d-ttl" fill="var(--ink)">Case registry</text>
+        <text x="734" y="90" class="d-txt" fill="var(--ink-2)">Probe upload, consent record,</text>
+        <text x="734" y="106" class="d-txt" fill="var(--ink-2)">per-node key mint, scope + TTL</text>
+        <text x="734" y="126" class="d-mono" fill="var(--muted)">auto-expiry on case closure</text>
+
+        <rect x="720" y="154" width="250" height="86" fill="var(--surface)" stroke="var(--rule)" stroke-width="1"/>
+        <text x="734" y="174" class="d-ttl" fill="var(--ink)">Template distribution</text>
+        <text x="734" y="192" class="d-txt" fill="var(--ink-2)">Cancelable transform per node,</text>
+        <text x="734" y="208" class="d-txt" fill="var(--ink-2)">signed push over MQTT / gRPC</text>
+        <text x="734" y="228" class="d-mono" fill="var(--muted)">no raw probe image ever sent</text>
+
+        <rect x="720" y="252" width="250" height="104" fill="var(--surface)" stroke="var(--rule)" stroke-width="1"/>
+        <rect x="720" y="252" width="3" height="104" fill="var(--accent)"/>
+        <text x="734" y="272" class="d-ttl" fill="var(--ink)">FL aggregator</text>
+        <text x="734" y="290" class="d-txt" fill="var(--ink-2)">Flower · FedProx (μ tuned)</text>
+        <text x="734" y="306" class="d-txt" fill="var(--ink-2)">SecAgg+ pairwise masking</text>
+        <text x="734" y="322" class="d-txt" fill="var(--ink-2)">Norm clipping + trimmed mean</text>
+        <text x="734" y="344" class="d-mono" fill="var(--muted)">never sees an individual update</text>
+
+        <rect x="720" y="368" width="250" height="118" fill="var(--surface)" stroke="var(--rule)" stroke-width="1"/>
+        <rect x="720" y="368" width="3" height="118" fill="var(--flag)"/>
+        <text x="734" y="388" class="d-ttl" fill="var(--ink)">Alert triage &amp; audit</text>
+        <text x="734" y="406" class="d-txt" fill="var(--ink-2)">Case dashboard, sighting map,</text>
+        <text x="734" y="422" class="d-txt" fill="var(--ink-2)">second-level human review</text>
+        <text x="734" y="444" class="d-mono" fill="var(--muted)">append-only log of every</text>
+        <text x="734" y="458" class="d-mono" fill="var(--muted)">distribution, alert and access</text>
+        <text x="734" y="478" class="d-mono" fill="var(--muted)">reviewable by the node operators</text>
+
+        <!-- ===== NEVER-LEAVES BAR ===== -->
+        <rect x="14" y="524" width="972" height="76" fill="var(--stop-soft)" stroke="var(--stop)" stroke-width="1"/>
+        <text x="30" y="548" class="d-lbl" fill="var(--stop)">Never leaves the node — under any condition</text>
+        <text x="30" y="570" class="d-txt" fill="var(--ink-2)">Raw video frames  ·  face crops of non-matches  ·  face embeddings  ·  bystander tracks  ·  the local label buffer  ·  the node's cancelable key</text>
+        <text x="30" y="590" class="d-mono" fill="var(--muted)">Retention at the node: frames and embeddings destroyed after the track closes. Only the label buffer persists, and only as anonymised feature vectors.</text>
+      </svg>
+    </div>
+    <figcaption>Fig. 1 — Two planes on two clocks. Blue channels carry model and watchlist traffic; the dashed amber channel is the only path by which any image leaves a node, and a human opens it. Parameter counts are for the recommended frozen-backbone design (§06).</figcaption>
+  </figure>
+
+  <div class="snum"></div>
+  <section>
+    <h3>Why the quality gate matters more than it looks</h3>
+    <p>Stage A discards roughly 70% of detected faces before they ever reach the embedding model. This is not an optimisation detail — it is an accuracy mechanism. Face recognition on a 12-pixel, heavily blurred, 80°-yaw crop does not produce a weak match; it produces a <em>confident wrong</em> match. Rejecting those crops outright removes the largest single source of false alarms and cuts your edge compute budget by more than half at the same time. Report the gate's thresholds and its rejection rate as a result.</p>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">06</div>
+  <section id="fl">
+    <h2>What is federated, and what is not</h2>
+    <p class="lede">This table is the technical core of the project. Expect to defend every row of it.</p>
+  </section>
+
+  <div class="scroll wide">
+    <table>
+      <thead><tr><th>Component</th><th class="num">Params</th><th class="num">Size</th><th>Federated?</th><th>Reasoning</th></tr></thead>
+      <tbody>
+        <tr><td class="k">SCRFD face detector</td><td class="num">0.5 M</td><td class="num">2.5 MB</td><td><span class="chip drop">Frozen</span></td><td>Detection generalises well across domains and nodes have no bounding-box labels. Fine-tuning it is a stretch goal at best.</td></tr>
+        <tr><td class="k">ArcFace <code>buffalo_l</code> (R50)</td><td class="num">43.6 M</td><td class="num">166 MB</td><td><span class="chip drop">Frozen</span></td><td>Needs a global identity classifier and millions of images. Federating it collapses the embedding space and makes the privacy stack unaffordable.</td></tr>
+        <tr><td class="k">Surveillance adapter</td><td class="num">0.4 M</td><td class="num">1.6 MB</td><td><span class="chip keep">Federated</span></td><td>Residual MLP, 512→256→512, over the frozen embedding. Each node's camera degradation profile differs, which makes the data genuinely non-IID — the exact condition where FL earns its keep.</td></tr>
+        <tr><td class="k">Match verifier head</td><td class="num">0.13 M</td><td class="num">0.5 MB</td><td><span class="chip keep">Federated</span></td><td>MLP over pair features [|e₁−e₂|, e₁⊙e₂, cosine, quality scores]. Trained on operator-confirmed labels, which exist only at the node and can never be shared.</td></tr>
+        <tr><td class="k">Quality-gate thresholds</td><td class="num">—</td><td class="num">—</td><td><span class="chip rework">Local only</span></td><td>Calibrated per camera. Deliberately <em>not</em> federated — this is a nice deliberate contrast to point at in the viva.</td></tr>
+        <tr><td class="k"><strong>Per-round uplink</strong></td><td class="num">0.53 M</td><td class="num"><strong>2.1 MB</strong></td><td>—</td><td>Small enough that pairwise masking, DP noise and bandwidth all stop being obstacles.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="snum"></div>
+  <section>
+    <h3>Training objectives at the node</h3>
+    <p><strong>Adapter.</strong> Cosine-embedding or triplet loss on pairs of (degraded surveillance crop, clean reference) for the same identity, with hard negatives mined from that node's own non-matching tracks. In the experimental setup each node holds both sides of the pair from its private partition; in the deployment story, the "clean" side is the watchlist probe itself.</p>
+    <p><strong>Verifier.</strong> Binary cross-entropy on operator-confirmed labels, plus the mined hard negatives. Calibrate the output — an uncalibrated confidence score is useless to an operator deciding whether to act.</p>
+
+    <h3>Aggregation</h3>
+    <p>Use <strong>FedProx</strong> with a tuned proximal term rather than plain FedAvg. Paper [6] found precisely the failure mode you will hit — client drift and model divergence under non-IID partitions with DP noise — and found FedProx corrected it. Run FedAvg as your baseline so you can show the difference; that comparison is a result in itself.</p>
+
+    <div class="call warn">
+      <h4>The three-way comparison you must produce</h4>
+      <p>Every FL claim needs all three numbers: <strong>local-only</strong> (each node trains alone — the lower bound), <strong>federated</strong> (your system), and <strong>centralised</strong> (all data pooled — the upper bound you are not allowed to reach). If federated does not beat local-only, the entire methodology is unjustified. Run this comparison in week 10, not week 24 — it is the single most important early result, and you need time to react if it comes out flat.</p>
+    </div>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">07</div>
+  <section id="privacy">
+    <h2>The privacy stack</h2>
+    <p class="lede">Four layers, each with a stated cost. A privacy mechanism whose cost you have not measured is a claim, not a contribution.</p>
+  </section>
+
+  <div class="scroll wide">
+    <table>
+      <thead><tr><th>Layer</th><th>What it buys</th><th>What it costs</th><th>How you evidence it</th></tr></thead>
+      <tbody>
+        <tr><td class="k">1 · Data minimisation<br><span class="d-mono" style="color:var(--muted);font-size:.75rem">architectural</span></td><td>Raw frames, crops and embeddings never leave the node. Deletes the entire class of "central database breach" risk.</td><td>Nothing. This is free and it is your biggest single win.</td><td>Instrument the node and report bytes-by-category leaving it over a 24-hour run.</td></tr>
+        <tr><td class="k">2 · Cancelable templates<br><span class="d-mono" style="color:var(--muted);font-size:.75rem">DeepShieldFed-style [2]</span></td><td>Revocability, cross-site unlinkability, resistance to reconstruction from a leaked watchlist DB.</td><td>Accuracy loss from top-<em>k</em> selection and binarisation. [2] reports GAR ≈ 99.5% on clean data; expect a larger drop on surveillance imagery.</td><td>Measure GAR/FAR with and without the transform, on degraded data. Sweep <em>k</em> ∈ {64, 96, 128, 256}.</td></tr>
+        <tr><td class="k">3 · Secure aggregation<br><span class="d-mono" style="color:var(--muted);font-size:.75rem">pairwise masking, Flower SecAgg+</span></td><td>Server observes only the aggregate — no individual node's update is ever visible to it.</td><td>Round latency and a dropout-recovery protocol. Negligible accuracy cost (masks cancel exactly).</td><td>Wall-clock per round with and without SecAgg, at 5 and 8 nodes. Test node-dropout recovery.</td></tr>
+        <tr><td class="k">4 · DP-SGD<br><span class="d-mono" style="color:var(--muted);font-size:.75rem">Opacus, per-example clipping</span></td><td>Formal bound against inversion and membership inference on the released updates.</td><td>Real utility loss, growing sharply as ε falls. [6] observed exactly this degradation.</td><td>Sweep ε ∈ {1, 3, 8, ∞} at fixed δ = 1e-5. Plot utility against ε. <em>The curve is the finding.</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="snum"></div>
+  <section>
+    <div class="call stop">
+      <h4>Three things in your literature that you should deliberately not build</h4>
+      <p><strong>Blockchain</strong> appears in [7], [12] and [13]. It solves aggregator trust — which secure aggregation already solves for your threat model — and it will consume an entire semester in tooling. Cite it as future work and move on. <strong>Homomorphic encryption of full updates</strong> ([5], [11]) is too slow; benchmark it <em>once</em> on your 2 MB head so you can justify the exclusion with a measured number rather than an opinion, which is a much stronger report section. <strong>Multi-modal biometrics</strong> (gait, voice, micro-expression as in [5], [8], [14]) doubles the project for no marginal contribution.</p>
+    </div>
+
+    <h3>An optional SMPC demonstration worth the two weeks</h3>
+    <p>If you want a second, sharper SMPC result beyond secure aggregation: implement <strong>two-party secure threshold comparison</strong> between a node and the server using additive secret sharing — the two parties jointly determine whether a match score exceeds the alert threshold without the node revealing the score and without the server revealing the threshold. It is a few hundred lines, it is a genuine MPC protocol, it benchmarks cleanly, and it demonstrates the technique on a small enough surface that it cannot sink the project. Paper [4]'s partial-SMPC approach — restricting secret sharing to a single layer rather than the whole model — is the right precedent to cite for this kind of deliberate scoping.</p>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">08</div>
+  <section id="data">
+    <h2>Data strategy</h2>
+    <p class="lede">The single most common way this project fails is training on clean celebrity photographs and discovering in week 22 that nothing transfers. Start the access requests in week one — some of these take a month.</p>
+  </section>
+
+  <div class="scroll wide">
+    <table class="compact">
+      <thead><tr><th>Dataset</th><th>Role</th><th class="num">Scale</th><th>Access</th><th>Caveat</th></tr></thead>
+      <tbody>
+        <tr><td class="k">QMUL-SurvFace</td><td><strong>Primary realism source.</strong> Natively low-resolution surveillance faces — not downsampled, actually captured that way.</td><td class="num">~463 k imgs<br>~15.5 k IDs</td><td>Free for research, on request</td><td>Very noisy labels; open-set protocol included, use it.</td></tr>
+        <tr><td class="k">TinyFace</td><td>Low-resolution recognition benchmark with a built-in open-set identification protocol.</td><td class="num">~5.1 k IDs</td><td>Free for research</td><td>Still-image only — no tracks.</td></tr>
+        <tr><td class="k">SCface</td><td>Real surveillance cameras at three fixed distances plus IR. Ideal for a cross-distance generalisation result.</td><td class="num">130 subjects</td><td>Signed licence — <strong>request in week 1</strong></td><td>Small subject count; use for evaluation, not training.</td></tr>
+        <tr><td class="k">ChokePoint</td><td>Video sequences of people walking through portals. Your source for evaluating <em>track-level</em> aggregation.</td><td class="num">54 videos<br>29 subjects</td><td>Free for research</td><td>Indoor and controlled; easier than real CCTV.</td></tr>
+        <tr><td class="k">CelebA</td><td>Clean gallery side of the degraded/clean training pairs, and the degradation source.</td><td class="num">~200 k imgs</td><td>Open</td><td><strong>Never report a headline number on this.</strong></td></tr>
+        <tr><td class="k">LFW</td><td>One comparable verification number, to sit beside [2] and [6] in your results table.</td><td class="num">13 k imgs</td><td>Open</td><td>Saturated benchmark. Do not train on it.</td></tr>
+        <tr><td class="k">WIDER FACE</td><td>Detector validation under occlusion, scale variation and crowding.</td><td class="num">32 k imgs</td><td>Open</td><td>Detection only.</td></tr>
+        <tr><td class="k">Campus CCTV (custom)</td><td><strong>Evaluation only.</strong> The honest end-to-end demonstration.</td><td class="num">15–25 volunteers<br>3–4 cameras</td><td>Institutional approval + written consent</td><td>See §13. Do not publish it, do not put it on GitHub, delete at project end.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="snum"></div>
+  <section>
+    <h3>The degradation pipeline</h3>
+    <p>This is what makes clean data useful, and it deserves to be a named contribution in your report. Take a clean CelebA or LFW face and push it through a physically-motivated chain: downsample to a target inter-ocular distance sampled from 16–48 px → directional motion blur → sensor noise → gamma shift for low light → JPEG at quality 30–70 → H.264 re-encode at a low bitrate. Sample the parameters per node so each node gets a distinct, consistent camera "personality" — that is what generates your non-IID partition.</p>
+    <p>Then <strong>validate the pipeline itself</strong>: a model trained only on synthetically degraded CelebA should transfer measurably to natively-degraded QMUL-SurvFace. If it does not, your synthetic chain is wrong and you need to know that in week 5, not week 22. Paper [16] is the right citation here, including its negative finding — excessive angular rotation degraded accuracy through facial distortion, so more augmentation is not automatically better.</p>
+
+    <h3>Partitioning across nodes</h3>
+    <p>Partition on <em>two</em> axes simultaneously, following [6]'s non-IID setup: <strong>disjoint identities</strong> (no person appears at two nodes, which is realistic and makes the FL problem honest) and <strong>distinct degradation profiles</strong> (each node's camera chain differs). Five to eight nodes. Also run one deliberately pathological partition — one node with 10× the data of the others — to show what happens to FedAvg and how FedProx handles it.</p>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">09</div>
+  <section id="eval">
+    <h2>Evaluation — the part most capstones get wrong</h2>
+    <p class="lede">Your literature reports numbers like 97.50% [1], 99.75% [2], 94.68% [4]. Those are balanced-set accuracies. They tell an operator nothing about whether the system is usable, and a sharp examiner will press on exactly this.</p>
+
+    <div class="call stop">
+      <h4>The base-rate problem, stated in your report's own numbers</h4>
+      <p>One camera sees roughly 2,000 distinct people a day. Your watchlist holds 50 open cases. That is 100,000 comparisons per camera per day. At a false-positive identification rate of 10⁻³ per comparison — which would be an excellent number on any benchmark in your survey — you generate <strong>100 false alarms per camera per day</strong>. The system is unusable. To get to roughly one false alarm per camera per day you need an alert-level FPIR near <strong>10⁻⁵</strong>.</p>
+      <p>Two things close that gap: the quality gate, which removes the crops that generate confident-wrong matches, and track-level aggregation, which requires <em>k</em> of <em>n</em> frames in a track to agree. Note carefully that frames within a track are <em>correlated</em>, so the reduction is sub-geometric — you must measure it empirically, never assume independence. Getting this right, and saying it plainly, is the difference between a capstone that reports a benchmark number and one that reports an engineering result.</p>
+    </div>
+  </section>
+
+  <div class="scroll wide">
+    <table class="compact">
+      <thead><tr><th>Axis</th><th>Metric</th><th>Why this one</th></tr></thead>
+      <tbody>
+        <tr><td class="k" rowspan="4">Identification</td><td>TPIR @ FPIR ∈ {10⁻², 10⁻³, 10⁻⁴}, with the DET curve</td><td>Open-set is the actual task: most people passing the camera are in no gallery at all.</td></tr>
+        <tr><td>Rank-1 and rank-20 closed-set accuracy</td><td>Secondary, and comparable to prior work.</td></tr>
+        <tr><td><strong>Alerts per camera per day</strong> at the operating point</td><td>The number an operator actually cares about. Put it in your abstract.</td></tr>
+        <tr><td>Track-level vs frame-level rates, side by side</td><td>Quantifies the tracking contribution that [1] left as an open gap.</td></tr>
+        <tr><td class="k" rowspan="3">Privacy</td><td>Membership-inference attack AUC</td><td>Target ≈ 0.50. [4] reached 0.507–0.532; that is your bar.</td></tr>
+        <tr><td>Embedding-inversion attack: train a decoder to reconstruct a face from an adapter output; score with LPIPS and re-identification rate</td><td>Far more convincing than citing DP theory. A failed reconstruction is a picture you can put in the report.</td></tr>
+        <tr><td>(ε, δ) accounted through the full round schedule</td><td>Report the composed budget, not the per-step one.</td></tr>
+        <tr><td class="k" rowspan="3">Federated</td><td>Local-only vs federated vs centralised</td><td>The three-way comparison that justifies the methodology.</td></tr>
+        <tr><td>FedAvg vs FedProx under the non-IID partition</td><td>Directly tests [6]'s finding on your data.</td></tr>
+        <tr><td>Accuracy under 5% and 10% malicious nodes</td><td>Mirrors [7], which saw standard FL collapse to ~60% where their defended system held ~92%.</td></tr>
+        <tr><td class="k" rowspan="3">Systems</td><td>End-to-end FPS on the real edge device</td><td>[12] measured 5 FPS on a Jetson Nano. Report yours honestly, whatever it is.</td></tr>
+        <tr><td>Alert latency: face in frame → operator sees candidate</td><td>Operational viability.</td></tr>
+        <tr><td>Round wall-clock and uplink bytes, ± SecAgg</td><td>The measured cost of the privacy layer.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="hr full"></div>
+
+  <div class="snum">10</div>
+  <section id="stack">
+    <h2>Recommended stack</h2>
+    <p class="lede">Everything here is chosen because it is already used by a paper in your survey, or because it removes work you should not be doing.</p>
+
+    <div class="scroll">
+      <table class="compact">
+        <thead><tr><th>Layer</th><th>Choice</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td class="k">FL framework</td><td>Flower (<code>flwr</code>)</td><td>Used by [2] and [8]. Ships FedProx and a SecAgg+ implementation — this saves you a month.</td></tr>
+          <tr><td class="k">Face detection + embedding</td><td>InsightFace: SCRFD + <code>buffalo_l</code></td><td>The same ArcFace family [1] found had the best inter-class separability under surveillance distortion. Check the model licence for your submission.</td></tr>
+          <tr><td class="k">Person detection (optional)</td><td>Ultralytics YOLOv8n / v11n</td><td>Only if you add a person-detection stage. Note the AGPL-3.0 licence in your report.</td></tr>
+          <tr><td class="k">Tracking</td><td>ByteTrack, via <code>supervision</code></td><td>Lighter and more robust than DeepSORT for this; DeepSORT is what [1] suggested, so justify the swap.</td></tr>
+          <tr><td class="k">Differential privacy</td><td>Opacus</td><td>Per-example clipping and RDP accounting, out of the box.</td></tr>
+          <tr><td class="k">Node runtime</td><td>PyTorch 2.x → ONNX Runtime / TensorRT</td><td>Export for the edge device; do not run raw PyTorch there.</td></tr>
+          <tr><td class="k">Dashboards</td><td>FastAPI + a light frontend; SQLite per node, Postgres at server</td><td>Two dashboards: node review console and server case dashboard. Keep them plain.</td></tr>
+          <tr><td class="k">Watchlist transport</td><td>MQTT or gRPC over TLS</td><td>Separate from the FL channel — different clock, different failure mode.</td></tr>
+          <tr><td class="k">Node simulation</td><td>Docker Compose, 5–8 containers</td><td>On one or two machines. This is your main experimental substrate.</td></tr>
+          <tr><td class="k">Real edge device</td><td>1× Jetson Orin Nano <em>or</em> Raspberry Pi 5 + Hailo-8L</td><td>One device is enough to make the "edge" claim honest. [12] got 5 FPS on a Jetson Nano; Orin Nano is roughly an order of magnitude faster.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">11</div>
+  <section id="plan">
+    <h2>Two-semester plan</h2>
+    <p class="lede">Sequenced so that the highest-risk result — does federated beat local-only? — lands in week 10, while there is still time to react.</p>
+
+    <div class="phases">
+      <div class="ph"><div class="wk">W1–2</div><div><p class="nm">Setup and access requests</p><p class="ds">Environment, repo, literature consolidation. <strong>Submit the SCface and QMUL-SurvFace access requests on day one</strong> — approvals take weeks and they are on the critical path.</p><p class="dl">Deliverable: project charter, dataset access log</p></div></div>
+
+      <div class="ph"><div class="wk">W3–5</div><div><p class="nm">Degradation pipeline and centralised baseline</p><p class="ds">Build and validate the degradation chain. Establish the frozen-backbone ceiling on degraded data. Confirm synthetic-to-real transfer against QMUL-SurvFace.</p><p class="dl">Deliverable: baseline DET curves; a go/no-go on the degradation chain</p></div></div>
+
+      <div class="ph"><div class="wk">W6–8</div><div><p class="nm">Single-node pipeline, end to end</p><p class="ds">Detect → track → quality gate → embed → match → track-level vote → alert, running on real video. No FL yet, no privacy layer yet.</p><p class="dl">Deliverable: working demo on ChokePoint video</p></div></div>
+
+      <div class="ph"><div class="wk">W9–11</div><div><p class="nm">Federated learning, plain</p><p class="ds">Flower, 6 simulated nodes, non-IID partition, adapter + verifier. FedAvg vs FedProx. <strong>The three-way comparison lands here.</strong></p><p class="dl">Deliverable: the result the whole methodology rests on</p></div></div>
+
+      <div class="ph"><div class="wk">W12–14</div><div><p class="nm">Semester 1 close</p><p class="ds">Interim report, mid-term review, consolidate results. Freeze the architecture.</p><p class="dl">Deliverable: interim report + demo</p></div></div>
+
+      <div class="ph"><div class="wk">W15–18</div><div><p class="nm">Privacy layer</p><p class="ds">SecAgg+, DP-SGD with the ε sweep, cancelable templates with the <em>k</em> sweep. Measure every cost.</p><p class="dl">Deliverable: privacy–utility curves; the SecAgg overhead table</p></div></div>
+
+      <div class="ph"><div class="wk">W19–21</div><div><p class="nm">Attack evaluation</p><p class="ds">Membership inference, embedding inversion, 5% and 10% poisoning. This is what separates a privacy <em>claim</em> from a privacy <em>result</em>.</p><p class="dl">Deliverable: attack results, including the reconstruction figure</p></div></div>
+
+      <div class="ph"><div class="wk">W22–24</div><div><p class="nm">Edge deployment and dashboards</p><p class="ds">Export to the real device and profile it. Both dashboards to a demonstrable state. Custom campus CCTV evaluation, if approval came through.</p><p class="dl">Deliverable: edge profiling table; end-to-end live demo</p></div></div>
+
+      <div class="ph"><div class="wk">W25–26</div><div><p class="nm">Write-up and defence</p><p class="ds">Final report, paper draft, viva preparation. Rehearse the base-rate argument and the frozen-backbone justification specifically — those are where the questions will come.</p><p class="dl">Deliverable: final report, paper draft, demo</p></div></div>
+    </div>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">12</div>
+  <section id="risk">
+    <h2>Risks</h2>
+  </section>
+
+  <div class="scroll wide">
+    <table class="compact">
+      <thead><tr><th>Risk</th><th class="num">Impact</th><th>Mitigation, and the trigger for falling back</th></tr></thead>
+      <tbody>
+        <tr><td class="k">SCface or QMUL access denied or delayed</td><td class="num">High</td><td>Request in week 1. If nothing by week 4, proceed on TinyFace plus synthetic degradation only and say so in the limitations.</td></tr>
+        <tr><td class="k">The federated adapter does not beat local-only</td><td class="num">High</td><td>You find this out in week 10, which is why it is scheduled there. First try more rounds, a tuned FedProx μ, and a more aggressive non-IID split. If it still does not, <strong>report it as a negative result</strong> — a well-characterised negative FL result is publishable — and let the privacy and systems contributions carry the project. This is exactly why the project must not depend on a single result.</td></tr>
+        <tr><td class="k">DP noise destroys utility at low ε</td><td class="num">Medium</td><td>Expected, and [6] saw it too. The curve <em>is</em> the finding. Do not chase ε = 1 at the cost of a working system; report where the knee sits.</td></tr>
+        <tr><td class="k">Edge device too slow for real-time</td><td class="num">Medium</td><td>Drop the sampling rate, batch across cameras, export via TensorRT, shrink the detector input. If it still misses, present it as a profiling result with the bottleneck identified — [12] did exactly this at 5 FPS and it was publishable.</td></tr>
+        <tr><td class="k">Campus CCTV approval or consent falls through</td><td class="num">Low</td><td>It is evaluation-only by design. The project stands on public research datasets without it.</td></tr>
+        <tr><td class="k">Scope creep</td><td class="num">High</td><td>The "do not build" list in §07 and §15 exists for this. Blockchain and full HE are the two most likely to tempt you, because three of your papers use them.</td></tr>
+        <tr><td class="k">Four-person coordination</td><td class="num">Medium</td><td>Split along the architecture: (1) vision pipeline and tracking, (2) federated learning and aggregation, (3) privacy mechanisms and attack evaluation, (4) systems, dashboards and edge deployment. Every member owns one results table.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="hr full"></div>
+
+  <div class="snum">13</div>
+  <section id="ethics">
+    <h2>Ethics, law and governance</h2>
+    <p class="lede">Include this as a full chapter, not an appendix. For a facial-recognition surveillance project it is a substantive part of the work, and examiners increasingly expect it.</p>
+
+    <h3>Legal frame</h3>
+    <p>India's Digital Personal Data Protection Act, 2023 governs digital personal data and applies to biometric processing; the Puttaswamy judgment established privacy as a fundamental right and requires that any intrusion be legal, necessary and proportionate. There is, as far as this report is aware, no dedicated Indian statute specifically governing facial recognition in surveillance — <strong>verify the current position when you write, since this area is moving.</strong> Your design should be able to point at concrete answers for consent, purpose limitation, data minimisation, retention and erasure, which the architecture in §05 already gives you.</p>
+
+    <h3>Governance controls to specify explicitly</h3>
+    <ul>
+      <li><strong>Purpose limitation by construction.</strong> A watchlist template is scoped to one case and carries a TTL. When the case closes, the template expires at every node automatically — nobody has to remember to delete it.</li>
+      <li><strong>Human accountability for every disclosure.</strong> No image leaves a node without a named operator confirming it. The audit log records who, when and on what evidence.</li>
+      <li><strong>Auditability in both directions.</strong> Node operators can inspect the log of what the server distributed to them and what they returned. Trust in these systems has to be mutual to be real.</li>
+      <li><strong>False positives are the primary harm.</strong> An innocent person misidentified against a missing-person watchlist can be detained or approached by police. Design the operating point for this, and say in your report that you did.</li>
+      <li><strong>Demographic performance.</strong> Report accuracy disaggregated by any demographic attribute your datasets label. Uneven error rates across groups are the best-documented failure mode in deployed face recognition, and a project that does not check is a project that missed something.</li>
+    </ul>
+
+    <h3>For the custom CCTV collection</h3>
+    <p>Written informed consent from every participant, institutional approval before a single frame is recorded, no bystanders captured, encrypted and access-controlled storage, deletion at project end, and the dataset never published or committed to a repository. Include the consent form as an appendix — it is easy marks and it is the right thing to do.</p>
+
+    <h3>Misuse considerations</h3>
+    <p>Write a short honest section on how this architecture could be abused: the same system that finds a missing child finds a protester, and federation makes it <em>easier</em> to deploy at scale precisely because it lowers the legal and infrastructural barriers to participation. Name that tension. Explain which of your controls (case scoping, TTL, mutual audit, human gate) are aimed at it and which of them are policy rather than technical. Examiners respond very well to a team that can see the shape of its own work.</p>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">14</div>
+  <section id="gap">
+    <h2>Where your gap actually is</h2>
+    <p class="lede">You have a real one. This is how to state it so it holds up.</p>
+  </section>
+
+  <div class="scroll wide">
+    <table class="compact">
+      <thead><tr><th>Capability</th><th>Covered by</th><th>What is still missing</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Missing-person identification with YOLO + deep embeddings</td><td>[1]</td><td>Centralised; frame-based, no tracking; evaluated on manually composed synthetic group images.</td></tr>
+        <tr><td class="k">FL + DP + cancelable face templates</td><td>[2]</td><td>Clean CelebA and LFW; closed-set verification; no surveillance degradation, no application context.</td></tr>
+        <tr><td class="k">Partial SMPC for face recognition under FL</td><td>[4]</td><td>Vertical/split setting; still-image; no open-set retrieval, no edge deployment.</td></tr>
+        <tr><td class="k">Non-IID FL for face recognition, FedAvg vs FedProx</td><td>[6]</td><td>Method study on LFW; no application, no surveillance imagery, no operational metrics.</td></tr>
+        <tr><td class="k">Edge federated video with DP and HE</td><td>[11]</td><td>Prototype testbed; no identification task, no open-set evaluation.</td></tr>
+        <tr><td class="k">Robust aggregation against malicious clients</td><td>[7], [13]</td><td>Blockchain and TEE mechanisms; heavyweight for edge; not face-search specific.</td></tr>
+        <tr><td class="k"><strong>The empty cell</strong></td><td><strong>—</strong></td><td><strong>Open-set missing-person retrieval on surveillance-degraded video, using federated adaptation over a frozen backbone, learning from human-verified labels that cannot be centralised, secured with secure aggregation and DP, and evaluated at operationally honest false-positive rates rather than balanced-set accuracy.</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="snum"></div>
+  <section>
+    <p>Three parts of that sentence are individually defensible as contributions, which is what you want — the project does not stand or fall on any one of them. The <strong>frozen-backbone federated adaptation</strong> argument (federate the 0.5 M parameters that carry site-specific information; freeze the 43.6 M that do not). The <strong>human-verified label loop</strong> that turns operator review into the training signal, which is genuinely novel in this literature. And the <strong>operationally honest evaluation</strong> — reporting alerts-per-camera-per-day alongside TPIR@FPIR, when every paper in your survey reports balanced accuracy.</p>
+  </section>
+
+  <div class="hr full"></div>
+
+  <div class="snum">15</div>
+  <section id="cut">
+    <h2>If the semester goes badly</h2>
+    <p class="lede">Decide the cut order now, while nobody is panicking. Build strictly downward through these tiers.</p>
+
+    <div class="cuts">
+      <div class="cut must">
+        <h4>Must have · this is a pass</h4>
+        <ul>
+          <li>Single-node pipeline running end-to-end on video</li>
+          <li>Degradation pipeline, validated against real low-resolution data</li>
+          <li>FL of the adapter across 5 simulated nodes</li>
+          <li>Local-only vs federated vs centralised comparison</li>
+          <li>FedAvg vs FedProx under non-IID</li>
+          <li>DP-SGD with an ε sweep</li>
+          <li>Open-set evaluation with DET curves</li>
+          <li>Both dashboards, demonstrable</li>
+        </ul>
+      </div>
+      <div class="cut">
+        <h4>Should have · this is a strong grade</h4>
+        <ul>
+          <li>Secure aggregation, with measured overhead</li>
+          <li>Cancelable templates, with measured accuracy cost</li>
+          <li>Membership-inference evaluation</li>
+          <li>Track-level aggregation results</li>
+          <li>Deployment on the real edge device</li>
+          <li>Alerts-per-camera-per-day at the operating point</li>
+        </ul>
+      </div>
+      <div class="cut">
+        <h4>Nice to have · this is a paper</h4>
+        <ul>
+          <li>Embedding-inversion attack with reconstruction figures</li>
+          <li>Poisoning robustness at 5% and 10%</li>
+          <li>Two-party secure threshold comparison demo</li>
+          <li>Custom campus CCTV evaluation</li>
+          <li>Demographic performance disaggregation</li>
+          <li>The HE benchmark that justifies excluding HE</li>
+        </ul>
+      </div>
+      <div class="cut no">
+        <h4>Do not build</h4>
+        <ul>
+          <li>Blockchain aggregation</li>
+          <li>Homomorphic encryption of full updates</li>
+          <li>Gait, voice or micro-expression modalities</li>
+          <li>Training a backbone from scratch</li>
+          <li>Cross-camera re-identification beyond faces</li>
+          <li>Any live deployment on non-consenting subjects</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="keyline">
+      <p>The project is feasible. The frozen backbone is what makes it feasible, the human-in-the-loop label buffer is what makes federation meaningful, and the honest false-positive analysis is what will make it good.</p>
+    </div>
+  </section>
+
+  <footer class="wide">
+    <p>Design review prepared against the 16-paper capstone literature survey (Fall 2026–2027). Bracketed numbers refer to that survey's reference list. Parameter counts and payload sizes are for InsightFace <code>buffalo_l</code> (ResNet-50 ArcFace) and the module sizes specified in §06. Legal statements in §13 reflect this report's understanding and should be re-verified at the time of writing.</p>
+  </footer>
+
+</div>
+</div>

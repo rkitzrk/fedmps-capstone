@@ -1,0 +1,1137 @@
+
+######## STEP 1/3  prepare 8631 identities (gallery ~3020, up from 1750) ########
+2026-09-15T15:16:12Z
+
+[prepare] loading source=folder
+[loader] folder: 8631 identities, reading 172620 images at 160px (~12.3 GB)
+[loader] folder: 500/8631 identities, 10000 images
+[loader] folder: 1000/8631 identities, 20000 images
+[loader] folder: 1500/8631 identities, 30000 images
+[loader] folder: 2000/8631 identities, 40000 images
+[loader] folder: 2500/8631 identities, 50000 images
+[loader] folder: 3000/8631 identities, 60000 images
+[loader] folder: 3500/8631 identities, 70000 images
+[loader] folder: 4000/8631 identities, 80000 images
+[loader] folder: 4500/8631 identities, 90000 images
+[loader] folder: 5000/8631 identities, 100000 images
+[loader] folder: 5500/8631 identities, 110000 images
+[loader] folder: 6000/8631 identities, 120000 images
+[loader] folder: 6500/8631 identities, 130000 images
+[loader] folder: 7000/8631 identities, 140000 images
+[loader] folder: 7500/8631 identities, 150000 images
+[loader] folder: 8000/8631 identities, 160000 images
+[loader] folder: 8500/8631 identities, 170000 images
+[prepare] 172620 images, 8631 identities, 20-20 images each (median 20)
+[backbone] aligning 172620 images via det_10g.onnx at 320px providers=['CUDAExecutionProvider', 'CPUExecutionProvider']
+[backbone] alignment done: 172606/172620 (0.01% missed)
+[prepare] partitioning across 5 nodes
+nodes: 5   held-out identities: 6042 (120840 images)
+  node_0:  258 ids   3440 train  1720 val   camera[face=0.56 blur=0.86 jpeg=0.70]
+  node_1:  388 ids   5173 train  2587 val   camera[face=0.13 blur=0.20 jpeg=0.33]
+  node_2:  517 ids   6893 train  3447 val   camera[face=0.18 blur=0.08 jpeg=0.07]
+  node_3:  647 ids   8627 train  4313 val   camera[face=0.86 blur=0.22 jpeg=0.71]
+  node_4:  779 ids  10387 train  5193 val   camera[face=0.55 blur=0.31 jpeg=0.32]
+[prepare] applying the degradation model
+[backbone] loaded buffalo_l/w600k_r50.onnx providers=['CUDAExecutionProvider', 'CPUExecutionProvider']
+[backbone] alignment OFF - embeddings will be weaker; see _align
+[prepare] embedding 172620 clean images with insightface
+[backbone] insightface: 64/172620
+[backbone] insightface: 704/172620
+[backbone] insightface: 1344/172620
+[backbone] insightface: 1984/172620
+[backbone] insightface: 2624/172620
+[backbone] insightface: 3264/172620
+[backbone] insightface: 3904/172620
+[backbone] insightface: 4544/172620
+[backbone] insightface: 5184/172620
+[backbone] insightface: 5824/172620
+[backbone] insightface: 6464/172620
+[backbone] insightface: 7104/172620
+[backbone] insightface: 7744/172620
+[backbone] insightface: 8384/172620
+[backbone] insightface: 9024/172620
+[backbone] insightface: 9664/172620
+[backbone] insightface: 10304/172620
+[backbone] insightface: 10944/172620
+[backbone] insightface: 11584/172620
+[backbone] insightface: 12224/172620
+[backbone] insightface: 12864/172620
+[backbone] insightface: 13504/172620
+[backbone] insightface: 14144/172620
+[backbone] insightface: 14784/172620
+[backbone] insightface: 15424/172620
+[backbone] insightface: 16064/172620
+[backbone] insightface: 16704/172620
+[backbone] insightface: 17344/172620
+[backbone] insightface: 17984/172620
+[backbone] insightface: 18624/172620
+[backbone] insightface: 19264/172620
+[backbone] insightface: 19904/172620
+[backbone] insightface: 20544/172620
+[backbone] insightface: 21184/172620
+[backbone] insightface: 21824/172620
+[backbone] insightface: 22464/172620
+[backbone] insightface: 23104/172620
+[backbone] insightface: 23744/172620
+[backbone] insightface: 24384/172620
+[backbone] insightface: 25024/172620
+[backbone] insightface: 25664/172620
+[backbone] insightface: 26304/172620
+[backbone] insightface: 26944/172620
+[backbone] insightface: 27584/172620
+[backbone] insightface: 28224/172620
+[backbone] insightface: 28864/172620
+[backbone] insightface: 29504/172620
+[backbone] insightface: 30144/172620
+[backbone] insightface: 30784/172620
+[backbone] insightface: 31424/172620
+[backbone] insightface: 32064/172620
+[backbone] insightface: 32704/172620
+[backbone] insightface: 33344/172620
+[backbone] insightface: 33984/172620
+[backbone] insightface: 34624/172620
+[backbone] insightface: 35264/172620
+[backbone] insightface: 35904/172620
+[backbone] insightface: 36544/172620
+[backbone] insightface: 37184/172620
+[backbone] insightface: 37824/172620
+[backbone] insightface: 38464/172620
+[backbone] insightface: 39104/172620
+[backbone] insightface: 39744/172620
+[backbone] insightface: 40384/172620
+[backbone] insightface: 41024/172620
+[backbone] insightface: 41664/172620
+[backbone] insightface: 42304/172620
+[backbone] insightface: 42944/172620
+[backbone] insightface: 43584/172620
+[backbone] insightface: 44224/172620
+[backbone] insightface: 44864/172620
+[backbone] insightface: 45504/172620
+[backbone] insightface: 46144/172620
+[backbone] insightface: 46784/172620
+[backbone] insightface: 47424/172620
+[backbone] insightface: 48064/172620
+[backbone] insightface: 48704/172620
+[backbone] insightface: 49344/172620
+[backbone] insightface: 49984/172620
+[backbone] insightface: 50624/172620
+[backbone] insightface: 51264/172620
+[backbone] insightface: 51904/172620
+[backbone] insightface: 52544/172620
+[backbone] insightface: 53184/172620
+[backbone] insightface: 53824/172620
+[backbone] insightface: 54464/172620
+[backbone] insightface: 55104/172620
+[backbone] insightface: 55744/172620
+[backbone] insightface: 56384/172620
+[backbone] insightface: 57024/172620
+[backbone] insightface: 57664/172620
+[backbone] insightface: 58304/172620
+[backbone] insightface: 58944/172620
+[backbone] insightface: 59584/172620
+[backbone] insightface: 60224/172620
+[backbone] insightface: 60864/172620
+[backbone] insightface: 61504/172620
+[backbone] insightface: 62144/172620
+[backbone] insightface: 62784/172620
+[backbone] insightface: 63424/172620
+[backbone] insightface: 64064/172620
+[backbone] insightface: 64704/172620
+[backbone] insightface: 65344/172620
+[backbone] insightface: 65984/172620
+[backbone] insightface: 66624/172620
+[backbone] insightface: 67264/172620
+[backbone] insightface: 67904/172620
+[backbone] insightface: 68544/172620
+[backbone] insightface: 69184/172620
+[backbone] insightface: 69824/172620
+[backbone] insightface: 70464/172620
+[backbone] insightface: 71104/172620
+[backbone] insightface: 71744/172620
+[backbone] insightface: 72384/172620
+[backbone] insightface: 73024/172620
+[backbone] insightface: 73664/172620
+[backbone] insightface: 74304/172620
+[backbone] insightface: 74944/172620
+[backbone] insightface: 75584/172620
+[backbone] insightface: 76224/172620
+[backbone] insightface: 76864/172620
+[backbone] insightface: 77504/172620
+[backbone] insightface: 78144/172620
+[backbone] insightface: 78784/172620
+[backbone] insightface: 79424/172620
+[backbone] insightface: 80064/172620
+[backbone] insightface: 80704/172620
+[backbone] insightface: 81344/172620
+[backbone] insightface: 81984/172620
+[backbone] insightface: 82624/172620
+[backbone] insightface: 83264/172620
+[backbone] insightface: 83904/172620
+[backbone] insightface: 84544/172620
+[backbone] insightface: 85184/172620
+[backbone] insightface: 85824/172620
+[backbone] insightface: 86464/172620
+[backbone] insightface: 87104/172620
+[backbone] insightface: 87744/172620
+[backbone] insightface: 88384/172620
+[backbone] insightface: 89024/172620
+[backbone] insightface: 89664/172620
+[backbone] insightface: 90304/172620
+[backbone] insightface: 90944/172620
+[backbone] insightface: 91584/172620
+[backbone] insightface: 92224/172620
+[backbone] insightface: 92864/172620
+[backbone] insightface: 93504/172620
+[backbone] insightface: 94144/172620
+[backbone] insightface: 94784/172620
+[backbone] insightface: 95424/172620
+[backbone] insightface: 96064/172620
+[backbone] insightface: 96704/172620
+[backbone] insightface: 97344/172620
+[backbone] insightface: 97984/172620
+[backbone] insightface: 98624/172620
+[backbone] insightface: 99264/172620
+[backbone] insightface: 99904/172620
+[backbone] insightface: 100544/172620
+[backbone] insightface: 101184/172620
+[backbone] insightface: 101824/172620
+[backbone] insightface: 102464/172620
+[backbone] insightface: 103104/172620
+[backbone] insightface: 103744/172620
+[backbone] insightface: 104384/172620
+[backbone] insightface: 105024/172620
+[backbone] insightface: 105664/172620
+[backbone] insightface: 106304/172620
+[backbone] insightface: 106944/172620
+[backbone] insightface: 107584/172620
+[backbone] insightface: 108224/172620
+[backbone] insightface: 108864/172620
+[backbone] insightface: 109504/172620
+[backbone] insightface: 110144/172620
+[backbone] insightface: 110784/172620
+[backbone] insightface: 111424/172620
+[backbone] insightface: 112064/172620
+[backbone] insightface: 112704/172620
+[backbone] insightface: 113344/172620
+[backbone] insightface: 113984/172620
+[backbone] insightface: 114624/172620
+[backbone] insightface: 115264/172620
+[backbone] insightface: 115904/172620
+[backbone] insightface: 116544/172620
+[backbone] insightface: 117184/172620
+[backbone] insightface: 117824/172620
+[backbone] insightface: 118464/172620
+[backbone] insightface: 119104/172620
+[backbone] insightface: 119744/172620
+[backbone] insightface: 120384/172620
+[backbone] insightface: 121024/172620
+[backbone] insightface: 121664/172620
+[backbone] insightface: 122304/172620
+[backbone] insightface: 122944/172620
+[backbone] insightface: 123584/172620
+[backbone] insightface: 124224/172620
+[backbone] insightface: 124864/172620
+[backbone] insightface: 125504/172620
+[backbone] insightface: 126144/172620
+[backbone] insightface: 126784/172620
+[backbone] insightface: 127424/172620
+[backbone] insightface: 128064/172620
+[backbone] insightface: 128704/172620
+[backbone] insightface: 129344/172620
+[backbone] insightface: 129984/172620
+[backbone] insightface: 130624/172620
+[backbone] insightface: 131264/172620
+[backbone] insightface: 131904/172620
+[backbone] insightface: 132544/172620
+[backbone] insightface: 133184/172620
+[backbone] insightface: 133824/172620
+[backbone] insightface: 134464/172620
+[backbone] insightface: 135104/172620
+[backbone] insightface: 135744/172620
+[backbone] insightface: 136384/172620
+[backbone] insightface: 137024/172620
+[backbone] insightface: 137664/172620
+[backbone] insightface: 138304/172620
+[backbone] insightface: 138944/172620
+[backbone] insightface: 139584/172620
+[backbone] insightface: 140224/172620
+[backbone] insightface: 140864/172620
+[backbone] insightface: 141504/172620
+[backbone] insightface: 142144/172620
+[backbone] insightface: 142784/172620
+[backbone] insightface: 143424/172620
+[backbone] insightface: 144064/172620
+[backbone] insightface: 144704/172620
+[backbone] insightface: 145344/172620
+[backbone] insightface: 145984/172620
+[backbone] insightface: 146624/172620
+[backbone] insightface: 147264/172620
+[backbone] insightface: 147904/172620
+[backbone] insightface: 148544/172620
+[backbone] insightface: 149184/172620
+[backbone] insightface: 149824/172620
+[backbone] insightface: 150464/172620
+[backbone] insightface: 151104/172620
+[backbone] insightface: 151744/172620
+[backbone] insightface: 152384/172620
+[backbone] insightface: 153024/172620
+[backbone] insightface: 153664/172620
+[backbone] insightface: 154304/172620
+[backbone] insightface: 154944/172620
+[backbone] insightface: 155584/172620
+[backbone] insightface: 156224/172620
+[backbone] insightface: 156864/172620
+[backbone] insightface: 157504/172620
+[backbone] insightface: 158144/172620
+[backbone] insightface: 158784/172620
+[backbone] insightface: 159424/172620
+[backbone] insightface: 160064/172620
+[backbone] insightface: 160704/172620
+[backbone] insightface: 161344/172620
+[backbone] insightface: 161984/172620
+[backbone] insightface: 162624/172620
+[backbone] insightface: 163264/172620
+[backbone] insightface: 163904/172620
+[backbone] insightface: 164544/172620
+[backbone] insightface: 165184/172620
+[backbone] insightface: 165824/172620
+[backbone] insightface: 166464/172620
+[backbone] insightface: 167104/172620
+[backbone] insightface: 167744/172620
+[backbone] insightface: 168384/172620
+[backbone] insightface: 169024/172620
+[backbone] insightface: 169664/172620
+[backbone] insightface: 170304/172620
+[backbone] insightface: 170944/172620
+[backbone] insightface: 171584/172620
+[backbone] insightface: 172224/172620
+[prepare] embedding 172620 degraded images with insightface
+[backbone] insightface: 64/172620
+[backbone] insightface: 704/172620
+[backbone] insightface: 1344/172620
+[backbone] insightface: 1984/172620
+[backbone] insightface: 2624/172620
+[backbone] insightface: 3264/172620
+[backbone] insightface: 3904/172620
+[backbone] insightface: 4544/172620
+[backbone] insightface: 5184/172620
+[backbone] insightface: 5824/172620
+[backbone] insightface: 6464/172620
+[backbone] insightface: 7104/172620
+[backbone] insightface: 7744/172620
+[backbone] insightface: 8384/172620
+[backbone] insightface: 9024/172620
+[backbone] insightface: 9664/172620
+[backbone] insightface: 10304/172620
+[backbone] insightface: 10944/172620
+[backbone] insightface: 11584/172620
+[backbone] insightface: 12224/172620
+[backbone] insightface: 12864/172620
+[backbone] insightface: 13504/172620
+[backbone] insightface: 14144/172620
+[backbone] insightface: 14784/172620
+[backbone] insightface: 15424/172620
+[backbone] insightface: 16064/172620
+[backbone] insightface: 16704/172620
+[backbone] insightface: 17344/172620
+[backbone] insightface: 17984/172620
+[backbone] insightface: 18624/172620
+[backbone] insightface: 19264/172620
+[backbone] insightface: 19904/172620
+[backbone] insightface: 20544/172620
+[backbone] insightface: 21184/172620
+[backbone] insightface: 21824/172620
+[backbone] insightface: 22464/172620
+[backbone] insightface: 23104/172620
+[backbone] insightface: 23744/172620
+[backbone] insightface: 24384/172620
+[backbone] insightface: 25024/172620
+[backbone] insightface: 25664/172620
+[backbone] insightface: 26304/172620
+[backbone] insightface: 26944/172620
+[backbone] insightface: 27584/172620
+[backbone] insightface: 28224/172620
+[backbone] insightface: 28864/172620
+[backbone] insightface: 29504/172620
+[backbone] insightface: 30144/172620
+[backbone] insightface: 30784/172620
+[backbone] insightface: 31424/172620
+[backbone] insightface: 32064/172620
+[backbone] insightface: 32704/172620
+[backbone] insightface: 33344/172620
+[backbone] insightface: 33984/172620
+[backbone] insightface: 34624/172620
+[backbone] insightface: 35264/172620
+[backbone] insightface: 35904/172620
+[backbone] insightface: 36544/172620
+[backbone] insightface: 37184/172620
+[backbone] insightface: 37824/172620
+[backbone] insightface: 38464/172620
+[backbone] insightface: 39104/172620
+[backbone] insightface: 39744/172620
+[backbone] insightface: 40384/172620
+[backbone] insightface: 41024/172620
+[backbone] insightface: 41664/172620
+[backbone] insightface: 42304/172620
+[backbone] insightface: 42944/172620
+[backbone] insightface: 43584/172620
+[backbone] insightface: 44224/172620
+[backbone] insightface: 44864/172620
+[backbone] insightface: 45504/172620
+[backbone] insightface: 46144/172620
+[backbone] insightface: 46784/172620
+[backbone] insightface: 47424/172620
+[backbone] insightface: 48064/172620
+[backbone] insightface: 48704/172620
+[backbone] insightface: 49344/172620
+[backbone] insightface: 49984/172620
+[backbone] insightface: 50624/172620
+[backbone] insightface: 51264/172620
+[backbone] insightface: 51904/172620
+[backbone] insightface: 52544/172620
+[backbone] insightface: 53184/172620
+[backbone] insightface: 53824/172620
+[backbone] insightface: 54464/172620
+[backbone] insightface: 55104/172620
+[backbone] insightface: 55744/172620
+[backbone] insightface: 56384/172620
+[backbone] insightface: 57024/172620
+[backbone] insightface: 57664/172620
+[backbone] insightface: 58304/172620
+[backbone] insightface: 58944/172620
+[backbone] insightface: 59584/172620
+[backbone] insightface: 60224/172620
+[backbone] insightface: 60864/172620
+[backbone] insightface: 61504/172620
+[backbone] insightface: 62144/172620
+[backbone] insightface: 62784/172620
+[backbone] insightface: 63424/172620
+[backbone] insightface: 64064/172620
+[backbone] insightface: 64704/172620
+[backbone] insightface: 65344/172620
+[backbone] insightface: 65984/172620
+[backbone] insightface: 66624/172620
+[backbone] insightface: 67264/172620
+[backbone] insightface: 67904/172620
+[backbone] insightface: 68544/172620
+[backbone] insightface: 69184/172620
+[backbone] insightface: 69824/172620
+[backbone] insightface: 70464/172620
+[backbone] insightface: 71104/172620
+[backbone] insightface: 71744/172620
+[backbone] insightface: 72384/172620
+[backbone] insightface: 73024/172620
+[backbone] insightface: 73664/172620
+[backbone] insightface: 74304/172620
+[backbone] insightface: 74944/172620
+[backbone] insightface: 75584/172620
+[backbone] insightface: 76224/172620
+[backbone] insightface: 76864/172620
+[backbone] insightface: 77504/172620
+[backbone] insightface: 78144/172620
+[backbone] insightface: 78784/172620
+[backbone] insightface: 79424/172620
+[backbone] insightface: 80064/172620
+[backbone] insightface: 80704/172620
+[backbone] insightface: 81344/172620
+[backbone] insightface: 81984/172620
+[backbone] insightface: 82624/172620
+[backbone] insightface: 83264/172620
+[backbone] insightface: 83904/172620
+[backbone] insightface: 84544/172620
+[backbone] insightface: 85184/172620
+[backbone] insightface: 85824/172620
+[backbone] insightface: 86464/172620
+[backbone] insightface: 87104/172620
+[backbone] insightface: 87744/172620
+[backbone] insightface: 88384/172620
+[backbone] insightface: 89024/172620
+[backbone] insightface: 89664/172620
+[backbone] insightface: 90304/172620
+[backbone] insightface: 90944/172620
+[backbone] insightface: 91584/172620
+[backbone] insightface: 92224/172620
+[backbone] insightface: 92864/172620
+[backbone] insightface: 93504/172620
+[backbone] insightface: 94144/172620
+[backbone] insightface: 94784/172620
+[backbone] insightface: 95424/172620
+[backbone] insightface: 96064/172620
+[backbone] insightface: 96704/172620
+[backbone] insightface: 97344/172620
+[backbone] insightface: 97984/172620
+[backbone] insightface: 98624/172620
+[backbone] insightface: 99264/172620
+[backbone] insightface: 99904/172620
+[backbone] insightface: 100544/172620
+[backbone] insightface: 101184/172620
+[backbone] insightface: 101824/172620
+[backbone] insightface: 102464/172620
+[backbone] insightface: 103104/172620
+[backbone] insightface: 103744/172620
+[backbone] insightface: 104384/172620
+[backbone] insightface: 105024/172620
+[backbone] insightface: 105664/172620
+[backbone] insightface: 106304/172620
+[backbone] insightface: 106944/172620
+[backbone] insightface: 107584/172620
+[backbone] insightface: 108224/172620
+[backbone] insightface: 108864/172620
+[backbone] insightface: 109504/172620
+[backbone] insightface: 110144/172620
+[backbone] insightface: 110784/172620
+[backbone] insightface: 111424/172620
+[backbone] insightface: 112064/172620
+[backbone] insightface: 112704/172620
+[backbone] insightface: 113344/172620
+[backbone] insightface: 113984/172620
+[backbone] insightface: 114624/172620
+[backbone] insightface: 115264/172620
+[backbone] insightface: 115904/172620
+[backbone] insightface: 116544/172620
+[backbone] insightface: 117184/172620
+[backbone] insightface: 117824/172620
+[backbone] insightface: 118464/172620
+[backbone] insightface: 119104/172620
+[backbone] insightface: 119744/172620
+[backbone] insightface: 120384/172620
+[backbone] insightface: 121024/172620
+[backbone] insightface: 121664/172620
+[backbone] insightface: 122304/172620
+[backbone] insightface: 122944/172620
+[backbone] insightface: 123584/172620
+[backbone] insightface: 124224/172620
+[backbone] insightface: 124864/172620
+[backbone] insightface: 125504/172620
+[backbone] insightface: 126144/172620
+[backbone] insightface: 126784/172620
+[backbone] insightface: 127424/172620
+[backbone] insightface: 128064/172620
+[backbone] insightface: 128704/172620
+[backbone] insightface: 129344/172620
+[backbone] insightface: 129984/172620
+[backbone] insightface: 130624/172620
+[backbone] insightface: 131264/172620
+[backbone] insightface: 131904/172620
+[backbone] insightface: 132544/172620
+[backbone] insightface: 133184/172620
+[backbone] insightface: 133824/172620
+[backbone] insightface: 134464/172620
+[backbone] insightface: 135104/172620
+[backbone] insightface: 135744/172620
+[backbone] insightface: 136384/172620
+[backbone] insightface: 137024/172620
+[backbone] insightface: 137664/172620
+[backbone] insightface: 138304/172620
+[backbone] insightface: 138944/172620
+[backbone] insightface: 139584/172620
+[backbone] insightface: 140224/172620
+[backbone] insightface: 140864/172620
+[backbone] insightface: 141504/172620
+[backbone] insightface: 142144/172620
+[backbone] insightface: 142784/172620
+[backbone] insightface: 143424/172620
+[backbone] insightface: 144064/172620
+[backbone] insightface: 144704/172620
+[backbone] insightface: 145344/172620
+[backbone] insightface: 145984/172620
+[backbone] insightface: 146624/172620
+[backbone] insightface: 147264/172620
+[backbone] insightface: 147904/172620
+[backbone] insightface: 148544/172620
+[backbone] insightface: 149184/172620
+[backbone] insightface: 149824/172620
+[backbone] insightface: 150464/172620
+[backbone] insightface: 151104/172620
+[backbone] insightface: 151744/172620
+[backbone] insightface: 152384/172620
+[backbone] insightface: 153024/172620
+[backbone] insightface: 153664/172620
+[backbone] insightface: 154304/172620
+[backbone] insightface: 154944/172620
+[backbone] insightface: 155584/172620
+[backbone] insightface: 156224/172620
+[backbone] insightface: 156864/172620
+[backbone] insightface: 157504/172620
+[backbone] insightface: 158144/172620
+[backbone] insightface: 158784/172620
+[backbone] insightface: 159424/172620
+[backbone] insightface: 160064/172620
+[backbone] insightface: 160704/172620
+[backbone] insightface: 161344/172620
+[backbone] insightface: 161984/172620
+[backbone] insightface: 162624/172620
+[backbone] insightface: 163264/172620
+[backbone] insightface: 163904/172620
+[backbone] insightface: 164544/172620
+[backbone] insightface: 165184/172620
+[backbone] insightface: 165824/172620
+[backbone] insightface: 166464/172620
+[backbone] insightface: 167104/172620
+[backbone] insightface: 167744/172620
+[backbone] insightface: 168384/172620
+[backbone] insightface: 169024/172620
+[backbone] insightface: 169664/172620
+[backbone] insightface: 170304/172620
+[backbone] insightface: 170944/172620
+[backbone] insightface: 171584/172620
+[backbone] insightface: 172224/172620
+
+  mean cosine similarity        clean     degraded
+    same identity             +0.514      +0.219
+    different identities      +0.004      +0.022
+    separation                +0.511      +0.197
+
+[prepare] wrote artefacts to /home/ubuntu/fedmps/artifacts_vgg_big
+[prepare] done in 2260.4s
+PEAK_RSS_GB=20058032_KB WALL=2261.49 s
+
+######## STEP 2/3  operating-point surface on the bigger gallery ########
+2026-09-15T15:53:54Z
+
+[exp] degradation: clean vs degraded probes, frozen backbone alone
+[exp]   clean    rank1=0.9962  tpir@fpir=0.0001=0.3049  tpir@fpir=0.001=0.9801  tpir@fpir=0.01=0.9915  ver_auc=0.9769
+[exp]   degraded rank1=0.9294  tpir@fpir=0.0001=0.5038  tpir@fpir=0.001=0.6079  tpir@fpir=0.01=0.7564  ver_auc=0.9426
+[exp]   rank-1 lost to degradation: +0.0667 (at 3 photos x 3 frames)
+[exp]   single photo, single frame: 0.9180 -> 0.5240 (+0.3940)
+[exp] operating_points: enrolment depth x track length x scoring layer
+[exp]   enrol frames |  cosine  +centre  +rotate  +hubness
+[exp]       1      1 |  0.5240   0.5301   0.5344    0.5419
+[exp]       1      3 |  0.8238   0.8332   0.8393    0.8511
+[exp]       1      5 |  0.8948   0.9024   0.9052    0.9163
+[exp]       2      1 |  0.6051   0.6100   0.6152    0.6222
+[exp]       2      3 |  0.9016   0.9075   0.9115    0.9214
+[exp]       2      5 |  0.9537   0.9595   0.9618    0.9686
+[exp]       3      1 |  0.6395   0.6450   0.6501    0.6579
+[exp]       3      3 |  0.9294   0.9355   0.9391    0.9474
+[exp]       3      5 |  0.9775   0.9798   0.9814    0.9863
+[exp]       5      1 |  0.6692   0.6740   0.6798    0.6868
+[exp]       5      3 |  0.9470   0.9506   0.9544    0.9611
+[exp]       5      5 |  0.9861   0.9882   0.9895    0.9918
+warnings: none
+
+######## STEP 3/3  full experiment suite (all 8 experiments + figures) ########
+2026-09-15T15:57:01Z
+
+[run] reading artefacts from /home/ubuntu/fedmps/artifacts_vgg_big
+images        : 172620
+identities    : 8631
+backbone      : insightface
+nodes         : 5
+test images   : 120840
+extra non-mates: 0
+  node_0:  258 ids   3440 train  1720 val
+  node_1:  388 ids   5173 train  2587 val
+  node_2:  517 ids   6893 train  3447 val
+  node_3:  647 ids   8627 train  4313 val
+  node_4:  779 ids  10387 train  5193 val
+
+[run] experiments: degradation, operating_points, three_way, dp_sweep, masking, templates, fedprox, mia
+[exp] degradation: clean vs degraded probes, frozen backbone alone
+[exp]   clean    rank1=0.9962  tpir@fpir=0.0001=0.3049  tpir@fpir=0.001=0.9801  tpir@fpir=0.01=0.9915  ver_auc=0.9769
+[exp]   degraded rank1=0.9294  tpir@fpir=0.0001=0.5038  tpir@fpir=0.001=0.6079  tpir@fpir=0.01=0.7564  ver_auc=0.9426
+[exp]   rank-1 lost to degradation: +0.0667 (at 3 photos x 3 frames)
+[exp]   single photo, single frame: 0.9180 -> 0.5240 (+0.3940)
+[exp] operating_points: enrolment depth x track length x scoring layer
+[exp]   enrol frames |  cosine  +centre  +rotate  +hubness
+[exp]       1      1 |  0.5240   0.5301   0.5344    0.5419
+[exp]       1      3 |  0.8238   0.8332   0.8393    0.8511
+[exp]       1      5 |  0.8948   0.9024   0.9052    0.9163
+[exp]       2      1 |  0.6051   0.6100   0.6152    0.6222
+[exp]       2      3 |  0.9016   0.9075   0.9115    0.9214
+[exp]       2      5 |  0.9537   0.9595   0.9618    0.9686
+[exp]       3      1 |  0.6395   0.6450   0.6501    0.6579
+[exp]       3      3 |  0.9294   0.9355   0.9391    0.9474
+[exp]       3      5 |  0.9775   0.9798   0.9814    0.9863
+[exp]       5      1 |  0.6692   0.6740   0.6798    0.6868
+[exp]       5      3 |  0.9470   0.9506   0.9544    0.9611
+[exp]       5      5 |  0.9861   0.9882   0.9895    0.9918
+[exp] three_way: local-only vs federated vs centralised
+[fl] gallery 3021 identities x 3 enrolment photo(s) | 15105 mate probes x 3 frame(s) | 18126 non-mate probes | 6000 verification pairs
+[fl] scoring layer: centering + rotation
+[fl] no adapter (frozen backbone alone): rank1=0.9474  tpir@fpir=0.0001=0.5276  tpir@fpir=0.001=0.6725  tpir@fpir=0.01=0.7968  ver_auc=0.9456
+[fl] local_only: 5 nodes x 30 epochs each
+[fl]   node_0: n=4120  rank1=0.9261  sim_gain=+0.0278
+[fl]   node_1: n=6200  rank1=0.9191  sim_gain=+0.0443
+[fl]   node_2: n=8280  rank1=0.9219  sim_gain=+0.0389
+[fl]   node_3: n=10360 rank1=0.9398  sim_gain=-0.0012
+[fl]   node_4: n=12460 rank1=0.9355  sim_gain=+0.0054
+[fl] local_only: mean rank1=0.9285 (worst 0.9191, best 0.9398)
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.9478  val_rank1=0.9517  sim_gain=+0.0045  |delta|=0.0671
+[fl]   round   2/30  rank1=0.9477  val_rank1=0.9498  sim_gain=+0.0044  |delta|=0.0477
+[fl]   round   3/30  rank1=0.9479  val_rank1=0.9494  sim_gain=+0.0044  |delta|=0.0414
+[fl]   round   4/30  rank1=0.9474  val_rank1=0.9498  sim_gain=+0.0046  |delta|=0.0371
+[fl]   round   5/30  rank1=0.9468  val_rank1=0.9510  sim_gain=+0.0046  |delta|=0.0346
+[fl]   round   6/30  rank1=0.9470  val_rank1=0.9506  sim_gain=+0.0047  |delta|=0.0321
+[fl]   round   7/30  rank1=0.9465  val_rank1=0.9494  sim_gain=+0.0046  |delta|=0.0304
+[fl]   round   8/30  rank1=0.9468  val_rank1=0.9486  sim_gain=+0.0045  |delta|=0.0288
+[fl]   round   9/30  rank1=0.9466  val_rank1=0.9483  sim_gain=+0.0044  |delta|=0.0275
+[fl]   round  10/30  rank1=0.9466  val_rank1=0.9490  sim_gain=+0.0043  |delta|=0.0271
+[fl]   round  11/30  rank1=0.9462  val_rank1=0.9502  sim_gain=+0.0042  |delta|=0.0264
+[fl]   round  12/30  rank1=0.9466  val_rank1=0.9506  sim_gain=+0.0041  |delta|=0.0256
+[fl]   round  13/30  rank1=0.9464  val_rank1=0.9498  sim_gain=+0.0040  |delta|=0.0250
+[fl]   round  14/30  rank1=0.9463  val_rank1=0.9510  sim_gain=+0.0038  |delta|=0.0250
+[fl]   round  15/30  rank1=0.9458  val_rank1=0.9502  sim_gain=+0.0038  |delta|=0.0244
+[fl]   round  16/30  rank1=0.9456  val_rank1=0.9506  sim_gain=+0.0037  |delta|=0.0249
+[fl]   round  17/30  rank1=0.9458  val_rank1=0.9510  sim_gain=+0.0036  |delta|=0.0239
+[fl]   round  18/30  rank1=0.9456  val_rank1=0.9514  sim_gain=+0.0036  |delta|=0.0241
+[fl]   round  19/30  rank1=0.9458  val_rank1=0.9514  sim_gain=+0.0035  |delta|=0.0237
+[fl]   round  20/30  rank1=0.9452  val_rank1=0.9510  sim_gain=+0.0034  |delta|=0.0240
+[fl]   round  21/30  rank1=0.9452  val_rank1=0.9517  sim_gain=+0.0033  |delta|=0.0234
+[fl]   round  22/30  rank1=0.9450  val_rank1=0.9517  sim_gain=+0.0033  |delta|=0.0234
+[fl]   round  23/30  rank1=0.9449  val_rank1=0.9517  sim_gain=+0.0032  |delta|=0.0233
+[fl]   round  24/30  rank1=0.9448  val_rank1=0.9517  sim_gain=+0.0031  |delta|=0.0237
+[fl]   round  25/30  rank1=0.9449  val_rank1=0.9517  sim_gain=+0.0031  |delta|=0.0235
+[fl]   round  26/30  rank1=0.9448  val_rank1=0.9529  sim_gain=+0.0031  |delta|=0.0232
+[fl]   round  27/30  rank1=0.9450  val_rank1=0.9521  sim_gain=+0.0031  |delta|=0.0231
+[fl]   round  28/30  rank1=0.9451  val_rank1=0.9529  sim_gain=+0.0030  |delta|=0.0232
+[fl]   round  29/30  rank1=0.9453  val_rank1=0.9529  sim_gain=+0.0031  |delta|=0.0234
+[fl]   round  30/30  rank1=0.9456  val_rank1=0.9529  sim_gain=+0.0030  |delta|=0.0233
+[fl] early stop: keeping round 26/30 (val rank1=0.9529) instead of the final round
+[fl] federated: rank1=0.9448  tpir@fpir=0.0001=0.5074  tpir@fpir=0.001=0.6821  tpir@fpir=0.01=0.8044  ver_auc=0.9448
+[fl] centralised: 41420 images, 2071 identities, pooled into one client (30 rounds x 1 epoch, mu=3.0)
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 1 nodes, 30 rounds, 1 sampled per round
+[fl]   round   1/30  rank1=0.9478  val_rank1=0.9498  sim_gain=+0.0005  |delta|=0.1158
+[fl]   round   2/30  rank1=0.9478  val_rank1=0.9494  sim_gain=-0.0003  |delta|=0.0961
+[fl]   round   3/30  rank1=0.9472  val_rank1=0.9490  sim_gain=-0.0011  |delta|=0.0883
+[fl]   round   4/30  rank1=0.9469  val_rank1=0.9486  sim_gain=-0.0018  |delta|=0.0863
+[fl]   round   5/30  rank1=0.9466  val_rank1=0.9486  sim_gain=-0.0023  |delta|=0.0843
+[fl]   round   6/30  rank1=0.9458  val_rank1=0.9475  sim_gain=-0.0025  |delta|=0.0811
+[fl]   round   7/30  rank1=0.9458  val_rank1=0.9475  sim_gain=-0.0029  |delta|=0.0813
+[fl]   round   8/30  rank1=0.9464  val_rank1=0.9490  sim_gain=-0.0035  |delta|=0.0815
+[fl]   round   9/30  rank1=0.9456  val_rank1=0.9467  sim_gain=-0.0039  |delta|=0.0809
+[fl]   round  10/30  rank1=0.9456  val_rank1=0.9475  sim_gain=-0.0042  |delta|=0.0796
+[fl]   round  11/30  rank1=0.9453  val_rank1=0.9475  sim_gain=-0.0045  |delta|=0.0803
+[fl]   round  12/30  rank1=0.9452  val_rank1=0.9502  sim_gain=-0.0047  |delta|=0.0796
+[fl]   round  13/30  rank1=0.9456  val_rank1=0.9471  sim_gain=-0.0049  |delta|=0.0794
+[fl]   round  14/30  rank1=0.9456  val_rank1=0.9490  sim_gain=-0.0051  |delta|=0.0778
+[fl]   round  15/30  rank1=0.9459  val_rank1=0.9475  sim_gain=-0.0052  |delta|=0.0780
+[fl]   round  16/30  rank1=0.9453  val_rank1=0.9483  sim_gain=-0.0053  |delta|=0.0781
+[fl]   round  17/30  rank1=0.9449  val_rank1=0.9479  sim_gain=-0.0054  |delta|=0.0780
+[fl]   round  18/30  rank1=0.9462  val_rank1=0.9479  sim_gain=-0.0056  |delta|=0.0787
+[fl]   round  19/30  rank1=0.9456  val_rank1=0.9494  sim_gain=-0.0053  |delta|=0.0785
+[fl]   round  20/30  rank1=0.9453  val_rank1=0.9483  sim_gain=-0.0055  |delta|=0.0801
+[fl]   round  21/30  rank1=0.9449  val_rank1=0.9471  sim_gain=-0.0056  |delta|=0.0787
+[fl]   round  22/30  rank1=0.9449  val_rank1=0.9475  sim_gain=-0.0056  |delta|=0.0793
+[fl]   round  23/30  rank1=0.9452  val_rank1=0.9475  sim_gain=-0.0058  |delta|=0.0774
+[fl]   round  24/30  rank1=0.9456  val_rank1=0.9483  sim_gain=-0.0060  |delta|=0.0791
+[fl]   round  25/30  rank1=0.9457  val_rank1=0.9486  sim_gain=-0.0058  |delta|=0.0779
+[fl]   round  26/30  rank1=0.9463  val_rank1=0.9475  sim_gain=-0.0058  |delta|=0.0794
+[fl]   round  27/30  rank1=0.9451  val_rank1=0.9471  sim_gain=-0.0059  |delta|=0.0800
+[fl]   round  28/30  rank1=0.9454  val_rank1=0.9479  sim_gain=-0.0059  |delta|=0.0790
+[fl]   round  29/30  rank1=0.9460  val_rank1=0.9479  sim_gain=-0.0063  |delta|=0.0788
+[fl]   round  30/30  rank1=0.9459  val_rank1=0.9486  sim_gain=-0.0060  |delta|=0.0792
+[fl] early stop: keeping round 12/30 (val rank1=0.9502) instead of the final round
+[fl] federated: rank1=0.9452  tpir@fpir=0.0001=0.5009  tpir@fpir=0.001=0.6830  tpir@fpir=0.01=0.7983  ver_auc=0.9440
+[fl] centralised: rank1=0.9452  tpir@fpir=0.0001=0.5009  tpir@fpir=0.001=0.6830  tpir@fpir=0.01=0.7983  ver_auc=0.9440
+
+[fl] three-way comparison, rank-1 on held-out identities
+[fl]   no adapter        0.9474
+[fl]   local only (mean) 0.9285
+[fl]   federated         0.9448   (+0.0163 vs local only)
+[fl]   centralised       0.9452   (+0.0004 headroom remaining)
+
+[fl] WARNING: The adapter did not improve on the frozen backbone alone. Check that the degradation model is strong enough to matter and that the shift it induces is systematic rather than pure noise.
+
+[fl] saved the federated adapter to /home/ubuntu/fedmps/checkpoints/adapter_final.pt
+[exp] dp_sweep: 5 settings x 30 rounds
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 3 rounds, 5 sampled per round
+[fl]   round   1/3  rank1=0.9353  val_rank1=0.9432  sim_gain=+0.0044  |delta|=0.0666
+[fl]   round   2/3  rank1=0.9368  val_rank1=0.9417  sim_gain=+0.0042  |delta|=0.0471
+[fl]   round   3/3  rank1=0.9368  val_rank1=0.9421  sim_gain=+0.0042  |delta|=0.0408
+[fl] early stop: keeping round 1/3 (val rank1=0.9432) instead of the final round
+[fl] federated: rank1=0.9353  tpir@fpir=0.0001=0.4945  tpir@fpir=0.001=0.6228  tpir@fpir=0.01=0.7665  ver_auc=0.9436
+[exp]   calibrated clip_norm=0.128 from 15 observed updates (median 0.092, p95 0.148) -> 33% clipped
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.9362  val_rank1=0.9429  sim_gain=+0.0044  |delta|=0.0612
+[fl]   round   2/30  rank1=0.9377  val_rank1=0.9425  sim_gain=+0.0042  |delta|=0.0468
+[fl]   round   3/30  rank1=0.9380  val_rank1=0.9417  sim_gain=+0.0042  |delta|=0.0414
+[fl]   round   4/30  rank1=0.9384  val_rank1=0.9421  sim_gain=+0.0044  |delta|=0.0375
+[fl]   round   5/30  rank1=0.9388  val_rank1=0.9436  sim_gain=+0.0044  |delta|=0.0349
+[fl]   round   6/30  rank1=0.9391  val_rank1=0.9444  sim_gain=+0.0044  |delta|=0.0325
+[fl]   round   7/30  rank1=0.9394  val_rank1=0.9436  sim_gain=+0.0043  |delta|=0.0306
+[fl]   round   8/30  rank1=0.9396  val_rank1=0.9421  sim_gain=+0.0042  |delta|=0.0291
+[fl]   round   9/30  rank1=0.9395  val_rank1=0.9429  sim_gain=+0.0042  |delta|=0.0275
+[fl]   round  10/30  rank1=0.9394  val_rank1=0.9413  sim_gain=+0.0041  |delta|=0.0270
+[fl]   round  11/30  rank1=0.9394  val_rank1=0.9421  sim_gain=+0.0040  |delta|=0.0262
+[fl]   round  12/30  rank1=0.9393  val_rank1=0.9417  sim_gain=+0.0039  |delta|=0.0256
+[fl]   round  13/30  rank1=0.9396  val_rank1=0.9429  sim_gain=+0.0038  |delta|=0.0251
+[fl]   round  14/30  rank1=0.9396  val_rank1=0.9429  sim_gain=+0.0036  |delta|=0.0249
+[fl]   round  15/30  rank1=0.9394  val_rank1=0.9432  sim_gain=+0.0035  |delta|=0.0245
+[fl]   round  16/30  rank1=0.9392  val_rank1=0.9417  sim_gain=+0.0035  |delta|=0.0246
+[fl]   round  17/30  rank1=0.9394  val_rank1=0.9429  sim_gain=+0.0034  |delta|=0.0239
+[fl]   round  18/30  rank1=0.9390  val_rank1=0.9421  sim_gain=+0.0034  |delta|=0.0239
+[fl]   round  19/30  rank1=0.9392  val_rank1=0.9429  sim_gain=+0.0033  |delta|=0.0238
+[fl]   round  20/30  rank1=0.9395  val_rank1=0.9429  sim_gain=+0.0031  |delta|=0.0239
+[fl]   round  21/30  rank1=0.9390  val_rank1=0.9432  sim_gain=+0.0030  |delta|=0.0235
+[fl]   round  22/30  rank1=0.9389  val_rank1=0.9440  sim_gain=+0.0031  |delta|=0.0234
+[fl]   round  23/30  rank1=0.9390  val_rank1=0.9432  sim_gain=+0.0029  |delta|=0.0233
+[fl]   round  24/30  rank1=0.9395  val_rank1=0.9432  sim_gain=+0.0029  |delta|=0.0236
+[fl]   round  25/30  rank1=0.9393  val_rank1=0.9429  sim_gain=+0.0028  |delta|=0.0233
+[fl]   round  26/30  rank1=0.9390  val_rank1=0.9429  sim_gain=+0.0029  |delta|=0.0232
+[fl]   round  27/30  rank1=0.9390  val_rank1=0.9432  sim_gain=+0.0030  |delta|=0.0232
+[fl]   round  28/30  rank1=0.9386  val_rank1=0.9425  sim_gain=+0.0029  |delta|=0.0235
+[fl]   round  29/30  rank1=0.9389  val_rank1=0.9429  sim_gain=+0.0028  |delta|=0.0235
+[fl]   round  30/30  rank1=0.9388  val_rank1=0.9425  sim_gain=+0.0028  |delta|=0.0232
+[fl] early stop: keeping round 6/30 (val rank1=0.9444) instead of the final round
+[fl] federated: rank1=0.9391  tpir@fpir=0.0001=0.4973  tpir@fpir=0.001=0.6258  tpir@fpir=0.01=0.7737  ver_auc=0.9443
+[exp]   sigma=0.00  eps=     inf  rank1=0.9391  clipped=0.0
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.8751  val_rank1=0.8846  sim_gain=+0.0044  |delta|=2.0843
+[fl]   round   2/30  rank1=0.8281  val_rank1=0.8552  sim_gain=-0.0854  |delta|=2.0974
+[fl]   round   3/30  rank1=0.7789  val_rank1=0.8201  sim_gain=-0.1293  |delta|=2.0895
+[fl]   round   4/30  rank1=0.7321  val_rank1=0.7842  sim_gain=-0.1570  |delta|=2.0828
+[fl]   round   5/30  rank1=0.6974  val_rank1=0.7749  sim_gain=-0.1755  |delta|=2.0904
+[fl]   round   6/30  rank1=0.6716  val_rank1=0.7467  sim_gain=-0.1885  |delta|=2.0919
+[fl]   round   7/30  rank1=0.6391  val_rank1=0.7259  sim_gain=-0.1998  |delta|=2.0976
+[fl]   round   8/30  rank1=0.6170  val_rank1=0.7212  sim_gain=-0.2089  |delta|=2.1054
+[fl]   round   9/30  rank1=0.6069  val_rank1=0.7000  sim_gain=-0.2133  |delta|=2.0971
+[fl]   round  10/30  rank1=0.5997  val_rank1=0.7050  sim_gain=-0.2178  |delta|=2.0938
+[fl]   round  11/30  rank1=0.5970  val_rank1=0.7012  sim_gain=-0.2207  |delta|=2.0940
+[fl]   round  12/30  rank1=0.5868  val_rank1=0.6973  sim_gain=-0.2234  |delta|=2.0949
+[fl]   round  13/30  rank1=0.5807  val_rank1=0.7015  sim_gain=-0.2249  |delta|=2.0946
+[fl]   round  14/30  rank1=0.5840  val_rank1=0.6973  sim_gain=-0.2272  |delta|=2.0980
+[fl]   round  15/30  rank1=0.5764  val_rank1=0.6973  sim_gain=-0.2282  |delta|=2.0903
+[fl]   round  16/30  rank1=0.5873  val_rank1=0.7062  sim_gain=-0.2296  |delta|=2.1034
+[fl]   round  17/30  rank1=0.5811  val_rank1=0.6846  sim_gain=-0.2290  |delta|=2.0964
+[fl]   round  18/30  rank1=0.5995  val_rank1=0.7019  sim_gain=-0.2278  |delta|=2.0898
+[fl]   round  19/30  rank1=0.5999  val_rank1=0.6981  sim_gain=-0.2264  |delta|=2.0964
+[fl]   round  20/30  rank1=0.5893  val_rank1=0.6795  sim_gain=-0.2271  |delta|=2.1048
+[fl]   round  21/30  rank1=0.5985  val_rank1=0.6985  sim_gain=-0.2278  |delta|=2.0942
+[fl]   round  22/30  rank1=0.6060  val_rank1=0.6896  sim_gain=-0.2261  |delta|=2.1006
+[fl]   round  23/30  rank1=0.6041  val_rank1=0.7066  sim_gain=-0.2243  |delta|=2.0942
+[fl]   round  24/30  rank1=0.6019  val_rank1=0.7004  sim_gain=-0.2236  |delta|=2.0983
+[fl]   round  25/30  rank1=0.6165  val_rank1=0.7035  sim_gain=-0.2249  |delta|=2.1002
+[fl]   round  26/30  rank1=0.6113  val_rank1=0.6996  sim_gain=-0.2250  |delta|=2.0953
+[fl]   round  27/30  rank1=0.6203  val_rank1=0.7154  sim_gain=-0.2241  |delta|=2.0970
+[fl]   round  28/30  rank1=0.6226  val_rank1=0.7205  sim_gain=-0.2251  |delta|=2.0982
+[fl]   round  29/30  rank1=0.6326  val_rank1=0.7336  sim_gain=-0.2241  |delta|=2.0946
+[fl]   round  30/30  rank1=0.6398  val_rank1=0.7216  sim_gain=-0.2201  |delta|=2.0982
+[fl] early stop: keeping round 1/30 (val rank1=0.8846) instead of the final round
+[fl] federated: rank1=0.8751  tpir@fpir=0.0001=0.2578  tpir@fpir=0.001=0.5267  tpir@fpir=0.01=0.6599  ver_auc=0.9252
+[exp]   sigma=0.30  eps= 251.883  rank1=0.8751  clipped=1.0
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.6254  val_rank1=0.7073  sim_gain=+0.0043  |delta|=4.1940
+[fl]   round   2/30  rank1=0.3926  val_rank1=0.5560  sim_gain=-0.2053  |delta|=4.1964
+[fl]   round   3/30  rank1=0.2948  val_rank1=0.4653  sim_gain=-0.2629  |delta|=4.1928
+[fl]   round   4/30  rank1=0.2306  val_rank1=0.3927  sim_gain=-0.2886  |delta|=4.1756
+[fl]   round   5/30  rank1=0.1748  val_rank1=0.3394  sim_gain=-0.3037  |delta|=4.1705
+[fl]   round   6/30  rank1=0.1407  val_rank1=0.3170  sim_gain=-0.3168  |delta|=4.1866
+[fl]   round   7/30  rank1=0.1246  val_rank1=0.2838  sim_gain=-0.3252  |delta|=4.1877
+[fl]   round   8/30  rank1=0.1090  val_rank1=0.2514  sim_gain=-0.3311  |delta|=4.1981
+[fl]   round   9/30  rank1=0.1004  val_rank1=0.2386  sim_gain=-0.3355  |delta|=4.1929
+[fl]   round  10/30  rank1=0.0963  val_rank1=0.2290  sim_gain=-0.3379  |delta|=4.1928
+[fl]   round  11/30  rank1=0.0912  val_rank1=0.2131  sim_gain=-0.3409  |delta|=4.1631
+[fl]   round  12/30  rank1=0.0930  val_rank1=0.2239  sim_gain=-0.3436  |delta|=4.1880
+[fl]   round  13/30  rank1=0.0927  val_rank1=0.2081  sim_gain=-0.3462  |delta|=4.1966
+[fl]   round  14/30  rank1=0.0861  val_rank1=0.2189  sim_gain=-0.3474  |delta|=4.1733
+[fl]   round  15/30  rank1=0.0802  val_rank1=0.2193  sim_gain=-0.3473  |delta|=4.1883
+[fl]   round  16/30  rank1=0.0779  val_rank1=0.2174  sim_gain=-0.3476  |delta|=4.1922
+[fl]   round  17/30  rank1=0.0759  val_rank1=0.1861  sim_gain=-0.3479  |delta|=4.2000
+[fl]   round  18/30  rank1=0.0814  val_rank1=0.1907  sim_gain=-0.3478  |delta|=4.1980
+[fl]   round  19/30  rank1=0.0826  val_rank1=0.1819  sim_gain=-0.3468  |delta|=4.2089
+[fl]   round  20/30  rank1=0.0803  val_rank1=0.1753  sim_gain=-0.3459  |delta|=4.1953
+[fl]   round  21/30  rank1=0.0766  val_rank1=0.1768  sim_gain=-0.3470  |delta|=4.1719
+[fl]   round  22/30  rank1=0.0791  val_rank1=0.1869  sim_gain=-0.3481  |delta|=4.1833
+[fl]   round  23/30  rank1=0.0745  val_rank1=0.1741  sim_gain=-0.3477  |delta|=4.1635
+[fl]   round  24/30  rank1=0.0786  val_rank1=0.1931  sim_gain=-0.3487  |delta|=4.1822
+[fl]   round  25/30  rank1=0.0765  val_rank1=0.1931  sim_gain=-0.3470  |delta|=4.1804
+[fl]   round  26/30  rank1=0.0818  val_rank1=0.1954  sim_gain=-0.3473  |delta|=4.1966
+[fl]   round  27/30  rank1=0.0819  val_rank1=0.1938  sim_gain=-0.3468  |delta|=4.1920
+[fl]   round  28/30  rank1=0.0804  val_rank1=0.1896  sim_gain=-0.3477  |delta|=4.1757
+[fl]   round  29/30  rank1=0.0880  val_rank1=0.1981  sim_gain=-0.3484  |delta|=4.1959
+[fl]   round  30/30  rank1=0.0882  val_rank1=0.1927  sim_gain=-0.3474  |delta|=4.1795
+[fl] early stop: keeping round 1/30 (val rank1=0.7073) instead of the final round
+[fl] federated: rank1=0.6254  tpir@fpir=0.0001=0.1034  tpir@fpir=0.001=0.2248  tpir@fpir=0.01=0.3408  ver_auc=0.8862
+[exp]   sigma=0.60  eps=  83.616  rank1=0.6254  clipped=0.6
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.2477  val_rank1=0.4170  sim_gain=+0.0044  |delta|=6.9801
+[fl]   round   2/30  rank1=0.0894  val_rank1=0.1807  sim_gain=-0.2937  |delta|=6.9861
+[fl]   round   3/30  rank1=0.0546  val_rank1=0.1378  sim_gain=-0.3332  |delta|=6.9500
+[fl]   round   4/30  rank1=0.0383  val_rank1=0.1116  sim_gain=-0.3504  |delta|=6.9830
+[fl]   round   5/30  rank1=0.0260  val_rank1=0.0958  sim_gain=-0.3618  |delta|=6.9671
+[fl]   round   6/30  rank1=0.0245  val_rank1=0.0788  sim_gain=-0.3686  |delta|=6.9823
+[fl]   round   7/30  rank1=0.0234  val_rank1=0.0695  sim_gain=-0.3738  |delta|=6.9828
+[fl]   round   8/30  rank1=0.0174  val_rank1=0.0537  sim_gain=-0.3781  |delta|=6.9470
+[fl]   round   9/30  rank1=0.0162  val_rank1=0.0502  sim_gain=-0.3818  |delta|=6.9610
+[fl]   round  10/30  rank1=0.0153  val_rank1=0.0402  sim_gain=-0.3823  |delta|=6.9892
+[fl]   round  11/30  rank1=0.0127  val_rank1=0.0448  sim_gain=-0.3824  |delta|=6.9638
+[fl]   round  12/30  rank1=0.0126  val_rank1=0.0483  sim_gain=-0.3858  |delta|=6.9435
+[fl]   round  13/30  rank1=0.0103  val_rank1=0.0402  sim_gain=-0.3867  |delta|=6.9621
+[fl]   round  14/30  rank1=0.0113  val_rank1=0.0386  sim_gain=-0.3897  |delta|=6.9806
+[fl]   round  15/30  rank1=0.0107  val_rank1=0.0378  sim_gain=-0.3905  |delta|=6.9942
+[fl]   round  16/30  rank1=0.0106  val_rank1=0.0363  sim_gain=-0.3916  |delta|=6.9985
+[fl]   round  17/30  rank1=0.0107  val_rank1=0.0367  sim_gain=-0.3938  |delta|=7.0072
+[fl]   round  18/30  rank1=0.0095  val_rank1=0.0405  sim_gain=-0.3938  |delta|=6.9827
+[fl]   round  19/30  rank1=0.0097  val_rank1=0.0386  sim_gain=-0.3942  |delta|=6.9928
+[fl]   round  20/30  rank1=0.0099  val_rank1=0.0409  sim_gain=-0.3940  |delta|=6.9854
+[fl]   round  21/30  rank1=0.0082  val_rank1=0.0382  sim_gain=-0.3929  |delta|=6.9349
+[fl]   round  22/30  rank1=0.0071  val_rank1=0.0371  sim_gain=-0.3932  |delta|=6.9643
+[fl]   round  23/30  rank1=0.0073  val_rank1=0.0263  sim_gain=-0.3964  |delta|=6.9536
+[fl]   round  24/30  rank1=0.0066  val_rank1=0.0309  sim_gain=-0.3963  |delta|=6.9748
+[fl]   round  25/30  rank1=0.0073  val_rank1=0.0320  sim_gain=-0.3985  |delta|=6.9990
+[fl]   round  26/30  rank1=0.0083  val_rank1=0.0317  sim_gain=-0.3990  |delta|=6.9662
+[fl]   round  27/30  rank1=0.0082  val_rank1=0.0305  sim_gain=-0.3992  |delta|=6.9878
+[fl]   round  28/30  rank1=0.0081  val_rank1=0.0278  sim_gain=-0.3983  |delta|=6.9806
+[fl]   round  29/30  rank1=0.0075  val_rank1=0.0278  sim_gain=-0.3985  |delta|=6.9951
+[fl]   round  30/30  rank1=0.0066  val_rank1=0.0309  sim_gain=-0.3990  |delta|=7.0105
+[fl] early stop: keeping round 1/30 (val rank1=0.4170) instead of the final round
+[fl] federated: rank1=0.2477  tpir@fpir=0.0001=0.0087  tpir@fpir=0.001=0.0258  tpir@fpir=0.01=0.0619  ver_auc=0.8177
+[exp]   sigma=1.00  eps=  40.007  rank1=0.2477  clipped=0.0
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.0216  val_rank1=0.0737  sim_gain=+0.0045  |delta|=13.9555
+[fl]   round   2/30  rank1=0.0101  val_rank1=0.0286  sim_gain=-0.3775  |delta|=13.9767
+[fl]   round   3/30  rank1=0.0056  val_rank1=0.0212  sim_gain=-0.3964  |delta|=13.9211
+[fl]   round   4/30  rank1=0.0044  val_rank1=0.0236  sim_gain=-0.4058  |delta|=13.9356
+[fl]   round   5/30  rank1=0.0032  val_rank1=0.0189  sim_gain=-0.4113  |delta|=14.0498
+[fl]   round   6/30  rank1=0.0028  val_rank1=0.0131  sim_gain=-0.4142  |delta|=14.0258
+[fl]   round   7/30  rank1=0.0021  val_rank1=0.0135  sim_gain=-0.4170  |delta|=13.8735
+[fl]   round   8/30  rank1=0.0015  val_rank1=0.0097  sim_gain=-0.4194  |delta|=14.0323
+[fl]   round   9/30  rank1=0.0017  val_rank1=0.0093  sim_gain=-0.4196  |delta|=14.0093
+[fl]   round  10/30  rank1=0.0016  val_rank1=0.0089  sim_gain=-0.4214  |delta|=13.9414
+[fl]   round  11/30  rank1=0.0015  val_rank1=0.0093  sim_gain=-0.4214  |delta|=13.9633
+[fl]   round  12/30  rank1=0.0024  val_rank1=0.0093  sim_gain=-0.4216  |delta|=13.9784
+[fl]   round  13/30  rank1=0.0013  val_rank1=0.0097  sim_gain=-0.4233  |delta|=13.9672
+[fl]   round  14/30  rank1=0.0011  val_rank1=0.0104  sim_gain=-0.4241  |delta|=13.9197
+[fl]   round  15/30  rank1=0.0011  val_rank1=0.0097  sim_gain=-0.4253  |delta|=13.8848
+[fl]   round  16/30  rank1=0.0011  val_rank1=0.0093  sim_gain=-0.4249  |delta|=13.9337
+[fl]   round  17/30  rank1=0.0012  val_rank1=0.0077  sim_gain=-0.4237  |delta|=13.9326
+[fl]   round  18/30  rank1=0.0011  val_rank1=0.0077  sim_gain=-0.4228  |delta|=13.9615
+[fl]   round  19/30  rank1=0.0015  val_rank1=0.0069  sim_gain=-0.4226  |delta|=13.9743
+[fl]   round  20/30  rank1=0.0009  val_rank1=0.0085  sim_gain=-0.4241  |delta|=13.9318
+[fl]   round  21/30  rank1=0.0005  val_rank1=0.0054  sim_gain=-0.4239  |delta|=13.9554
+[fl]   round  22/30  rank1=0.0011  val_rank1=0.0066  sim_gain=-0.4239  |delta|=13.9951
+[fl]   round  23/30  rank1=0.0009  val_rank1=0.0054  sim_gain=-0.4235  |delta|=13.9173
+[fl]   round  24/30  rank1=0.0011  val_rank1=0.0073  sim_gain=-0.4249  |delta|=14.0192
+[fl]   round  25/30  rank1=0.0011  val_rank1=0.0054  sim_gain=-0.4260  |delta|=13.9433
+[fl]   round  26/30  rank1=0.0008  val_rank1=0.0054  sim_gain=-0.4266  |delta|=14.0085
+[fl]   round  27/30  rank1=0.0010  val_rank1=0.0046  sim_gain=-0.4273  |delta|=13.9671
+[fl]   round  28/30  rank1=0.0013  val_rank1=0.0042  sim_gain=-0.4281  |delta|=13.9357
+[fl]   round  29/30  rank1=0.0011  val_rank1=0.0039  sim_gain=-0.4286  |delta|=13.9930
+[fl]   round  30/30  rank1=0.0013  val_rank1=0.0046  sim_gain=-0.4287  |delta|=14.0059
+[fl] early stop: keeping round 1/30 (val rank1=0.0737) instead of the final round
+[fl] federated: rank1=0.0216  tpir@fpir=0.0001=0.0000  tpir@fpir=0.001=0.0003  tpir@fpir=0.01=0.0017  ver_auc=0.6936
+[exp]   sigma=2.00  eps=  15.929  rank1=0.0216  clipped=0.0
+[exp] masking: 10 rounds, with and without
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 10 rounds, 5 sampled per round
+[fl]   round   1/10  rank1=0.9353  val_rank1=0.9432  sim_gain=+0.0044  |delta|=0.0666
+[fl]   round   2/10  rank1=0.9368  val_rank1=0.9417  sim_gain=+0.0042  |delta|=0.0471
+[fl]   round   3/10  rank1=0.9368  val_rank1=0.9421  sim_gain=+0.0042  |delta|=0.0408
+[fl]   round   4/10  rank1=0.9372  val_rank1=0.9421  sim_gain=+0.0044  |delta|=0.0366
+[fl]   round   5/10  rank1=0.9376  val_rank1=0.9425  sim_gain=+0.0044  |delta|=0.0343
+[fl]   round   6/10  rank1=0.9376  val_rank1=0.9436  sim_gain=+0.0044  |delta|=0.0321
+[fl]   round   7/10  rank1=0.9380  val_rank1=0.9429  sim_gain=+0.0043  |delta|=0.0303
+[fl]   round   8/10  rank1=0.9381  val_rank1=0.9417  sim_gain=+0.0042  |delta|=0.0289
+[fl]   round   9/10  rank1=0.9380  val_rank1=0.9417  sim_gain=+0.0041  |delta|=0.0275
+[fl]   round  10/10  rank1=0.9376  val_rank1=0.9409  sim_gain=+0.0041  |delta|=0.0267
+[fl] early stop: keeping round 6/10 (val rank1=0.9436) instead of the final round
+[fl] federated: rank1=0.9376  tpir@fpir=0.0001=0.4908  tpir@fpir=0.001=0.6302  tpir@fpir=0.01=0.7709  ver_auc=0.9440
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 10 rounds, 5 sampled per round
+[fl]   round   1/10  rank1=0.9353  val_rank1=0.9432  sim_gain=+0.0044  |delta|=0.0666
+[fl]   round   2/10  rank1=0.9368  val_rank1=0.9417  sim_gain=+0.0042  |delta|=0.0471
+[fl]   round   3/10  rank1=0.9368  val_rank1=0.9421  sim_gain=+0.0042  |delta|=0.0408
+[fl]   round   4/10  rank1=0.9372  val_rank1=0.9421  sim_gain=+0.0044  |delta|=0.0366
+[fl]   round   5/10  rank1=0.9376  val_rank1=0.9425  sim_gain=+0.0044  |delta|=0.0343
+[fl]   round   6/10  rank1=0.9376  val_rank1=0.9436  sim_gain=+0.0044  |delta|=0.0321
+[fl]   round   7/10  rank1=0.9380  val_rank1=0.9429  sim_gain=+0.0043  |delta|=0.0303
+[fl]   round   8/10  rank1=0.9381  val_rank1=0.9417  sim_gain=+0.0042  |delta|=0.0289
+[fl]   round   9/10  rank1=0.9380  val_rank1=0.9417  sim_gain=+0.0041  |delta|=0.0275
+[fl]   round  10/10  rank1=0.9376  val_rank1=0.9409  sim_gain=+0.0041  |delta|=0.0267
+[fl] early stop: keeping round 6/10 (val rank1=0.9436) instead of the final round
+[fl] federated: rank1=0.9376  tpir@fpir=0.0001=0.4908  tpir@fpir=0.001=0.6302  tpir@fpir=0.01=0.7709  ver_auc=0.9440
+[exp]   rank1 plain=0.9376  masked=0.9376  difference=+0.00000
+[exp]   wall clock 26.8s -> 27.0s (1.01x)
+[exp] templates: sweeping [32, 64, 96, 128, 256] bits
+[exp]   float embeddings (unprotected): rank1=0.9355
+[exp]     32 bits ( 4 bytes): rank1=0.0383  cost=+0.8973
+[exp]     64 bits ( 8 bytes): rank1=0.1299  cost=+0.8056
+[exp]     96 bits (12 bytes): rank1=0.2502  cost=+0.6853
+[exp]    128 bits (16 bytes): rank1=0.3593  cost=+0.5762
+[exp]    256 bits (32 bytes): rank1=0.6483  cost=+0.2872
+[exp] fedprox: mu in [0.0, 0.01, 0.1, 1.0], 30 rounds each
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedAvg, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.9382  val_rank1=0.9417  sim_gain=+0.0043  |delta|=0.1758
+[fl]   round   2/30  rank1=0.9379  val_rank1=0.9421  sim_gain=+0.0054  |delta|=0.1748
+[fl]   round   3/30  rank1=0.9380  val_rank1=0.9429  sim_gain=+0.0058  |delta|=0.1558
+[fl]   round   4/30  rank1=0.9384  val_rank1=0.9425  sim_gain=+0.0060  |delta|=0.1418
+[fl]   round   5/30  rank1=0.9381  val_rank1=0.9429  sim_gain=+0.0060  |delta|=0.1328
+[fl]   round   6/30  rank1=0.9382  val_rank1=0.9425  sim_gain=+0.0061  |delta|=0.1275
+[fl]   round   7/30  rank1=0.9380  val_rank1=0.9421  sim_gain=+0.0062  |delta|=0.1237
+[fl]   round   8/30  rank1=0.9381  val_rank1=0.9417  sim_gain=+0.0062  |delta|=0.1205
+[fl]   round   9/30  rank1=0.9372  val_rank1=0.9421  sim_gain=+0.0063  |delta|=0.1191
+[fl]   round  10/30  rank1=0.9372  val_rank1=0.9417  sim_gain=+0.0064  |delta|=0.1165
+[fl]   round  11/30  rank1=0.9372  val_rank1=0.9421  sim_gain=+0.0064  |delta|=0.1149
+[fl]   round  12/30  rank1=0.9372  val_rank1=0.9429  sim_gain=+0.0067  |delta|=0.1125
+[fl]   round  13/30  rank1=0.9372  val_rank1=0.9432  sim_gain=+0.0067  |delta|=0.1113
+[fl]   round  14/30  rank1=0.9370  val_rank1=0.9421  sim_gain=+0.0067  |delta|=0.1115
+[fl]   round  15/30  rank1=0.9374  val_rank1=0.9417  sim_gain=+0.0069  |delta|=0.1092
+[fl]   round  16/30  rank1=0.9371  val_rank1=0.9425  sim_gain=+0.0070  |delta|=0.1091
+[fl]   round  17/30  rank1=0.9372  val_rank1=0.9413  sim_gain=+0.0072  |delta|=0.1071
+[fl]   round  18/30  rank1=0.9367  val_rank1=0.9421  sim_gain=+0.0073  |delta|=0.1078
+[fl]   round  19/30  rank1=0.9372  val_rank1=0.9421  sim_gain=+0.0074  |delta|=0.1049
+[fl]   round  20/30  rank1=0.9366  val_rank1=0.9409  sim_gain=+0.0074  |delta|=0.1038
+[fl]   round  21/30  rank1=0.9362  val_rank1=0.9413  sim_gain=+0.0075  |delta|=0.1038
+[fl]   round  22/30  rank1=0.9364  val_rank1=0.9417  sim_gain=+0.0077  |delta|=0.1023
+[fl]   round  23/30  rank1=0.9367  val_rank1=0.9413  sim_gain=+0.0077  |delta|=0.1012
+[fl]   round  24/30  rank1=0.9362  val_rank1=0.9421  sim_gain=+0.0078  |delta|=0.1009
+[fl]   round  25/30  rank1=0.9365  val_rank1=0.9421  sim_gain=+0.0078  |delta|=0.0997
+[fl]   round  26/30  rank1=0.9364  val_rank1=0.9413  sim_gain=+0.0080  |delta|=0.0998
+[fl]   round  27/30  rank1=0.9362  val_rank1=0.9405  sim_gain=+0.0081  |delta|=0.0996
+[fl]   round  28/30  rank1=0.9359  val_rank1=0.9409  sim_gain=+0.0082  |delta|=0.0974
+[fl]   round  29/30  rank1=0.9360  val_rank1=0.9409  sim_gain=+0.0082  |delta|=0.0978
+[fl]   round  30/30  rank1=0.9358  val_rank1=0.9417  sim_gain=+0.0083  |delta|=0.0963
+[fl] early stop: keeping round 13/30 (val rank1=0.9432) instead of the final round
+[fl] federated: rank1=0.9372  tpir@fpir=0.0001=0.5069  tpir@fpir=0.001=0.6250  tpir@fpir=0.01=0.7659  ver_auc=0.9451
+[exp]   mu=0     rank1=0.9372  |delta|=0.0963
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.9382  val_rank1=0.9417  sim_gain=+0.0043  |delta|=0.1591
+[fl]   round   2/30  rank1=0.9378  val_rank1=0.9421  sim_gain=+0.0053  |delta|=0.1551
+[fl]   round   3/30  rank1=0.9381  val_rank1=0.9429  sim_gain=+0.0057  |delta|=0.1412
+[fl]   round   4/30  rank1=0.9382  val_rank1=0.9429  sim_gain=+0.0059  |delta|=0.1300
+[fl]   round   5/30  rank1=0.9380  val_rank1=0.9425  sim_gain=+0.0060  |delta|=0.1219
+[fl]   round   6/30  rank1=0.9384  val_rank1=0.9425  sim_gain=+0.0061  |delta|=0.1172
+[fl]   round   7/30  rank1=0.9383  val_rank1=0.9421  sim_gain=+0.0061  |delta|=0.1140
+[fl]   round   8/30  rank1=0.9382  val_rank1=0.9421  sim_gain=+0.0061  |delta|=0.1111
+[fl]   round   9/30  rank1=0.9376  val_rank1=0.9425  sim_gain=+0.0062  |delta|=0.1101
+[fl]   round  10/30  rank1=0.9372  val_rank1=0.9417  sim_gain=+0.0063  |delta|=0.1077
+[fl]   round  11/30  rank1=0.9372  val_rank1=0.9425  sim_gain=+0.0063  |delta|=0.1062
+[fl]   round  12/30  rank1=0.9374  val_rank1=0.9432  sim_gain=+0.0066  |delta|=0.1042
+[fl]   round  13/30  rank1=0.9373  val_rank1=0.9436  sim_gain=+0.0066  |delta|=0.1026
+[fl]   round  14/30  rank1=0.9373  val_rank1=0.9425  sim_gain=+0.0066  |delta|=0.1032
+[fl]   round  15/30  rank1=0.9374  val_rank1=0.9421  sim_gain=+0.0068  |delta|=0.1012
+[fl]   round  16/30  rank1=0.9370  val_rank1=0.9425  sim_gain=+0.0069  |delta|=0.1007
+[fl]   round  17/30  rank1=0.9372  val_rank1=0.9417  sim_gain=+0.0070  |delta|=0.0992
+[fl]   round  18/30  rank1=0.9368  val_rank1=0.9425  sim_gain=+0.0072  |delta|=0.0998
+[fl]   round  19/30  rank1=0.9372  val_rank1=0.9421  sim_gain=+0.0073  |delta|=0.0973
+[fl]   round  20/30  rank1=0.9363  val_rank1=0.9405  sim_gain=+0.0072  |delta|=0.0964
+[fl]   round  21/30  rank1=0.9361  val_rank1=0.9413  sim_gain=+0.0074  |delta|=0.0962
+[fl]   round  22/30  rank1=0.9364  val_rank1=0.9413  sim_gain=+0.0075  |delta|=0.0951
+[fl]   round  23/30  rank1=0.9363  val_rank1=0.9413  sim_gain=+0.0076  |delta|=0.0942
+[fl]   round  24/30  rank1=0.9367  val_rank1=0.9421  sim_gain=+0.0076  |delta|=0.0937
+[fl]   round  25/30  rank1=0.9366  val_rank1=0.9417  sim_gain=+0.0077  |delta|=0.0927
+[fl]   round  26/30  rank1=0.9362  val_rank1=0.9413  sim_gain=+0.0079  |delta|=0.0927
+[fl]   round  27/30  rank1=0.9363  val_rank1=0.9405  sim_gain=+0.0080  |delta|=0.0924
+[fl]   round  28/30  rank1=0.9356  val_rank1=0.9409  sim_gain=+0.0080  |delta|=0.0904
+[fl]   round  29/30  rank1=0.9358  val_rank1=0.9405  sim_gain=+0.0081  |delta|=0.0910
+[fl]   round  30/30  rank1=0.9359  val_rank1=0.9413  sim_gain=+0.0082  |delta|=0.0896
+[fl] early stop: keeping round 13/30 (val rank1=0.9436) instead of the final round
+[fl] federated: rank1=0.9373  tpir@fpir=0.0001=0.5055  tpir@fpir=0.001=0.6248  tpir@fpir=0.01=0.7664  ver_auc=0.9450
+[exp]   mu=0.01  rank1=0.9373  |delta|=0.0896
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.9380  val_rank1=0.9417  sim_gain=+0.0043  |delta|=0.1252
+[fl]   round   2/30  rank1=0.9377  val_rank1=0.9421  sim_gain=+0.0052  |delta|=0.1044
+[fl]   round   3/30  rank1=0.9380  val_rank1=0.9436  sim_gain=+0.0055  |delta|=0.0962
+[fl]   round   4/30  rank1=0.9383  val_rank1=0.9429  sim_gain=+0.0057  |delta|=0.0904
+[fl]   round   5/30  rank1=0.9382  val_rank1=0.9429  sim_gain=+0.0057  |delta|=0.0859
+[fl]   round   6/30  rank1=0.9384  val_rank1=0.9425  sim_gain=+0.0057  |delta|=0.0829
+[fl]   round   7/30  rank1=0.9383  val_rank1=0.9425  sim_gain=+0.0057  |delta|=0.0807
+[fl]   round   8/30  rank1=0.9381  val_rank1=0.9417  sim_gain=+0.0057  |delta|=0.0792
+[fl]   round   9/30  rank1=0.9379  val_rank1=0.9425  sim_gain=+0.0058  |delta|=0.0783
+[fl]   round  10/30  rank1=0.9382  val_rank1=0.9405  sim_gain=+0.0059  |delta|=0.0770
+[fl]   round  11/30  rank1=0.9371  val_rank1=0.9417  sim_gain=+0.0058  |delta|=0.0763
+[fl]   round  12/30  rank1=0.9376  val_rank1=0.9436  sim_gain=+0.0060  |delta|=0.0755
+[fl]   round  13/30  rank1=0.9374  val_rank1=0.9429  sim_gain=+0.0060  |delta|=0.0738
+[fl]   round  14/30  rank1=0.9374  val_rank1=0.9421  sim_gain=+0.0060  |delta|=0.0746
+[fl]   round  15/30  rank1=0.9376  val_rank1=0.9421  sim_gain=+0.0062  |delta|=0.0735
+[fl]   round  16/30  rank1=0.9377  val_rank1=0.9425  sim_gain=+0.0063  |delta|=0.0731
+[fl]   round  17/30  rank1=0.9375  val_rank1=0.9421  sim_gain=+0.0064  |delta|=0.0721
+[fl]   round  18/30  rank1=0.9370  val_rank1=0.9421  sim_gain=+0.0065  |delta|=0.0724
+[fl]   round  19/30  rank1=0.9371  val_rank1=0.9429  sim_gain=+0.0066  |delta|=0.0712
+[fl]   round  20/30  rank1=0.9366  val_rank1=0.9421  sim_gain=+0.0066  |delta|=0.0711
+[fl]   round  21/30  rank1=0.9368  val_rank1=0.9432  sim_gain=+0.0067  |delta|=0.0705
+[fl]   round  22/30  rank1=0.9366  val_rank1=0.9429  sim_gain=+0.0069  |delta|=0.0704
+[fl]   round  23/30  rank1=0.9368  val_rank1=0.9425  sim_gain=+0.0069  |delta|=0.0697
+[fl]   round  24/30  rank1=0.9372  val_rank1=0.9432  sim_gain=+0.0069  |delta|=0.0697
+[fl]   round  25/30  rank1=0.9370  val_rank1=0.9398  sim_gain=+0.0070  |delta|=0.0690
+[fl]   round  26/30  rank1=0.9374  val_rank1=0.9413  sim_gain=+0.0072  |delta|=0.0686
+[fl]   round  27/30  rank1=0.9370  val_rank1=0.9421  sim_gain=+0.0073  |delta|=0.0688
+[fl]   round  28/30  rank1=0.9367  val_rank1=0.9409  sim_gain=+0.0073  |delta|=0.0677
+[fl]   round  29/30  rank1=0.9363  val_rank1=0.9409  sim_gain=+0.0074  |delta|=0.0685
+[fl]   round  30/30  rank1=0.9362  val_rank1=0.9432  sim_gain=+0.0074  |delta|=0.0673
+[fl] early stop: keeping round 3/30 (val rank1=0.9436) instead of the final round
+[fl] federated: rank1=0.9380  tpir@fpir=0.0001=0.4923  tpir@fpir=0.001=0.6377  tpir@fpir=0.01=0.7695  ver_auc=0.9442
+[exp]   mu=0.1   rank1=0.9380  |delta|=0.0673
+[fl] early stopping on 518 held-back identities (2590 probes), disjoint from both training and test
+[fl] federated: FedProx, 5 nodes, 30 rounds, 5 sampled per round
+[fl]   round   1/30  rank1=0.9373  val_rank1=0.9421  sim_gain=+0.0045  |delta|=0.0883
+[fl]   round   2/30  rank1=0.9374  val_rank1=0.9421  sim_gain=+0.0047  |delta|=0.0608
+[fl]   round   3/30  rank1=0.9374  val_rank1=0.9425  sim_gain=+0.0049  |delta|=0.0515
+[fl]   round   4/30  rank1=0.9379  val_rank1=0.9425  sim_gain=+0.0051  |delta|=0.0456
+[fl]   round   5/30  rank1=0.9382  val_rank1=0.9421  sim_gain=+0.0050  |delta|=0.0417
+[fl]   round   6/30  rank1=0.9382  val_rank1=0.9425  sim_gain=+0.0050  |delta|=0.0393
+[fl]   round   7/30  rank1=0.9383  val_rank1=0.9425  sim_gain=+0.0049  |delta|=0.0373
+[fl]   round   8/30  rank1=0.9383  val_rank1=0.9421  sim_gain=+0.0047  |delta|=0.0363
+[fl]   round   9/30  rank1=0.9383  val_rank1=0.9421  sim_gain=+0.0047  |delta|=0.0351
+[fl]   round  10/30  rank1=0.9383  val_rank1=0.9409  sim_gain=+0.0046  |delta|=0.0347
+[fl]   round  11/30  rank1=0.9384  val_rank1=0.9405  sim_gain=+0.0044  |delta|=0.0343
+[fl]   round  12/30  rank1=0.9382  val_rank1=0.9413  sim_gain=+0.0045  |delta|=0.0339
+[fl]   round  13/30  rank1=0.9384  val_rank1=0.9421  sim_gain=+0.0044  |delta|=0.0335
+[fl]   round  14/30  rank1=0.9384  val_rank1=0.9409  sim_gain=+0.0043  |delta|=0.0336
+[fl]   round  15/30  rank1=0.9381  val_rank1=0.9405  sim_gain=+0.0043  |delta|=0.0335
+[fl]   round  16/30  rank1=0.9385  val_rank1=0.9409  sim_gain=+0.0043  |delta|=0.0337
+[fl]   round  17/30  rank1=0.9377  val_rank1=0.9405  sim_gain=+0.0043  |delta|=0.0333
+[fl]   round  18/30  rank1=0.9377  val_rank1=0.9405  sim_gain=+0.0044  |delta|=0.0336
+[fl]   round  19/30  rank1=0.9372  val_rank1=0.9398  sim_gain=+0.0043  |delta|=0.0334
+[fl]   round  20/30  rank1=0.9374  val_rank1=0.9402  sim_gain=+0.0043  |delta|=0.0337
+[fl]   round  21/30  rank1=0.9374  val_rank1=0.9405  sim_gain=+0.0043  |delta|=0.0331
+[fl]   round  22/30  rank1=0.9373  val_rank1=0.9413  sim_gain=+0.0044  |delta|=0.0331
+[fl]   round  23/30  rank1=0.9375  val_rank1=0.9405  sim_gain=+0.0043  |delta|=0.0329
+[fl]   round  24/30  rank1=0.9372  val_rank1=0.9405  sim_gain=+0.0043  |delta|=0.0331
+[fl]   round  25/30  rank1=0.9370  val_rank1=0.9409  sim_gain=+0.0043  |delta|=0.0330
+[fl]   round  26/30  rank1=0.9366  val_rank1=0.9405  sim_gain=+0.0044  |delta|=0.0328
+[fl]   round  27/30  rank1=0.9367  val_rank1=0.9409  sim_gain=+0.0045  |delta|=0.0329
+[fl]   round  28/30  rank1=0.9364  val_rank1=0.9405  sim_gain=+0.0045  |delta|=0.0331
+[fl]   round  29/30  rank1=0.9367  val_rank1=0.9402  sim_gain=+0.0045  |delta|=0.0332
+[fl]   round  30/30  rank1=0.9366  val_rank1=0.9409  sim_gain=+0.0045  |delta|=0.0330
+[fl] early stop: keeping round 3/30 (val rank1=0.9425) instead of the final round
+[fl] federated: rank1=0.9374  tpir@fpir=0.0001=0.4869  tpir@fpir=0.001=0.6359  tpir@fpir=0.01=0.7701  ver_auc=0.9440
+[exp]   mu=1     rank1=0.9374  |delta|=0.0330
+[exp] mia: loss-threshold membership inference
+[exp]   sample level    AUC = 0.4963  (17260 per class)
+[exp]   identity level  AUC = 0.5456  (34520 per class)
+[exp] rendering figures
+[exp]   wrote fig1_degradation.png
+[exp]   wrote fig8_operating_points.png
+[exp]   wrote fig2_three_way.png
+[exp]   wrote fig3_convergence.png
+[exp]   wrote fig4_dp_sweep.png
+[exp]   wrote fig5_det.png
+[exp]   wrote fig6_templates.png
+[exp]   wrote fig7_fedprox.png
+
+[run] wrote /home/ubuntu/fedmps/results/experiments_vgg_big.json
+[run]   figure fig1_degradation.png
+[run]   figure fig8_operating_points.png
+[run]   figure fig2_three_way.png
+[run]   figure fig3_convergence.png
+[run]   figure fig4_dp_sweep.png
+[run]   figure fig5_det.png
+[run]   figure fig6_templates.png
+[run]   figure fig7_fedprox.png
+
+[run] WARNINGS - read these before writing anything up:
+    - [three_way] The adapter did not improve on the frozen backbone alone. Check that the degradation model is strong enough to matter and that the shift it induces is systematic rather than pure noise.
+
+[run] rank-1 on held-out identities
+    no adapter     0.9474
+    local only     0.9285
+    federated      0.9448
+    centralised    0.9452
+
+######## EVERYTHING DONE ########
+2026-09-15T16:19:31Z
+

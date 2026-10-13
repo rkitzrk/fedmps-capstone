@@ -1,0 +1,401 @@
+{
+  "config": {
+    "seed": 1337,
+    "paths": {
+      "root": "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone",
+      "artifacts": "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone\\artifacts",
+      "figures": "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone\\figures",
+      "results": "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone\\results",
+      "checkpoints": "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone\\checkpoints",
+      "cache": "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone\\cache",
+      "media": "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone\\media"
+    },
+    "data": {
+      "source": "lfw",
+      "lfw_min_faces_per_person": 5,
+      "lfw_resize": 0.64,
+      "folder_path": null,
+      "folder_min_images_per_person": 3,
+      "max_identities": 400,
+      "max_images_per_identity": 40,
+      "image_size": 160,
+      "channel_order": "RGB"
+    },
+    "degrade": {
+      "ranges": {
+        "face_px": [
+          20,
+          48
+        ],
+        "blur_kernel": [
+          1,
+          9
+        ],
+        "noise_sigma": [
+          0.0,
+          12.0
+        ],
+        "gamma": [
+          0.7,
+          1.6
+        ],
+        "jpeg_quality": [
+          25,
+          70
+        ]
+      },
+      "per_image_jitter": 0.25,
+      "downscale_interp": "area",
+      "upscale_interp": "linear"
+    },
+    "partition": {
+      "n_nodes": 5,
+      "test_identity_frac": 0.25,
+      "val_frac": 0.2,
+      "unbalanced": true,
+      "unbalance_ratio": 3.0
+    },
+    "backbone": {
+      "preference": [
+        "insightface",
+        "facenet",
+        "dummy"
+      ],
+      "insightface_model": "buffalo_l",
+      "insightface_onnx": "w600k_r50.onnx",
+      "facenet_pretrained": "vggface2",
+      "device": "cpu",
+      "batch_size": 64,
+      "dummy_identity_noise": 0.35,
+      "dummy_degradation_sensitivity": 0.55
+    },
+    "adapter": {
+      "in_dim": 512,
+      "hidden_dim": 256,
+      "out_dim": 512,
+      "dropout": 0.1,
+      "residual": true
+    },
+    "train": {
+      "lr": 0.001,
+      "weight_decay": 0.0001,
+      "local_epochs": 2,
+      "centralised_epochs": 40,
+      "batch_size": 128,
+      "loss": "infonce",
+      "temperature": 0.07,
+      "margin": 0.3,
+      "hard_negative_ratio": 0.5
+    },
+    "fl": {
+      "rounds": 6,
+      "clients_per_round": null,
+      "fedprox_mu": 0.0
+    },
+    "privacy": {
+      "enable_dp": false,
+      "clip_norm": 1.0,
+      "noise_multiplier": 0.0,
+      "delta": 1e-05,
+      "dp_orders": [
+        1.25,
+        1.5,
+        1.75,
+        2.0,
+        2.5,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        8.0,
+        12.0,
+        16.0,
+        24.0,
+        32.0,
+        48.0,
+        64.0,
+        128.0,
+        256.0
+      ],
+      "enable_masking": false,
+      "dh_bits": 2048,
+      "template_bits": 96,
+      "template_key_bits": 96,
+      "template_master_key": "fedmps-demo-master-key"
+    },
+    "pipeline": {
+      "sample_fps": 8,
+      "min_face_px": 24,
+      "max_blur_ratio": 0.35,
+      "max_yaw_deg": 45.0,
+      "match_threshold": 0.35,
+      "track_vote_k": 3,
+      "track_vote_n": 5
+    },
+    "eval": {
+      "fpir_points": [
+        0.01,
+        0.001,
+        0.0001
+      ],
+      "far_points": [
+        0.01,
+        0.001,
+        0.0001
+      ],
+      "gallery_frac": 0.5,
+      "n_verification_pairs": 6000,
+      "n_bootstrap": 0,
+      "eval_every": 1
+    }
+  },
+  "backbone": "dummy",
+  "synthetic_backbone": true,
+  "dp_sweep": {
+    "points": [
+      {
+        "noise_multiplier": 0.0,
+        "clip_norm": 1.0,
+        "epsilon": Infinity,
+        "delta": 1e-05,
+        "rank1": 1.0,
+        "verification_auc": 1.0,
+        "fraction_clipped": 0.0,
+        "seconds": 8.5
+      },
+      {
+        "noise_multiplier": 0.3,
+        "clip_norm": 1.0,
+        "epsilon": 71.11630842505602,
+        "delta": 1e-05,
+        "rank1": 0.2471042471042471,
+        "verification_auc": 0.6642469999999999,
+        "fraction_clipped": 0.8,
+        "seconds": 3.6
+      },
+      {
+        "noise_multiplier": 0.6,
+        "clip_norm": 1.0,
+        "epsilon": 26.793297770517007,
+        "delta": 1e-05,
+        "rank1": 0.15057915057915058,
+        "verification_auc": 0.574575888888889,
+        "fraction_clipped": 0.8,
+        "seconds": 3.6
+      },
+      {
+        "noise_multiplier": 1.0,
+        "clip_norm": 1.0,
+        "epsilon": 13.801691480042896,
+        "delta": 1e-05,
+        "rank1": 0.09652509652509653,
+        "verification_auc": 0.5125146666666667,
+        "fraction_clipped": 0.8,
+        "seconds": 3.5
+      },
+      {
+        "noise_multiplier": 2.0,
+        "clip_norm": 1.0,
+        "epsilon": 6.002728336819823,
+        "delta": 1e-05,
+        "rank1": 0.22007722007722008,
+        "verification_auc": 0.5147216666666667,
+        "fraction_clipped": 0.8,
+        "seconds": 3.4
+      }
+    ],
+    "no_noise_rank1": 1.0,
+    "note": "epsilon is update-level and assumes full participation; sigma=0 means clipping only, which carries no formal guarantee and is reported as infinite epsilon",
+    "knee": {
+      "noise_multiplier": 0.3,
+      "clip_norm": 1.0,
+      "epsilon": 71.11630842505602,
+      "delta": 1e-05,
+      "rank1": 0.2471042471042471,
+      "verification_auc": 0.6642469999999999,
+      "fraction_clipped": 0.8,
+      "seconds": 3.6
+    }
+  },
+  "templates": {
+    "baseline_float": {
+      "rank1": 1.0,
+      "tpir@fpir=0.01": 1.0,
+      "tpir@fpir=0.001": NaN,
+      "tpir@fpir=0.001_note": "unmeasurable: 266 non-mate probes resolve no finer than 0.0038",
+      "tpir@fpir=0.0001": NaN,
+      "tpir@fpir=0.0001_note": "unmeasurable: 266 non-mate probes resolve no finer than 0.0038",
+      "n_gallery": 8,
+      "n_mate": 259,
+      "n_nonmate": 266,
+      "mean_mate_score": 0.7313465476036072,
+      "mean_nonmate_score": 0.1745084822177887
+    },
+    "points": [
+      {
+        "bits": 32,
+        "bytes_on_wire": 4,
+        "rank1": 0.9768339768339769,
+        "rank1_cost": 0.02316602316602312,
+        "selection_criterion": "fisher",
+        "tpir@fpir=0.01": 0.7953667953667953,
+        "tpir@fpir=0.001": NaN,
+        "tpir@fpir=0.0001": NaN,
+        "n_bits": 32,
+        "source_dims": 512,
+        "compression_ratio": 512.0
+      },
+      {
+        "bits": 64,
+        "bytes_on_wire": 8,
+        "rank1": 1.0,
+        "rank1_cost": 0.0,
+        "selection_criterion": "fisher",
+        "tpir@fpir=0.01": 0.9806949806949807,
+        "tpir@fpir=0.001": NaN,
+        "tpir@fpir=0.0001": NaN,
+        "n_bits": 64,
+        "source_dims": 512,
+        "compression_ratio": 256.0
+      },
+      {
+        "bits": 96,
+        "bytes_on_wire": 12,
+        "rank1": 1.0,
+        "rank1_cost": 0.0,
+        "selection_criterion": "fisher",
+        "tpir@fpir=0.01": 0.9922779922779923,
+        "tpir@fpir=0.001": NaN,
+        "tpir@fpir=0.0001": NaN,
+        "n_bits": 96,
+        "source_dims": 512,
+        "compression_ratio": 170.66666666666666
+      },
+      {
+        "bits": 128,
+        "bytes_on_wire": 16,
+        "rank1": 1.0,
+        "rank1_cost": 0.0,
+        "selection_criterion": "fisher",
+        "tpir@fpir=0.01": 1.0,
+        "tpir@fpir=0.001": NaN,
+        "tpir@fpir=0.0001": NaN,
+        "n_bits": 128,
+        "source_dims": 512,
+        "compression_ratio": 128.0
+      },
+      {
+        "bits": 256,
+        "bytes_on_wire": 32,
+        "rank1": 1.0,
+        "rank1_cost": 0.0,
+        "selection_criterion": "fisher",
+        "tpir@fpir=0.01": 1.0,
+        "tpir@fpir=0.001": NaN,
+        "tpir@fpir=0.0001": NaN,
+        "n_bits": 256,
+        "source_dims": 512,
+        "compression_ratio": 64.0
+      }
+    ],
+    "chosen": {
+      "bits": 96,
+      "bytes_on_wire": 12,
+      "rank1": 1.0,
+      "rank1_cost": 0.0,
+      "selection_criterion": "fisher",
+      "tpir@fpir=0.01": 0.9922779922779923,
+      "tpir@fpir=0.001": NaN,
+      "tpir@fpir=0.0001": NaN,
+      "n_bits": 96,
+      "source_dims": 512,
+      "compression_ratio": 170.66666666666666
+    },
+    "note": "templates protect a watchlist at rest and defeat cross-site linkage; they do not defend a live compromised node, which holds the key and sees its own camera feed regardless",
+    "used_adapter": false
+  },
+  "fedprox": {
+    "points": [
+      {
+        "mu": 0.0,
+        "aggregation": "FedAvg",
+        "rank1": 1.0,
+        "verification_auc": 1.0,
+        "final_delta_norm": 0.41502708196640015,
+        "rank1_curve": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "mu": 0.01,
+        "aggregation": "FedProx",
+        "rank1": 1.0,
+        "verification_auc": 1.0,
+        "final_delta_norm": 0.19668979942798615,
+        "rank1_curve": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "mu": 0.1,
+        "aggregation": "FedProx",
+        "rank1": 1.0,
+        "verification_auc": 1.0,
+        "final_delta_norm": 0.14450952410697937,
+        "rank1_curve": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      },
+      {
+        "mu": 1.0,
+        "aggregation": "FedProx",
+        "rank1": 1.0,
+        "verification_auc": 1.0,
+        "final_delta_norm": 0.13225267827510834,
+        "rank1_curve": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ]
+      }
+    ],
+    "best_mu": 0.0,
+    "fedavg_rank1": 1.0,
+    "best_rank1": 1.0,
+    "improvement": 0.0
+  },
+  "mia": {
+    "attack_auc": 0.9999788798580725,
+    "n_per_class": 533,
+    "mean_member_similarity": 0.8147082924842834,
+    "mean_nonmember_similarity": 0.6187565922737122,
+    "verdict": "substantial leakage - report this honestly and check whether DP closes it",
+    "reference": "[4] reported MIA AUC 0.507-0.532",
+    "attack": "loss-threshold on per-sample probe-to-gallery similarity"
+  },
+  "elapsed_sec": 36.9,
+  "warnings": [],
+  "figures": [
+    "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone\\figures\\fig4_dp_sweep.png",
+    "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone\\figures\\fig6_templates.png",
+    "C:\\Users\\gopal\\Downloads\\fedmpscapstone\\fedmps-capstone\\figures\\fig7_fedprox.png"
+  ]
+}

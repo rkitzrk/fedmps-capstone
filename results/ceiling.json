@@ -1,0 +1,26 @@
+[
+  {
+    "variant": "none          (frozen backbone)",
+    "rank1": 0.48066165413533835,
+    "gain": 0.0,
+    "tpir_1e-3": 0.0769624060150376
+  },
+  {
+    "variant": "global map    (fitted on train)",
+    "rank1": 0.4486015037593985,
+    "gain": -0.032060150375939844,
+    "tpir_1e-3": 0.05353383458646616
+  },
+  {
+    "variant": "per-camera    (fitted on train)",
+    "rank1": 0.3152781954887218,
+    "gain": -0.16538345864661652,
+    "tpir_1e-3": 0.022345864661654134
+  },
+  {
+    "variant": "per-camera    (fitted on TEST - cheating ceiling)",
+    "rank1": 0.5596992481203007,
+    "gain": 0.07903759398496235,
+    "tpir_1e-3": 0.077203007518797
+  }
+]

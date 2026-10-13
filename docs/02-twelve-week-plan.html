@@ -1,0 +1,561 @@
+<title>Federated Face Search Build Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F4F5F2;
+  --surface:#FFFFFF;
+  --surface-2:#EBEEE9;
+  --ink:#14191A;
+  --ink-2:#3D474A;
+  --muted:#6B7679;
+  --rule:#DADED7;
+  --rule-strong:#B9C1BA;
+  --accent:#0F5F57;
+  --accent-soft:#DCEDE8;
+  --flag:#8E5A11;
+  --flag-soft:#F5EAD8;
+  --stop:#93332A;
+  --stop-soft:#F6E3DF;
+
+  --t1:#0F5F57;
+  --t2:#2C5C86;
+  --t3:#8E5A11;
+  --t4:#5C4A80;
+
+  --f-display:"Newsreader",Georgia,serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1413; --surface:#161B1A; --surface-2:#1D2423;
+    --ink:#E9ECE8; --ink-2:#B5BEBA; --muted:#818C88;
+    --rule:#293130; --rule-strong:#3B4543;
+    --accent:#54C2B1; --accent-soft:#14312D;
+    --flag:#DBA657; --flag-soft:#332810;
+    --stop:#E08578; --stop-soft:#3B221D;
+    --t1:#54C2B1; --t2:#79ADDE; --t3:#DBA657; --t4:#A797D6;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1413; --surface:#161B1A; --surface-2:#1D2423;
+  --ink:#E9ECE8; --ink-2:#B5BEBA; --muted:#818C88;
+  --rule:#293130; --rule-strong:#3B4543;
+  --accent:#54C2B1; --accent-soft:#14312D;
+  --flag:#DBA657; --flag-soft:#332810;
+  --stop:#E08578; --stop-soft:#3B221D;
+  --t1:#54C2B1; --t2:#79ADDE; --t3:#DBA657; --t4:#A797D6;
+}
+
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.page{max-width:62rem;margin:0 auto;padding:3.5rem 1.5rem 6rem}
+@media(max-width:640px){.page{padding:2.5rem 1.1rem 4rem}}
+
+.eyebrow{font-family:var(--f-mono);font-size:.69rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem}
+h1{font-family:var(--f-display);font-size:clamp(2rem,4.6vw,2.9rem);font-weight:500;line-height:1.1;letter-spacing:-.015em;margin:0 0 .9rem;text-wrap:balance}
+.stand{font-family:var(--f-display);font-size:1.15rem;line-height:1.5;color:var(--ink-2);margin:0 0 1.5rem;max-width:36rem}
+.meta{display:flex;flex-wrap:wrap;gap:.3rem 1.8rem;font-family:var(--f-mono);font-size:.71rem;color:var(--muted);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:.75rem 0;margin-bottom:1rem}
+.meta b{color:var(--ink-2);font-weight:500}
+
+section{padding:2.6rem 0 0;scroll-margin-top:1rem}
+h2{font-family:var(--f-display);font-size:1.6rem;font-weight:500;line-height:1.2;margin:0 0 .45rem;letter-spacing:-.01em}
+.hint{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 1rem}
+h3{font-size:.93rem;font-weight:600;margin:1.7rem 0 .45rem}
+p{margin:0 0 .9rem;max-width:44rem}
+ul,ol{margin:0 0 .9rem;padding-left:1.1rem;max-width:44rem}
+li{margin-bottom:.32rem}
+li::marker{color:var(--rule-strong)}
+code{font-family:var(--f-mono);font-size:.85em;background:var(--surface-2);border:1px solid var(--rule);padding:.08em .32em;border-radius:3px}
+.hr{height:1px;background:var(--rule);border:0;margin:2.6rem 0 0}
+
+/* callouts */
+.call{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1rem 1.2rem;margin:1.3rem 0;max-width:46rem}
+.call.warn{border-left-color:var(--flag)}
+.call.stop{border-left-color:var(--stop)}
+.call h4{font-family:var(--f-mono);font-size:.69rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 .45rem}
+.call p:last-child{margin-bottom:0}
+.call p{max-width:none}
+
+.pull{border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);padding:1.2rem 0;margin:1.5rem 0;max-width:46rem}
+.pull p{font-family:var(--f-display);font-size:1.13rem;line-height:1.5;margin:0;max-width:none}
+
+/* tables */
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);margin:1.1rem 0 1.4rem}
+table{border-collapse:collapse;width:100%;min-width:34rem;font-size:.86rem}
+th{font-family:var(--f-mono);font-size:.64rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.62rem .8rem;background:var(--surface-2);border-bottom:1px solid var(--rule-strong)}
+td{padding:.6rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.48}
+tr:last-child td{border-bottom:0}
+td.k{font-weight:500;color:var(--ink)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* gantt */
+.gantt{border:1px solid var(--rule);background:var(--surface);padding:1rem;margin:1.2rem 0 1.5rem;overflow-x:auto}
+.gt{min-width:38rem}
+.gt-head{display:grid;grid-template-columns:8.5rem repeat(12,1fr);gap:3px;margin-bottom:5px}
+.gt-head span{font-family:var(--f-mono);font-size:.62rem;color:var(--muted);text-align:center;letter-spacing:.02em}
+.gt-head span:first-child{text-align:left}
+.gt-row{display:grid;grid-template-columns:8.5rem repeat(12,1fr);gap:3px;margin-bottom:3px;align-items:center}
+.gt-lbl{font-family:var(--f-mono);font-size:.66rem;font-weight:500;display:flex;align-items:center;gap:.4rem;color:var(--ink-2)}
+.dot{width:8px;height:8px;flex:0 0 8px;border-radius:1px}
+.cell{height:20px;background:var(--surface-2);border-radius:1px}
+.cell.on{opacity:1}
+.cell.hi{position:relative}
+.cell.hi::after{content:"";position:absolute;inset:0;border:1.5px solid var(--ink);border-radius:1px}
+.gt-key{display:flex;flex-wrap:wrap;gap:.3rem 1.2rem;margin-top:.8rem;font-family:var(--f-mono);font-size:.64rem;color:var(--muted)}
+.gt-key span{display:flex;align-items:center;gap:.35rem}
+
+/* weeks */
+.weeks{border-top:1px solid var(--rule);margin:1.3rem 0 1.5rem}
+.wk{display:grid;grid-template-columns:3.4rem 1fr;column-gap:1.3rem;padding:1rem 0;border-bottom:1px solid var(--rule)}
+.wk-n{font-family:var(--f-mono);font-size:.78rem;font-weight:600;color:var(--accent);padding-top:.1rem;letter-spacing:.02em}
+.wk-t{font-size:.95rem;font-weight:600;margin:0 0 .5rem}
+.wk-b{margin:0}
+.task{display:grid;grid-template-columns:1.1rem 1fr;column-gap:.55rem;font-size:.87rem;color:var(--ink-2);margin-bottom:.32rem;align-items:start}
+.who{font-family:var(--f-mono);font-size:.66rem;font-weight:600;padding-top:.18rem}
+.w1{color:var(--t1)} .w2{color:var(--t2)} .w3{color:var(--t3)} .w4{color:var(--t4)} .wa{color:var(--muted)}
+.out{font-family:var(--f-mono);font-size:.7rem;color:var(--muted);margin-top:.5rem;padding-left:1.65rem;position:relative}
+.out::before{content:"▸";position:absolute;left:.45rem;color:var(--rule-strong)}
+.wk.key{background:var(--accent-soft);margin:0 -.9rem;padding-left:.9rem;padding-right:.9rem;border-bottom-color:var(--rule)}
+.wk.key .wk-n{color:var(--accent)}
+.badge{font-family:var(--f-mono);font-size:.6rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);padding:.08em .4em;border-radius:2px;margin-left:.5rem;vertical-align:.12em}
+
+/* team */
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:1.1rem;margin:1.2rem 0 1rem}
+.mem{border-top:2px solid var(--rule-strong);padding-top:.7rem}
+.mem.m1{border-top-color:var(--t1)} .mem.m2{border-top-color:var(--t2)}
+.mem.m3{border-top-color:var(--t3)} .mem.m4{border-top-color:var(--t4)}
+.mem h4{font-family:var(--f-mono);font-size:.68rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin:0 0 .35rem;color:var(--muted)}
+.mem .r{font-size:.92rem;font-weight:600;margin:0 0 .4rem}
+.mem ul{font-size:.84rem;color:var(--ink-2);padding-left:.95rem;margin:0}
+.mem li{margin-bottom:.22rem}
+
+/* checklist */
+.check{columns:2;column-gap:2rem;max-width:46rem;margin:1rem 0}
+@media(max-width:640px){.check{columns:1}}
+.check div{break-inside:avoid;display:grid;grid-template-columns:1.1rem 1fr;gap:.5rem;font-size:.87rem;margin-bottom:.45rem;color:var(--ink-2)}
+.check .bx{width:12px;height:12px;border:1.5px solid var(--rule-strong);border-radius:2px;margin-top:.34rem}
+.check .bx.req{border-color:var(--accent)}
+
+footer{border-top:1px solid var(--rule);margin-top:3rem;padding-top:1.2rem;font-family:var(--f-mono);font-size:.7rem;color:var(--muted);line-height:1.7}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="page">
+
+<p class="eyebrow">Execution plan · 12 weeks · 4 people</p>
+<h1>Federated Missing-Person Search — Build Plan</h1>
+<p class="stand">The scoped-down version. One federated module, five small components, four parallel lanes, and exactly one novelty claim that carries the report.</p>
+<div class="meta">
+  <span><b>Duration</b> 12 weeks</span>
+  <span><b>Team</b> 4</span>
+  <span><b>Hardware</b> Laptops only</span>
+  <span><b>New datasets to request</b> None</span>
+  <span><b>Companion</b> Design report</span>
+</div>
+
+<div class="pull">
+  <p>Everything in this plan runs on a laptop, uses only datasets you can download today, and involves no hardware purchase, no access request, and no protocol you cannot read in an afternoon.</p>
+</div>
+
+<hr class="hr">
+
+<section id="novelty">
+  <h2>The novelty, in one sentence</h2>
+  <p class="hint">Paste this into your abstract</p>
+
+  <div class="call">
+    <p>Existing federated face-recognition work federates the recognition model itself, which is impractical at edge scale. <strong>We freeze a public face recognition backbone entirely and federate only a 0.4&nbsp;M-parameter domain adapter that learns each site's camera degradation profile</strong> — cutting per-round communication by roughly two orders of magnitude while recovering low-resolution matching accuracy that no single node could reach alone, with cancelable watchlist templates and differentially private update aggregation on top.</p>
+  </div>
+
+  <p>That claim is small, true, measurable in three weeks, and absent from all sixteen papers in your survey. It is enough. Two supporting contributions come almost free and give you extra report sections:</p>
+  <ul>
+    <li><strong>Cancelable watchlist templates</strong> — the missing person's face is distributed as a keyed binary code, never as an image. About 30 lines of code, directly extends paper [2].</li>
+    <li><strong>Track-level decisions instead of frame-level</strong> — requires <em>k</em> of <em>n</em> frames in one track to agree before raising an alert. Closes the exact gap paper [1] left open, and it makes the demo video look far better.</li>
+  </ul>
+
+  <div class="call warn">
+    <h4>Resist adding a fourth</h4>
+    <p>Every extra mechanism costs a week you do not have and adds nothing to the grade. If someone suggests blockchain, homomorphic encryption, or a second biometric modality, the answer is "future work" and it goes in the last paragraph of the report.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="scope">
+  <h2>What you are actually building</h2>
+  <p class="hint">Five components · none of them large</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Component</th><th>Roughly</th><th>What it is</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Degradation pipeline</td><td class="mono">~80 lines</td><td>OpenCV chain: downsample → motion blur → noise → JPEG. Turns clean LFW/CelebA faces into fake CCTV faces. Also generates your non-IID split, since each node gets its own parameter range.</td></tr>
+        <tr><td class="k">Adapter MLP <span class="mono" style="color:var(--accent)">← the federated part</span></td><td class="mono">~40 lines</td><td>512 → 256 → 512 residual MLP on top of frozen ArcFace embeddings. Trains in seconds on CPU. This is the only thing that ever moves between nodes.</td></tr>
+        <tr><td class="k">FedAvg loop</td><td class="mono">~60 lines</td><td>Five node objects in one Python process. Loop: send weights out, each node trains locally, average what comes back. No Docker, no network, no framework required.</td></tr>
+        <tr><td class="k">Privacy layer</td><td class="mono">~70 lines</td><td>Clip update norm + add Gaussian noise (DP). Pairwise random masks that cancel in the sum (secure aggregation). Top-k select + mean-threshold binarise + XOR key (cancelable template).</td></tr>
+        <tr><td class="k">Video pipeline + 2 dashboards</td><td class="mono">~300 lines</td><td>Detect → track → quality gate → embed → adapt → match → track vote → alert. Two Streamlit apps: a server console and a node review queue.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>That is the whole system. Roughly 550 lines of your own code, plus library calls. Four people over twelve weeks is comfortable for that — the risk in this project is not volume, it is getting stuck on setup in week 1.</p>
+</section>
+
+<hr class="hr">
+
+<section id="cuts">
+  <h2>What was cut from the design report</h2>
+  <p class="hint">And why each cut is safe</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Cut</th><th>Reason</th><th>What you say in the report</th></tr></thead>
+      <tbody>
+        <tr><td class="k">SCface, QMUL-SurvFace, TinyFace</td><td>All need access approval. Weeks of waiting on a 12-week clock.</td><td>"Evaluated on LFW and CelebA under a controlled synthetic degradation model; validation on natively-captured surveillance data is left to future work."</td></tr>
+        <tr><td class="k">The verifier head</td><td>Two federated modules is twice the debugging for one extra chart.</td><td>Nothing — just federate the adapter. Mention the verifier as a planned extension.</td></tr>
+        <tr><td class="k">Jetson / real edge device</td><td>Costs money and a week of driver pain.</td><td>"Nodes are simulated as independent processes; edge deployment is future work." Everyone does this. Nobody will object.</td></tr>
+        <tr><td class="k">Campus CCTV collection</td><td>Institutional approval will outlast the project.</td><td>Record your own four faces on a phone in a corridor instead. You are consenting adults filming yourselves — no approval needed, and it demos identically.</td></tr>
+        <tr><td class="k">Opacus DP-SGD</td><td>Per-example gradients are fiddly.</td><td>Use update-level DP instead: clip the update norm, add Gaussian noise. Ten lines, and it is the more standard choice for federated learning anyway.</td></tr>
+        <tr><td class="k">Inversion attack, poisoning eval</td><td>Each is a week for a section nobody grades.</td><td>Keep the one cheap membership-inference test if week 9 is calm. Otherwise drop it entirely.</td></tr>
+        <tr><td class="k">FastAPI + React</td><td>A week of frontend work for a demo shown once.</td><td>Streamlit. Two files, an afternoon each, and it screenshots well for the report.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="team">
+  <h2>Who does what</h2>
+  <p class="hint">Four lanes · each person owns one results table and one report chapter</p>
+
+  <div class="team">
+    <div class="mem m1">
+      <h4>Person 1</h4>
+      <p class="r">Data &amp; backbone</p>
+      <ul>
+        <li>Environment setup for everyone</li>
+        <li>LFW + CelebA download, embedding extraction</li>
+        <li>Degradation pipeline</li>
+        <li>Non-IID node split</li>
+        <li>Evaluation harness and metrics code</li>
+      </ul>
+    </div>
+    <div class="mem m2">
+      <h4>Person 2</h4>
+      <p class="r">Federated learning</p>
+      <ul>
+        <li>Adapter architecture</li>
+        <li>Centralised and local-only baselines</li>
+        <li>FedAvg loop</li>
+        <li>The three-way comparison</li>
+        <li>Optional: FedProx variant</li>
+      </ul>
+    </div>
+    <div class="mem m3">
+      <h4>Person 3</h4>
+      <p class="r">Privacy</p>
+      <ul>
+        <li>DP noise + the ε sweep</li>
+        <li>Pairwise masking</li>
+        <li>Cancelable templates</li>
+        <li>Optional: membership inference</li>
+        <li>Threat model chapter</li>
+      </ul>
+    </div>
+    <div class="mem m4">
+      <h4>Person 4</h4>
+      <p class="r">Systems &amp; demo</p>
+      <ul>
+        <li>Video pipeline: detect, track, gate</li>
+        <li>Matching + track-level voting</li>
+        <li>Both Streamlit dashboards</li>
+        <li>Demo footage and final video</li>
+        <li>Architecture chapter</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="call">
+    <h4>The one rule that keeps this on schedule</h4>
+    <p>Persons 1 and 4 must not block each other, and Person 2 must not be blocked by anyone. Person 1 hands over embeddings in week 2; from that point every lane runs independently until they converge in week 9. If any handover slips, the person waiting starts on their report chapter rather than idling.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="gantt">
+  <h2>Twelve weeks at a glance</h2>
+  <p class="hint">Outlined cells are the two weeks that decide the project</p>
+
+  <div class="gantt">
+    <div class="gt">
+      <div class="gt-head">
+        <span>Lane</span>
+        <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span>
+        <span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+      </div>
+
+      <div class="gt-row">
+        <span class="gt-lbl"><span class="dot" style="background:var(--t1)"></span>Data</span>
+        <span class="cell" style="background:var(--t1)"></span>
+        <span class="cell" style="background:var(--t1)"></span>
+        <span class="cell" style="background:var(--t1)"></span>
+        <span class="cell" style="background:var(--t1)"></span>
+        <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
+        <span class="cell"></span><span class="cell"></span>
+        <span class="cell" style="background:var(--t1)"></span>
+        <span class="cell" style="background:var(--t1)"></span>
+      </div>
+
+      <div class="gt-row">
+        <span class="gt-lbl"><span class="dot" style="background:var(--t2)"></span>Federated</span>
+        <span class="cell"></span><span class="cell"></span>
+        <span class="cell" style="background:var(--t2)"></span>
+        <span class="cell" style="background:var(--t2)"></span>
+        <span class="cell hi" style="background:var(--t2)"></span>
+        <span class="cell hi" style="background:var(--t2)"></span>
+        <span class="cell" style="background:var(--t2)"></span>
+        <span class="cell"></span><span class="cell"></span><span class="cell"></span>
+        <span class="cell" style="background:var(--t2)"></span>
+        <span class="cell" style="background:var(--t2)"></span>
+      </div>
+
+      <div class="gt-row">
+        <span class="gt-lbl"><span class="dot" style="background:var(--t3)"></span>Privacy</span>
+        <span class="cell"></span><span class="cell"></span><span class="cell"></span><span class="cell"></span>
+        <span class="cell"></span><span class="cell"></span>
+        <span class="cell" style="background:var(--t3)"></span>
+        <span class="cell" style="background:var(--t3)"></span>
+        <span class="cell" style="background:var(--t3)"></span>
+        <span class="cell"></span>
+        <span class="cell" style="background:var(--t3)"></span>
+        <span class="cell" style="background:var(--t3)"></span>
+      </div>
+
+      <div class="gt-row">
+        <span class="gt-lbl"><span class="dot" style="background:var(--t4)"></span>Systems</span>
+        <span class="cell"></span>
+        <span class="cell" style="background:var(--t4)"></span>
+        <span class="cell" style="background:var(--t4)"></span>
+        <span class="cell" style="background:var(--t4)"></span>
+        <span class="cell" style="background:var(--t4)"></span>
+        <span class="cell" style="background:var(--t4)"></span>
+        <span class="cell"></span><span class="cell"></span>
+        <span class="cell" style="background:var(--t4)"></span>
+        <span class="cell" style="background:var(--t4)"></span>
+        <span class="cell" style="background:var(--t4)"></span>
+        <span class="cell" style="background:var(--t4)"></span>
+      </div>
+
+      <div class="gt-key">
+        <span><span class="dot" style="background:var(--t1)"></span>P1 Data &amp; backbone</span>
+        <span><span class="dot" style="background:var(--t2)"></span>P2 Federated learning</span>
+        <span><span class="dot" style="background:var(--t3)"></span>P3 Privacy</span>
+        <span><span class="dot" style="background:var(--t4)"></span>P4 Systems &amp; demo</span>
+        <span><span class="dot" style="border:1.5px solid var(--ink);background:transparent"></span>Critical</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="weeks">
+  <h2>Week by week</h2>
+  <p class="hint">Coloured letters mark whose lane each task sits in</p>
+
+  <div class="weeks">
+
+    <div class="wk">
+      <div class="wk-n">W1</div>
+      <div class="wk-b">
+        <p class="wk-t">Environment and embeddings</p>
+        <div class="task"><span class="who w1">P1</span><span>Install <code>insightface</code> + <code>onnxruntime</code>, get <code>buffalo_l</code> running. Download LFW (via <code>scikit-learn</code>) and a CelebA subset — 500 identities is plenty.</span></div>
+        <div class="task"><span class="who w1">P1</span><span>Extract and cache 512-d embeddings for every image to a <code>.npy</code> file. Everything downstream reads this file, never the images.</span></div>
+        <div class="task"><span class="who wa">all</span><span>Repo, shared drive for figures, weekly 30-minute sync. Agree the report chapter list now.</span></div>
+        <p class="out">Out: <code>embeddings.npy</code> + identity labels. Everyone unblocked.</p>
+      </div>
+    </div>
+
+    <div class="wk">
+      <div class="wk-n">W2</div>
+      <div class="wk-b">
+        <p class="wk-t">Degradation pipeline and the problem statement</p>
+        <div class="task"><span class="who w1">P1</span><span>Build the OpenCV degradation chain. Measure verification accuracy on clean vs degraded faces with the frozen backbone.</span></div>
+        <div class="task"><span class="who w4">P4</span><span>Start the video pipeline skeleton: read a video file, run face detection, draw boxes. Nothing clever yet.</span></div>
+        <p class="out">Out: the accuracy-collapse chart. This single figure is your problem statement — it proves surveillance degradation breaks a state-of-the-art model.</p>
+      </div>
+    </div>
+
+    <div class="wk">
+      <div class="wk-n">W3</div>
+      <div class="wk-b">
+        <p class="wk-t">Adapter, trained centrally</p>
+        <div class="task"><span class="who w2">P2</span><span>Write the adapter MLP. Train it on all data pooled, using cosine-embedding loss on (degraded, clean) pairs of the same identity.</span></div>
+        <div class="task"><span class="who w1">P1</span><span>Build the non-IID split: 5 nodes, disjoint identities, each with its own degradation parameter range.</span></div>
+        <div class="task"><span class="who w4">P4</span><span>Add ByteTrack via <code>supervision</code> so each person gets a persistent track ID.</span></div>
+        <p class="out">Out: centralised upper bound — the number federated learning is allowed to approach but not beat.</p>
+      </div>
+    </div>
+
+    <div class="wk">
+      <div class="wk-n">W4</div>
+      <div class="wk-b">
+        <p class="wk-t">Local-only baselines and the eval harness</p>
+        <div class="task"><span class="who w2">P2</span><span>Train each of the 5 nodes' adapters in isolation. These are your lower bounds.</span></div>
+        <div class="task"><span class="who w1">P1</span><span>Evaluation code: rank-1 accuracy, plus TPIR at fixed FPIR and a DET curve. Write it once, everyone reuses it.</span></div>
+        <div class="task"><span class="who w4">P4</span><span>Quality gate: reject faces below a minimum eye-distance, over a blur threshold, or at extreme pose.</span></div>
+        <div class="task"><span class="who w3">P3</span><span>Read up on DP and secret sharing. Draft the threat model chapter — it needs no code and it is a real deliverable.</span></div>
+        <p class="out">Out: local-only numbers, reusable metrics module.</p>
+      </div>
+    </div>
+
+    <div class="wk key">
+      <div class="wk-n">W5</div>
+      <div class="wk-b">
+        <p class="wk-t">FedAvg <span class="badge">critical</span></p>
+        <div class="task"><span class="who w2">P2</span><span>The loop: broadcast global weights → each node trains a few local epochs → average the returned weights → repeat for 20–50 rounds. Five node objects in one process. No framework.</span></div>
+        <div class="task"><span class="who w4">P4</span><span>Watchlist matching: cosine similarity of a live embedding against the enrolled probe, with a tunable threshold.</span></div>
+        <p class="out">Out: a federated model that trains without diverging.</p>
+      </div>
+    </div>
+
+    <div class="wk key">
+      <div class="wk-n">W6</div>
+      <div class="wk-b">
+        <p class="wk-t">The three-way comparison <span class="badge">critical</span></p>
+        <div class="task"><span class="who w2">P2</span><span>Local-only vs federated vs centralised, on the same test set. <strong>Federated must beat local-only.</strong> If it does not, the methodology has no justification — see the red-flag table below before you panic.</span></div>
+        <div class="task"><span class="who w4">P4</span><span>Record the demo footage: the four of you walking down a corridor past a phone camera, several passes, varied distance and lighting.</span></div>
+        <p class="out">Out: <strong>the headline chart of the entire project.</strong> Everything else supports this one figure.</p>
+      </div>
+    </div>
+
+    <div class="wk">
+      <div class="wk-n">W7</div>
+      <div class="wk-b">
+        <p class="wk-t">Differential privacy</p>
+        <div class="task"><span class="who w3">P3</span><span>Clip each node's update to a fixed norm, add Gaussian noise before aggregation. Sweep the noise multiplier over four settings including zero.</span></div>
+        <div class="task"><span class="who w2">P2</span><span>Optional and cheap: FedProx is a single extra term in the local loss. If it takes more than a day, skip it.</span></div>
+        <p class="out">Out: the privacy–utility curve. Accuracy should fall monotonically as noise rises — that shape <em>is</em> the result.</p>
+      </div>
+    </div>
+
+    <div class="wk">
+      <div class="wk-n">W8</div>
+      <div class="wk-b">
+        <p class="wk-t">Secure aggregation and cancelable templates</p>
+        <div class="task"><span class="who w3">P3</span><span>Pairwise masking: each pair of nodes derives a shared random mask, one adds it and the other subtracts it. Masks cancel in the sum, so the server can compute the average without seeing any single update. Print an individual masked update in your report to show it is unreadable — that screenshot is worth a paragraph of prose.</span></div>
+        <div class="task"><span class="who w3">P3</span><span>Cancelable template: pick the top-96 embedding dimensions, binarise by mean threshold, XOR with a per-node key. Measure the accuracy cost of the transform.</span></div>
+        <p class="out">Out: masking demo, template accuracy-cost table.</p>
+      </div>
+    </div>
+
+    <div class="wk">
+      <div class="wk-n">W9</div>
+      <div class="wk-b">
+        <p class="wk-t">Integration</p>
+        <div class="task"><span class="who w4">P4</span><span>Drop the trained adapter into the video pipeline. Add track-level voting: <em>k</em> of <em>n</em> frames in a track must agree before an alert fires. Measure false alarms with and without it.</span></div>
+        <div class="task"><span class="who w3">P3</span><span>Optional: loss-threshold membership inference. Only if this week is calm.</span></div>
+        <p class="out">Out: end-to-end run on your corridor video, with the track-voting comparison.</p>
+      </div>
+    </div>
+
+    <div class="wk">
+      <div class="wk-n">W10</div>
+      <div class="wk-b">
+        <p class="wk-t">Dashboards</p>
+        <div class="task"><span class="who w4">P4</span><span>Server console: upload a missing-person photo, generate the template, push to nodes, view incoming alerts. Node console: review queue with the matched crop, confirm or reject buttons.</span></div>
+        <div class="task"><span class="who wa">all</span><span>Full dry run of the demo, start to finish, and time it. Fix whatever breaks.</span></div>
+        <p class="out">Out: two Streamlit apps and a working live demo.</p>
+      </div>
+    </div>
+
+    <div class="wk">
+      <div class="wk-n">W11</div>
+      <div class="wk-b">
+        <p class="wk-t">Results and figures</p>
+        <div class="task"><span class="who wa">all</span><span>Every experiment re-run cleanly with fixed random seeds. Every chart regenerated at the same size, font and palette so the report looks deliberate.</span></div>
+        <div class="task"><span class="who wa">all</span><span>Each person drafts their own chapter. Do not leave writing to week 12.</span></div>
+        <p class="out">Out: final figure set, chapter drafts.</p>
+      </div>
+    </div>
+
+    <div class="wk">
+      <div class="wk-n">W12</div>
+      <div class="wk-b">
+        <p class="wk-t">Report, slides, viva</p>
+        <div class="task"><span class="who wa">all</span><span>Assemble the report. Record a 3-minute demo video as insurance against a live demo failing in the room.</span></div>
+        <div class="task"><span class="who wa">all</span><span>Rehearse two answers specifically: <em>why did you freeze the backbone?</em> and <em>why is federated learning necessary here at all?</em> Those are the questions you will get.</span></div>
+        <p class="out">Out: final report, slides, recorded demo.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="redflags">
+  <h2>Red flags and what they mean</h2>
+  <p class="hint">Diagnostics, so a bad number does not cost you a week</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>If you see</th><th>It usually means</th><th>Do this</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Degraded accuracy barely drops in W2</td><td>Your degradation is too gentle — the faces are still easy.</td><td>Push harder: smaller target face size, stronger blur, lower JPEG quality. You want a visible collapse, otherwise there is no problem to solve.</td></tr>
+        <tr><td class="k">Adapter does not beat no-adapter in W3</td><td>Wrong loss, or you are training on pairs the backbone already handles.</td><td>Check you are training degraded→clean of the <em>same</em> identity, and that the backbone is genuinely frozen (<code>requires_grad=False</code>). Verify the adapter output is not collapsing to a constant.</td></tr>
+        <tr><td class="k">Federated ≈ local-only in W6</td><td>Nodes are too similar, so there is nothing to share.</td><td>Make the split more non-IID: widen the per-node degradation ranges and shrink each node's dataset. FL only helps when a node has too little data to learn alone — that is the honest condition, so create it.</td></tr>
+        <tr><td class="k">Federated beats centralised</td><td>A bug — usually test-set leakage across nodes.</td><td>Check identity disjointness between train and test. Centralised is an upper bound; exceeding it means something is wrong.</td></tr>
+        <tr><td class="k">Accuracy collapses at any DP noise</td><td>Clipping norm is too small relative to the updates.</td><td>Log the median update norm first, then set the clip near it. Do not tune noise before you have looked at that number.</td></tr>
+        <tr><td class="k"><code>insightface</code> will not install</td><td>Windows build tools, as usual.</td><td>Fall back to <code>facenet-pytorch</code> or <code>deepface</code>. Any frozen embedding model works — the contribution is the adapter on top, not which backbone sits underneath. Do not lose three days here.</td></tr>
+        <tr><td class="k">Constant false alarms on the demo video</td><td>The quality gate is off or too permissive.</td><td>Raise the minimum face size. Tiny and blurred crops do not produce weak matches — they produce confident wrong ones.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="deliverables">
+  <h2>Deliverables checklist</h2>
+  <p class="hint">Teal boxes are required to pass · grey boxes lift the grade</p>
+
+  <div class="check">
+    <div><span class="bx req"></span><span>Accuracy-collapse chart: clean vs degraded</span></div>
+    <div><span class="bx req"></span><span>Three-way comparison chart</span></div>
+    <div><span class="bx req"></span><span>Federated convergence curve over rounds</span></div>
+    <div><span class="bx req"></span><span>Privacy–utility curve across noise levels</span></div>
+    <div><span class="bx req"></span><span>Architecture diagram</span></div>
+    <div><span class="bx req"></span><span>Threat model table</span></div>
+    <div><span class="bx req"></span><span>End-to-end demo on video</span></div>
+    <div><span class="bx req"></span><span>Both dashboards, screenshotted</span></div>
+    <div><span class="bx req"></span><span>Final report + slides</span></div>
+    <div><span class="bx"></span><span>Masked-update screenshot</span></div>
+    <div><span class="bx"></span><span>Cancelable template cost table</span></div>
+    <div><span class="bx"></span><span>Track-voting false-alarm comparison</span></div>
+    <div><span class="bx"></span><span>DET curve / TPIR at fixed FPIR</span></div>
+    <div><span class="bx"></span><span>FedAvg vs FedProx</span></div>
+    <div><span class="bx"></span><span>Membership-inference result</span></div>
+    <div><span class="bx"></span><span>Recorded backup demo video</span></div>
+  </div>
+
+  <div class="call stop">
+    <h4>If week 9 arrives and you are behind</h4>
+    <p>Cut in this order, and cut without guilt: membership inference, then FedProx, then the DET curve, then cancelable templates, then secure aggregation. Do not cut the three-way comparison, the DP sweep, or the video demo — those three are the project. A clean, small, working system with one honest novelty claim scores better than an ambitious one that does not run in the room.</p>
+  </div>
+</section>
+
+<footer>
+  <p>Companion to the full design report — consult that document for the threat model, evaluation rationale, and ethics chapter, all of which apply unchanged at this scale. Bracketed references point to the 16-paper capstone literature survey. Line counts are estimates for your own code and exclude library calls.</p>
+</footer>
+
+</div>

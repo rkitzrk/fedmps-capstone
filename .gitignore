@@ -1,0 +1,46 @@
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Caches and downloaded datasets
+cache/
+.cache/
+*.cache
+lfw_home/
+
+# Precomputed runtime artifacts and large embeddings (>100MB limit on GitHub)
+artifacts/
+artifacts_vgg_big/
+*.npy
+*.npz
+
+# SQLite databases & runtime states
+*.sqlite
+*.sqlite3
+*.db
+*.sqlite-shm
+*.sqlite-wal
+
+# Dynamic demo outputs, annotated videos, and alert crops
+media/*_annotated.mp4
+media/alerts/
+results/video_node*.json
+
+# OS / Editor temporary files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~

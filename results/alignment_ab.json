@@ -1,0 +1,116 @@
+{
+  "aligned": {
+    "health": {
+      "same_identity_clean": 0.513816941781668,
+      "same_identity_degraded": 0.24948370109521784,
+      "cross_identity_clean": 0.0037741634440608325,
+      "cross_identity_degraded": 0.018605153959826565
+    },
+    "alignment": {
+      "detector": "det_10g.onnx",
+      "det_size": 320,
+      "det_thresh": 0.3,
+      "out_size": 112,
+      "aligned": 99993,
+      "missed": 7,
+      "miss_rate": 7e-05
+    },
+    "n_images": 100000,
+    "n_identities": 5000,
+    "points": {
+      "1x1": {
+        "rank1_cosine": 0.6902857142857143,
+        "rank1_calibrated": 0.7003007518796992,
+        "rank1_clean_ceiling": 0.925233082706767,
+        "n_gallery": 1750,
+        "n_mate_probes": 33250
+      },
+      "1x3": {
+        "rank1_cosine": 0.9125714285714286,
+        "rank1_calibrated": 0.9199047619047619,
+        "rank1_clean_ceiling": 0.9660952380952381,
+        "n_gallery": 1750,
+        "n_mate_probes": 10500
+      },
+      "3x1": {
+        "rank1_cosine": 0.8043025210084034,
+        "rank1_calibrated": 0.8141512605042017,
+        "rank1_clean_ceiling": 0.9645714285714285,
+        "n_gallery": 1750,
+        "n_mate_probes": 29750
+      },
+      "3x3": {
+        "rank1_cosine": 0.9811428571428571,
+        "rank1_calibrated": 0.9848,
+        "rank1_clean_ceiling": 0.9973714285714286,
+        "n_gallery": 1750,
+        "n_mate_probes": 8750
+      },
+      "5x5": {
+        "rank1_cosine": 0.9963809523809524,
+        "rank1_calibrated": 0.9979047619047619,
+        "rank1_clean_ceiling": 0.9994285714285714,
+        "n_gallery": 1750,
+        "n_mate_probes": 5250
+      }
+    }
+  },
+  "unaligned": {
+    "health": {
+      "same_identity_clean": 0.29200555732520295,
+      "same_identity_degraded": 0.2955681779368315,
+      "cross_identity_clean": 0.10259637487912551,
+      "cross_identity_degraded": 0.2021308277468197
+    },
+    "alignment": {
+      "enabled": false,
+      "reason": "not an insightface run"
+    },
+    "n_images": 100000,
+    "n_identities": 5000,
+    "points": {
+      "1x1": {
+        "rank1_cosine": 0.0238796992481203,
+        "rank1_calibrated": 0.04439097744360902,
+        "rank1_clean_ceiling": 0.22078195488721805,
+        "n_gallery": 1750,
+        "n_mate_probes": 33250
+      },
+      "1x3": {
+        "rank1_cosine": 0.02095238095238095,
+        "rank1_calibrated": 0.0999047619047619,
+        "rank1_clean_ceiling": 0.3481904761904762,
+        "n_gallery": 1750,
+        "n_mate_probes": 10500
+      },
+      "3x1": {
+        "rank1_cosine": 0.04759663865546219,
+        "rank1_calibrated": 0.07546218487394958,
+        "rank1_clean_ceiling": 0.40863865546218486,
+        "n_gallery": 1750,
+        "n_mate_probes": 29750
+      },
+      "3x3": {
+        "rank1_cosine": 0.059314285714285715,
+        "rank1_calibrated": 0.2064,
+        "rank1_clean_ceiling": 0.6523428571428571,
+        "n_gallery": 1750,
+        "n_mate_probes": 8750
+      },
+      "5x5": {
+        "rank1_cosine": 0.096,
+        "rank1_calibrated": 0.3803809523809524,
+        "rank1_clean_ceiling": 0.868,
+        "n_gallery": 1750,
+        "n_mate_probes": 5250
+      }
+    }
+  },
+  "alignment_gain_calibrated": {
+    "1x1": 0.6559097744360902,
+    "1x3": 0.82,
+    "3x1": 0.7386890756302521,
+    "3x3": 0.7784,
+    "5x5": 0.6175238095238095
+  }
+}

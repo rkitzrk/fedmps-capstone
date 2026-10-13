@@ -1,0 +1,469 @@
+<title>FedMPS Implementation Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --ground:#F4F5F2; --surface:#FFFFFF; --surface-2:#EBEEE9; --surface-3:#E2E6E0;
+  --ink:#14191A; --ink-2:#3D474A; --muted:#6B7679;
+  --rule:#DADED7; --rule-strong:#B9C1BA;
+  --accent:#0F5F57; --accent-soft:#DCEDE8;
+  --flag:#8E5A11; --flag-soft:#F5EAD8;
+  --stop:#93332A; --stop-soft:#F6E3DF;
+  --p1:#0F5F57; --p2:#2C5C86; --p3:#8E5A11; --p4:#5C4A80;
+  --f-display:"Newsreader",Georgia,serif;
+  --f-body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono","SFMono-Regular",Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0F1413; --surface:#161B1A; --surface-2:#1D2423; --surface-3:#242C2A;
+    --ink:#E9ECE8; --ink-2:#B5BEBA; --muted:#818C88;
+    --rule:#293130; --rule-strong:#3B4543;
+    --accent:#54C2B1; --accent-soft:#14312D;
+    --flag:#DBA657; --flag-soft:#332810;
+    --stop:#E08578; --stop-soft:#3B221D;
+    --p1:#54C2B1; --p2:#79ADDE; --p3:#DBA657; --p4:#A797D6;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0F1413; --surface:#161B1A; --surface-2:#1D2423; --surface-3:#242C2A;
+  --ink:#E9ECE8; --ink-2:#B5BEBA; --muted:#818C88;
+  --rule:#293130; --rule-strong:#3B4543;
+  --accent:#54C2B1; --accent-soft:#14312D;
+  --flag:#DBA657; --flag-soft:#332810;
+  --stop:#E08578; --stop-soft:#3B221D;
+  --p1:#54C2B1; --p2:#79ADDE; --p3:#DBA657; --p4:#A797D6;
+}
+
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.page{max-width:64rem;margin:0 auto;padding:3.5rem 1.5rem 6rem}
+@media(max-width:640px){.page{padding:2.5rem 1.1rem 4rem}}
+
+.eyebrow{font-family:var(--f-mono);font-size:.69rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0 0 1rem}
+h1{font-family:var(--f-display);font-size:clamp(2rem,4.6vw,2.9rem);font-weight:500;line-height:1.1;letter-spacing:-.015em;margin:0 0 .9rem;text-wrap:balance}
+.stand{font-family:var(--f-display);font-size:1.15rem;line-height:1.5;color:var(--ink-2);margin:0 0 1.4rem;max-width:37rem}
+.meta{display:flex;flex-wrap:wrap;gap:.3rem 1.8rem;font-family:var(--f-mono);font-size:.71rem;color:var(--muted);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:.75rem 0}
+.meta b{color:var(--ink-2);font-weight:500}
+
+section{padding:2.6rem 0 0;scroll-margin-top:1rem}
+h2{font-family:var(--f-display);font-size:1.6rem;font-weight:500;line-height:1.2;margin:0 0 .4rem;letter-spacing:-.01em}
+.hint{font-family:var(--f-mono);font-size:.68rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 1rem}
+h3{font-size:.93rem;font-weight:600;margin:1.6rem 0 .45rem}
+p{margin:0 0 .9rem;max-width:45rem}
+ul,ol{margin:0 0 .9rem;padding-left:1.1rem;max-width:45rem}
+li{margin-bottom:.3rem}
+li::marker{color:var(--rule-strong)}
+code{font-family:var(--f-mono);font-size:.85em;background:var(--surface-2);border:1px solid var(--rule);padding:.08em .32em;border-radius:3px}
+.hr{height:1px;background:var(--rule);border:0;margin:2.6rem 0 0}
+
+.call{background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--accent);padding:1rem 1.2rem;margin:1.3rem 0;max-width:47rem}
+.call.warn{border-left-color:var(--flag)}
+.call.stop{border-left-color:var(--stop)}
+.call h4{font-family:var(--f-mono);font-size:.69rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 .45rem}
+.call p{max-width:none}
+.call p:last-child{margin-bottom:0}
+.pull{border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule-strong);padding:1.2rem 0;margin:1.5rem 0;max-width:47rem}
+.pull p{font-family:var(--f-display);font-size:1.13rem;line-height:1.5;margin:0;max-width:none}
+
+.scroll{overflow-x:auto;border:1px solid var(--rule);background:var(--surface);margin:1.1rem 0 1.4rem}
+table{border-collapse:collapse;width:100%;min-width:34rem;font-size:.85rem}
+th{font-family:var(--f-mono);font-size:.63rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:.6rem .8rem;background:var(--surface-2);border-bottom:1px solid var(--rule-strong)}
+td{padding:.58rem .8rem;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.46}
+tr:last-child td{border-bottom:0}
+td.k{font-weight:500;color:var(--ink)}
+td.m,th.m{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap;font-size:.8rem}
+
+/* file tree */
+.tree{background:var(--surface);border:1px solid var(--rule);padding:1.1rem 1.3rem;margin:1.1rem 0 1.4rem;overflow-x:auto;font-family:var(--f-mono);font-size:.78rem;line-height:1.85}
+.tree div{white-space:pre;color:var(--ink-2)}
+.tree .d{color:var(--ink);font-weight:600}
+.tree .c{color:var(--muted)}
+.tree .b1{color:var(--p1)} .tree .b2{color:var(--p2)}
+.tree .b3{color:var(--p3)} .tree .b4{color:var(--p4)}
+.treekey{display:flex;flex-wrap:wrap;gap:.3rem 1.3rem;font-family:var(--f-mono);font-size:.66rem;color:var(--muted);margin-top:.9rem;padding-top:.8rem;border-top:1px solid var(--rule)}
+.treekey span{display:flex;align-items:center;gap:.35rem}
+.sq{width:8px;height:8px;border-radius:1px;flex:0 0 8px}
+
+/* phase cards */
+.phase{border:1px solid var(--rule);background:var(--surface);margin:1.4rem 0;overflow:hidden}
+.ph-top{display:flex;align-items:baseline;gap:.8rem;padding:.85rem 1.2rem;background:var(--surface-2);border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.ph-n{font-family:var(--f-mono);font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:.15em .5em;border-radius:2px;color:var(--surface);}
+.p-1 .ph-n{background:var(--p1)} .p-2 .ph-n{background:var(--p2)}
+.p-3 .ph-n{background:var(--p3)} .p-4 .ph-n{background:var(--p4)}
+.ph-t{font-size:1.02rem;font-weight:600;margin:0;flex:1 1 12rem}
+.ph-sz{font-family:var(--f-mono);font-size:.68rem;color:var(--muted);white-space:nowrap}
+.ph-body{padding:1.1rem 1.2rem}
+.ph-body p{max-width:none;font-size:.9rem}
+.ph-body p:last-child{margin-bottom:0}
+.ph-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:.4rem}
+@media(min-width:760px){.ph-grid{grid-template-columns:1fr 1fr}}
+.ph-col h5{font-family:var(--f-mono);font-size:.64rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);margin:0 0 .4rem}
+.ph-col ul{font-size:.85rem;color:var(--ink-2);padding-left:1rem;margin:0;max-width:none}
+.ph-col li{margin-bottom:.26rem}
+.ph-col code{font-size:.8rem}
+.handoff{margin-top:1rem;padding-top:.85rem;border-top:1px solid var(--rule);font-size:.85rem;color:var(--ink-2)}
+.handoff b{font-family:var(--f-mono);font-size:.64rem;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:.3rem}
+
+.stub{background:var(--surface-2);border:1px solid var(--rule);border-left:3px solid var(--flag);padding:.75rem 1rem;margin-top:.9rem;font-family:var(--f-mono);font-size:.76rem;color:var(--ink-2);line-height:1.65;overflow-x:auto}
+.stub .kw{color:var(--accent);font-weight:600}
+.stub .cm{color:var(--muted)}
+
+footer{border-top:1px solid var(--rule);margin-top:3rem;padding-top:1.2rem;font-family:var(--f-mono);font-size:.7rem;color:var(--muted);line-height:1.7}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="page">
+
+<p class="eyebrow">Implementation spec · for verification before coding</p>
+<h1>FedMPS — Four-Phase Build Spec</h1>
+<p class="stand">One codebase, built in four sequential passes. Nothing runs until all four are done, so the interfaces between them are frozen up front — that is what makes deferred testing survivable.</p>
+<div class="meta">
+  <span><b>Package</b> <code>fedmps</code></span>
+  <span><b>Phases</b> 4 sequential</span>
+  <span><b>Files</b> 23</span>
+  <span><b>Est. LOC</b> ~1,400</span>
+  <span><b>Testing</b> After Phase 4</span>
+  <span><b>Status</b> Awaiting your sign-off</span>
+</div>
+
+<div class="pull">
+  <p>Because nothing is executed until the end, every phase boundary is a written contract rather than a passing test. Phases 2 and 3 are built against fixed array shapes and a dummy backbone, so they stay testable even if the face model never installs.</p>
+</div>
+
+<hr class="hr">
+
+<section id="rules">
+  <h2>Ground rules for this build</h2>
+  <p class="hint">Four decisions that make deferred testing safe</p>
+
+  <ol>
+    <li><strong>Contracts frozen in Phase 1.</strong> Array shapes, dtypes, file names and the config object are all fixed in the first pass and never renegotiated. Later phases read them, they do not change them.</li>
+    <li><strong>A dummy backbone ships in Phase 1.</strong> <code>DummyBackbone</code> emits deterministic 512-d vectors with real identity structure — same identity clusters together, different identities do not. The entire learning and privacy stack can therefore be exercised without <code>insightface</code>, <code>torch</code> vision weights, or a single image. This is the single most important de-risking decision in the plan.</li>
+    <li><strong>Privacy hooks are stubbed in Phase 2, filled in Phase 3.</strong> Phase 2 writes <code>apply_privacy()</code> as a pass-through. Phase 3 replaces the body only. No Phase 2 file is restructured later.</li>
+    <li><strong>Every module gets a smoke block.</strong> Each file ends with <code>if __name__ == "__main__":</code> running a tiny self-check on synthetic input. At test time you run modules bottom-up, so a failure localises to one file instead of one traceback from the top.</li>
+  </ol>
+
+  <div class="call warn">
+    <h4>On the LOC figure</h4>
+    <p>Earlier I estimated ~550 lines. That was the core algorithmic code only. The ~1,400 here includes config, the two dashboards, scripts, smoke blocks and docstrings. The algorithms themselves have not grown — this is not scope creep, it is the honest total once boilerplate is counted.</p>
+  </div>
+
+  <div class="call">
+    <h4>How this relates to the 12-week plan</h4>
+    <p>The four lanes in the week-by-week plan are <em>who does what</em>. These four phases are <em>what gets written when</em>. They are different cuts of the same work: Phase 1 lands in weeks 1–4, Phase 2 in weeks 3–6, Phase 3 in weeks 7–8, Phase 4 in weeks 9–10. Your team still splits by lane; I write the code in phases.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="tree">
+  <h2>File manifest</h2>
+  <p class="hint">Coloured by the phase that creates the file</p>
+
+  <div class="tree">
+<div><span class="d">fedmps/</span></div>
+<div>├── <span class="b1">config.py</span>                  <span class="c"># every knob, one place — frozen in P1</span></div>
+<div>├── <span class="b1">contracts.py</span>               <span class="c"># shapes, dtypes, paths, asserts</span></div>
+<div>├── <span class="d">data/</span></div>
+<div>│   ├── <span class="b1">loader.py</span>              <span class="c"># LFW + CelebA fetch and index</span></div>
+<div>│   ├── <span class="b1">degrade.py</span>             <span class="c"># the CCTV degradation chain</span></div>
+<div>│   └── <span class="b1">partition.py</span>           <span class="c"># non-IID split into 5 nodes</span></div>
+<div>├── <span class="d">models/</span></div>
+<div>│   ├── <span class="b1">backbone.py</span>            <span class="c"># frozen embedder + DummyBackbone</span></div>
+<div>│   └── <span class="b2">adapter.py</span>             <span class="c"># 512→256→512 residual MLP</span></div>
+<div>├── <span class="d">fl/</span></div>
+<div>│   ├── <span class="b2">node.py</span>                <span class="c"># local training, returns an update</span></div>
+<div>│   ├── <span class="b2">server.py</span>              <span class="c"># FedAvg + privacy hook</span></div>
+<div>│   └── <span class="b2">loop.py</span>                <span class="c"># round orchestration, 3 train modes</span></div>
+<div>├── <span class="d">privacy/</span></div>
+<div>│   ├── <span class="b3">dp.py</span>                  <span class="c"># clip norm + Gaussian noise</span></div>
+<div>│   ├── <span class="b3">mask.py</span>                <span class="c"># pairwise cancelling masks</span></div>
+<div>│   └── <span class="b3">template.py</span>            <span class="c"># cancelable binary templates</span></div>
+<div>├── <span class="d">eval/</span></div>
+<div>│   ├── <span class="b2">metrics.py</span>             <span class="c"># rank-1, TPIR@FPIR, DET</span></div>
+<div>│   └── <span class="b3">experiments.py</span>         <span class="c"># runs everything, writes figures</span></div>
+<div>├── <span class="d">pipeline/</span></div>
+<div>│   ├── <span class="b4">detect.py</span>              <span class="c"># face detection + tracking</span></div>
+<div>│   ├── <span class="b4">quality.py</span>             <span class="c"># size / blur / pose gate</span></div>
+<div>│   └── <span class="b4">match.py</span>               <span class="c"># watchlist match + track vote</span></div>
+<div>├── <span class="d">apps/</span></div>
+<div>│   ├── <span class="b4">server_app.py</span>          <span class="c"># Streamlit case console</span></div>
+<div>│   └── <span class="b4">node_app.py</span>            <span class="c"># Streamlit review queue</span></div>
+<div>├── <span class="d">scripts/</span></div>
+<div>│   ├── <span class="b1">01_prepare_data.py</span>     <span class="c"># → embeddings + partition on disk</span></div>
+<div>│   ├── <span class="b3">02_run_experiments.py</span>  <span class="c"># → every table and figure</span></div>
+<div>│   └── <span class="b4">03_run_video.py</span>        <span class="c"># → annotated demo video</span></div>
+<div>├── <span class="b1">requirements.txt</span></div>
+<div>└── <span class="b1">README.md</span>                  <span class="c"># run order, written in P1</span></div>
+  </div>
+
+  <div class="treekey">
+    <span><span class="sq" style="background:var(--p1)"></span>Phase 1 · Foundation &amp; data</span>
+    <span><span class="sq" style="background:var(--p2)"></span>Phase 2 · Learning core</span>
+    <span><span class="sq" style="background:var(--p3)"></span>Phase 3 · Privacy &amp; experiments</span>
+    <span><span class="sq" style="background:var(--p4)"></span>Phase 4 · Video &amp; dashboards</span>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="contracts">
+  <h2>Frozen contracts</h2>
+  <p class="hint">Fixed in Phase 1 · every later phase reads these and nothing else</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Artefact</th><th class="m">Shape / type</th><th>Written by</th><th>Read by</th></tr></thead>
+      <tbody>
+        <tr><td class="k"><code>embeddings_clean.npy</code></td><td class="m">float32 [N, 512], L2-normed</td><td>P1</td><td>P2, P3</td></tr>
+        <tr><td class="k"><code>embeddings_deg.npy</code></td><td class="m">float32 [N, 512], L2-normed</td><td>P1</td><td>P2, P3</td></tr>
+        <tr><td class="k"><code>labels.npy</code></td><td class="m">int32 [N] — identity id</td><td>P1</td><td>P2, P3</td></tr>
+        <tr><td class="k"><code>partition.json</code></td><td class="m">{node_id: {ids[], degrade_params{}, split}}</td><td>P1</td><td>P2, P3</td></tr>
+        <tr><td class="k">Adapter update</td><td class="m">dict[str, Tensor] — same keys as state_dict</td><td>P2</td><td>P3</td></tr>
+        <tr><td class="k">Watchlist template</td><td class="m">uint8 [12] — 96 bits packed</td><td>P3</td><td>P4</td></tr>
+        <tr><td class="k"><code>adapter_final.pt</code></td><td class="m">torch state_dict</td><td>P2/P3</td><td>P4</td></tr>
+        <tr><td class="k"><code>results/*.json</code></td><td class="m">{experiment, config, metrics{}}</td><td>P3</td><td>report</td></tr>
+        <tr><td class="k">Alert record</td><td class="m">{case_id, node_id, ts, score, crop_path, status}</td><td>P4</td><td>P4 apps</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Nine contracts. If any of these needs to change mid-build, it comes back to you first rather than being quietly renegotiated inside a later phase.</p>
+</section>
+
+<hr class="hr">
+
+<section id="phases">
+  <h2>The four phases</h2>
+  <p class="hint">Strictly sequential · each depends on the one before</p>
+
+  <div class="phase p-1">
+    <div class="ph-top">
+      <span class="ph-n">Phase 1</span>
+      <p class="ph-t">Foundation &amp; data</p>
+      <span class="ph-sz">8 files · ~340 LOC</span>
+    </div>
+    <div class="ph-body">
+      <p>Everything needed to turn images into the arrays the rest of the project consumes. This phase also fixes the contracts and writes the README, so the shape of the whole codebase is settled before any learning code exists.</p>
+      <div class="ph-grid">
+        <div class="ph-col">
+          <h5>Builds</h5>
+          <ul>
+            <li><code>config.py</code> — dataclass with every hyperparameter, seed, path</li>
+            <li><code>contracts.py</code> — shape assertions used everywhere</li>
+            <li><code>data/loader.py</code> — LFW via scikit-learn, CelebA subset, unified index</li>
+            <li><code>data/degrade.py</code> — downsample → motion blur → noise → JPEG, parameterised</li>
+            <li><code>data/partition.py</code> — 5 nodes, disjoint identities, per-node degradation ranges</li>
+            <li><code>models/backbone.py</code> — three interchangeable embedders behind one interface</li>
+            <li><code>scripts/01_prepare_data.py</code>, <code>requirements.txt</code>, <code>README.md</code></li>
+          </ul>
+        </div>
+        <div class="ph-col">
+          <h5>Key decisions inside</h5>
+          <ul>
+            <li>Backbone selected by config: <code>insightface</code> → <code>facenet</code> → <code>dummy</code>, tried in that order with automatic fallback</li>
+            <li><code>DummyBackbone</code> generates identity-structured random vectors so downstream phases never block on an install</li>
+            <li>Degradation parameters are sampled per node, not per image — that is what creates the non-IID condition</li>
+            <li>All randomness seeded from config for reproducible figures</li>
+          </ul>
+        </div>
+      </div>
+      <div class="handoff">
+        <b>Hands forward</b>
+        Four <code>.npy</code> files, one <code>partition.json</code>, and a config object. From here, Phase 2 never touches an image.
+      </div>
+    </div>
+  </div>
+
+  <div class="phase p-2">
+    <div class="ph-top">
+      <span class="ph-n">Phase 2</span>
+      <p class="ph-t">Learning core</p>
+      <span class="ph-sz">5 files · ~400 LOC</span>
+    </div>
+    <div class="ph-body">
+      <p>The adapter, the federated loop, and the metrics. This phase produces the project's headline result, so it is the largest and the one worth reading most carefully when you verify.</p>
+      <div class="ph-grid">
+        <div class="ph-col">
+          <h5>Builds</h5>
+          <ul>
+            <li><code>models/adapter.py</code> — 512→256→512 residual MLP, ~0.4 M params</li>
+            <li><code>fl/node.py</code> — local training on a node's slice, returns a weight delta</li>
+            <li><code>fl/server.py</code> — FedAvg aggregation + the privacy hook</li>
+            <li><code>fl/loop.py</code> — three modes: <code>centralised</code>, <code>local_only</code>, <code>federated</code></li>
+            <li><code>eval/metrics.py</code> — rank-1, TPIR at fixed FPIR, DET curve points</li>
+          </ul>
+        </div>
+        <div class="ph-col">
+          <h5>Key decisions inside</h5>
+          <ul>
+            <li>All three training modes share one code path, differing only in how data is partitioned and how updates are combined — so the three-way comparison is apples to apples by construction</li>
+            <li>Cosine-embedding loss on (degraded, clean) pairs of the same identity, hard negatives mined within the node's own slice</li>
+            <li>Optional FedProx term present but disabled by default in config</li>
+            <li>Round history logged to JSON so convergence curves come free</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stub"><span class="cm"># fl/server.py — written in Phase 2, body filled in Phase 3</span>
+<span class="kw">def</span> apply_privacy(update, cfg):
+    <span class="cm">"""Phase 3 replaces this body. Signature is frozen."""</span>
+    <span class="kw">return</span> update</div>
+
+      <div class="handoff">
+        <b>Hands forward</b>
+        A trained adapter, a working federated loop with a pass-through privacy hook, and reusable metrics. At this point the project's core claim is already implementable — everything after is contribution and demo.
+      </div>
+    </div>
+  </div>
+
+  <div class="phase p-3">
+    <div class="ph-top">
+      <span class="ph-n">Phase 3</span>
+      <p class="ph-t">Privacy &amp; experiments</p>
+      <span class="ph-sz">4 files · ~310 LOC</span>
+    </div>
+    <div class="ph-body">
+      <p>The three privacy mechanisms, plus the runner that turns everything into the tables and figures your report needs. No Phase 2 file is restructured — <code>apply_privacy()</code> gets a real body, and that is the only edit.</p>
+      <div class="ph-grid">
+        <div class="ph-col">
+          <h5>Builds</h5>
+          <ul>
+            <li><code>privacy/dp.py</code> — clip update to a fixed L2 norm, add Gaussian noise, log the ε accounting</li>
+            <li><code>privacy/mask.py</code> — pairwise seeds, one node adds, the partner subtracts, masks cancel in the sum</li>
+            <li><code>privacy/template.py</code> — top-96 dimension select, mean-threshold binarise, XOR with a per-node key</li>
+            <li><code>eval/experiments.py</code> + <code>scripts/02_run_experiments.py</code></li>
+          </ul>
+        </div>
+        <div class="ph-col">
+          <h5>Experiments it runs</h5>
+          <ul>
+            <li>Clean vs degraded accuracy — the problem-statement chart</li>
+            <li>Local-only vs federated vs centralised — the headline chart</li>
+            <li>Noise sweep — the privacy–utility curve</li>
+            <li>Template <em>k</em> sweep — the accuracy cost of protection</li>
+            <li>Masked-update dump — the "server sees nothing" screenshot</li>
+            <li>Optional: FedAvg vs FedProx, membership inference</li>
+          </ul>
+        </div>
+      </div>
+      <div class="handoff">
+        <b>Hands forward</b>
+        Every number and figure the report needs, written to <code>results/</code> and <code>figures/</code>, plus a saved adapter for Phase 4 to load.
+      </div>
+    </div>
+  </div>
+
+  <div class="phase p-4">
+    <div class="ph-top">
+      <span class="ph-n">Phase 4</span>
+      <p class="ph-t">Video pipeline &amp; dashboards</p>
+      <span class="ph-sz">6 files · ~430 LOC</span>
+    </div>
+    <div class="ph-body">
+      <p>The demo. Consumes the trained adapter and the template code from earlier phases and puts a face on the whole system — literally.</p>
+      <div class="ph-grid">
+        <div class="ph-col">
+          <h5>Builds</h5>
+          <ul>
+            <li><code>pipeline/detect.py</code> — read video, detect faces, assign track IDs</li>
+            <li><code>pipeline/quality.py</code> — reject on eye distance, blur variance, pose</li>
+            <li><code>pipeline/match.py</code> — embed → adapt → compare to template → <em>k</em>-of-<em>n</em> track vote</li>
+            <li><code>apps/server_app.py</code> — upload probe, mint template, push, view alerts</li>
+            <li><code>apps/node_app.py</code> — review queue, confirm / reject, writes labels back</li>
+            <li><code>scripts/03_run_video.py</code> — annotated output video</li>
+          </ul>
+        </div>
+        <div class="ph-col">
+          <h5>Key decisions inside</h5>
+          <ul>
+            <li>Node and server communicate through a shared SQLite file, not a network — one less thing to break during a live demo</li>
+            <li>Track vote thresholds live in config so you can tune them in front of the examiner if asked</li>
+            <li>Both apps run from one command each; no build step</li>
+            <li>Video writer produces the backup demo recording as a side effect</li>
+          </ul>
+        </div>
+      </div>
+      <div class="handoff">
+        <b>Hands forward</b>
+        A runnable end-to-end demo. Build complete — testing starts here.
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="testing">
+  <h2>Test plan, after Phase 4</h2>
+  <p class="hint">Bottom-up, so failures localise</p>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th class="m">Step</th><th>Run</th><th>Confirms</th></tr></thead>
+      <tbody>
+        <tr><td class="m">T1</td><td>Every module's smoke block, bottom-up</td><td>Each file imports and its core function returns the right shape on synthetic input.</td></tr>
+        <tr><td class="m">T2</td><td><code>01_prepare_data.py</code> with <code>backbone=dummy</code></td><td>The data layer, partitioning and contracts, with no model dependency at all.</td></tr>
+        <tr><td class="m">T3</td><td><code>02_run_experiments.py</code> with <code>backbone=dummy</code>, 3 rounds</td><td>The full learning and privacy stack executes end to end. Numbers will be meaningless — that is fine, this step tests plumbing.</td></tr>
+        <tr><td class="m">T4</td><td><code>01_prepare_data.py</code> with the real backbone</td><td>The face model installs and produces sane embeddings. <strong>The only step that can fail on environment rather than logic.</strong></td></tr>
+        <tr><td class="m">T5</td><td><code>02_run_experiments.py</code>, full run</td><td>Real numbers, real figures. This is where you check the red-flag table from the build plan.</td></tr>
+        <tr><td class="m">T6</td><td><code>03_run_video.py</code> on your corridor footage</td><td>End-to-end detection through alert.</td></tr>
+        <tr><td class="m">T7</td><td>Both Streamlit apps</td><td>The demo you show in the room.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>T1 through T3 need no dataset and no face model, so most of the codebase is verifiable within minutes of Phase 4 landing. T4 is the one genuine environment risk, and it is deliberately isolated so that failing it invalidates nothing built before it.</p>
+</section>
+
+<hr class="hr">
+
+<section id="risk">
+  <h2>What deferred testing costs, and the mitigation</h2>
+
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Risk</th><th>Mitigation already in the plan</th></tr></thead>
+      <tbody>
+        <tr><td class="k">A Phase 1 shape mistake propagates through all four phases</td><td><code>contracts.py</code> asserts shapes at every boundary, so the failure surfaces at the boundary that broke it rather than three modules downstream.</td></tr>
+        <tr><td class="k">The face model will not install, and nothing can be tested</td><td><code>DummyBackbone</code>. T1–T3 pass without any model, dataset or image.</td></tr>
+        <tr><td class="k">Phase 3 forces a rewrite of Phase 2</td><td>The <code>apply_privacy()</code> signature is frozen in Phase 2 and only its body changes.</td></tr>
+        <tr><td class="k">Phase 4 needs something Phase 2 did not save</td><td>The contract table above fixes <code>adapter_final.pt</code> and the template format before Phase 2 is written.</td></tr>
+        <tr><td class="k">One giant traceback with no idea which file broke</td><td>Per-module smoke blocks, run bottom-up as T1.</td></tr>
+        <tr><td class="k">A library API differs from what was assumed</td><td>The honest residual risk. Most likely in <code>insightface</code> and the tracker. Both are isolated to one file each — <code>backbone.py</code> and <code>detect.py</code> — and both have a documented fallback.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="call stop">
+    <h4>The one thing I would change if you let me</h4>
+    <p>Running T1–T3 immediately after Phase 2 instead of after Phase 4 costs about ten minutes and catches the entire class of shape-and-plumbing errors while only two phases exist to search through. It does not break your "test at the end" preference for anything real — no dataset, no model, no results. If you would rather keep the build completely uninterrupted, that is fine and the plan works as written; the dummy backbone exists precisely so this is a preference and not a requirement.</p>
+  </div>
+</section>
+
+<hr class="hr">
+
+<section id="verify">
+  <h2>What I need from you before starting</h2>
+
+  <ol>
+    <li><strong>Sign off the phase split</strong>, or tell me to move work between phases.</li>
+    <li><strong>Confirm the nine contracts</strong> in the table above — particularly the 96-bit template and the 512-d embedding width, since those two touch every phase.</li>
+    <li><strong>Confirm 5 nodes</strong> as the default. Changing it later is a config edit, but the figures are laid out for five.</li>
+    <li><strong>Tell me the backbone preference</strong>: attempt <code>insightface</code> first, or go straight to <code>facenet-pytorch</code> for a quieter install on Windows.</li>
+    <li><strong>Say whether the T1–T3 checkpoint after Phase 2 is acceptable</strong>, or whether you want all four phases uninterrupted.</li>
+  </ol>
+
+  <p>Once you confirm, I start with Phase 1 and stop at its boundary rather than continuing on.</p>
+</section>
+
+<footer>
+  <p>Third document in the set, after the design report and the 12-week build plan. Phase LOC figures are estimates including config, docstrings and smoke blocks. No code has been written yet — this spec exists to be corrected before it is.</p>
+</footer>
+
+</div>

@@ -1,0 +1,160 @@
+{
+  "rows": [
+    {
+      "n_enrol": 1,
+      "n_probe_frames": 1,
+      "rank1_cosine": 0.5239812540288158,
+      "rank1_centred": 0.5301137650481715,
+      "rank1_rotated": 0.5343647101865886,
+      "rank1_hubness": 0.5419432394292584,
+      "n_gallery": 3021,
+      "n_mate_probes": 57399,
+      "n_nonmate_probes": 60420
+    },
+    {
+      "n_enrol": 1,
+      "n_probe_frames": 3,
+      "rank1_cosine": 0.8238442016992166,
+      "rank1_centred": 0.8332229945934018,
+      "rank1_rotated": 0.8393467946596049,
+      "rank1_hubness": 0.8510978704623193,
+      "n_gallery": 3021,
+      "n_mate_probes": 18126,
+      "n_nonmate_probes": 18126
+    },
+    {
+      "n_enrol": 1,
+      "n_probe_frames": 5,
+      "rank1_cosine": 0.8948471808451948,
+      "rank1_centred": 0.9023502151605428,
+      "rank1_rotated": 0.9052190223987642,
+      "rank1_hubness": 0.9162528963919232,
+      "n_gallery": 3021,
+      "n_mate_probes": 9063,
+      "n_nonmate_probes": 12084
+    },
+    {
+      "n_enrol": 2,
+      "n_probe_frames": 1,
+      "rank1_cosine": 0.6050792599948509,
+      "rank1_centred": 0.6099893339218067,
+      "rank1_rotated": 0.6151568649086028,
+      "rank1_hubness": 0.6221817646842474,
+      "n_gallery": 3021,
+      "n_mate_probes": 54378,
+      "n_nonmate_probes": 60420
+    },
+    {
+      "n_enrol": 2,
+      "n_probe_frames": 3,
+      "rank1_cosine": 0.9016330133509876,
+      "rank1_centred": 0.9075361359373276,
+      "rank1_rotated": 0.911453161204899,
+      "rank1_hubness": 0.9214388171687079,
+      "n_gallery": 3021,
+      "n_mate_probes": 18126,
+      "n_nonmate_probes": 18126
+    },
+    {
+      "n_enrol": 2,
+      "n_probe_frames": 5,
+      "rank1_cosine": 0.9536577292287322,
+      "rank1_centred": 0.9595056824451065,
+      "rank1_rotated": 0.9618227959836698,
+      "rank1_hubness": 0.9685534591194969,
+      "n_gallery": 3021,
+      "n_mate_probes": 9063,
+      "n_nonmate_probes": 12084
+    },
+    {
+      "n_enrol": 3,
+      "n_probe_frames": 1,
+      "rank1_cosine": 0.6394843935588138,
+      "rank1_centred": 0.6450337831259614,
+      "rank1_rotated": 0.6500769125922464,
+      "rank1_hubness": 0.6579044726132757,
+      "n_gallery": 3021,
+      "n_mate_probes": 51357,
+      "n_nonmate_probes": 60420
+    },
+    {
+      "n_enrol": 3,
+      "n_probe_frames": 3,
+      "rank1_cosine": 0.9294273419397551,
+      "rank1_centred": 0.9355180403839788,
+      "rank1_rotated": 0.9390930155577624,
+      "rank1_hubness": 0.9473684210526315,
+      "n_gallery": 3021,
+      "n_mate_probes": 15105,
+      "n_nonmate_probes": 18126
+    },
+    {
+      "n_enrol": 3,
+      "n_probe_frames": 5,
+      "rank1_cosine": 0.9774908970539556,
+      "rank1_centred": 0.979808010592519,
+      "rank1_rotated": 0.9813527529515613,
+      "rank1_hubness": 0.9863179962484828,
+      "n_gallery": 3021,
+      "n_mate_probes": 9063,
+      "n_nonmate_probes": 12084
+    },
+    {
+      "n_enrol": 5,
+      "n_probe_frames": 1,
+      "rank1_cosine": 0.6692485931810659,
+      "rank1_centred": 0.6739931589981243,
+      "rank1_rotated": 0.6798411122144985,
+      "rank1_hubness": 0.6868365883261613,
+      "n_gallery": 3021,
+      "n_mate_probes": 45315,
+      "n_nonmate_probes": 60420
+    },
+    {
+      "n_enrol": 5,
+      "n_probe_frames": 3,
+      "rank1_cosine": 0.9469712015888778,
+      "rank1_centred": 0.9506123800066203,
+      "rank1_rotated": 0.9543859649122807,
+      "rank1_hubness": 0.961138695796094,
+      "n_gallery": 3021,
+      "n_mate_probes": 15105,
+      "n_nonmate_probes": 18126
+    },
+    {
+      "n_enrol": 5,
+      "n_probe_frames": 5,
+      "rank1_cosine": 0.9860973187686196,
+      "rank1_centred": 0.9881937548273199,
+      "rank1_rotated": 0.989517819706499,
+      "rank1_hubness": 0.9918349332450623,
+      "n_gallery": 3021,
+      "n_mate_probes": 9063,
+      "n_nonmate_probes": 12084
+    }
+  ],
+  "floor_1x1": {
+    "n_enrol": 1,
+    "n_probe_frames": 1,
+    "rank1_cosine": 0.5239812540288158,
+    "rank1_centred": 0.5301137650481715,
+    "rank1_rotated": 0.5343647101865886,
+    "rank1_hubness": 0.5419432394292584,
+    "n_gallery": 3021,
+    "n_mate_probes": 57399,
+    "n_nonmate_probes": 60420
+  },
+  "default": {
+    "n_enrol": 3,
+    "n_probe_frames": 3,
+    "rank1_cosine": 0.9294273419397551,
+    "rank1_centred": 0.9355180403839788,
+    "rank1_rotated": 0.9390930155577624,
+    "rank1_hubness": 0.9473684210526315,
+    "n_gallery": 3021,
+    "n_mate_probes": 15105,
+    "n_nonmate_probes": 18126
+  },
+  "note": "every row is the frozen backbone, no adapter, on the same 3,021-identity gallery; only the protocol and the scoring layer differ",
+  "warnings": []
+}
